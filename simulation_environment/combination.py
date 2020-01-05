@@ -19,7 +19,7 @@ import scipy.stats
 
 def mt_shuffle():
     np.random.shuffle(pairwise_list)
-N=70
+N=1000
 rho_bar=10
 mu=5
 l=5*rho_bar
@@ -57,8 +57,8 @@ while(1):
         rho_j= pairwise_list[z][0][1]
         robot_k= robots[pairwise_list[z][1][0]-1]
         rho_k = pairwise_list[z][1][1]
-        print(robots[pairwise_list[z][0][0]-1])
-        print(robots[pairwise_list[z][1][0]-1])
+#        print(robots[pairwise_list[z][0][0]-1])
+#        print(robots[pairwise_list[z][1][0]-1])
         xj,yj,xk,yk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win)
     
         #time.sleep(10)
@@ -66,8 +66,8 @@ while(1):
         #robots[pairwise_list[z][1][0]-1].move(xk + win.getWidth()/2,(win.getHeight()/2) - yk)
         robots[pairwise_list[z][0][0]-1].move(xj,-yj) # move bot to new position
         robots[pairwise_list[z][1][0]-1].move(xk,-yk)
-        print(robots[pairwise_list[z][0][0]-1])
-        print(robots[pairwise_list[z][1][0]-1])
+#        print(robots[pairwise_list[z][0][0]-1])
+#        print(robots[pairwise_list[z][1][0]-1])
         print("Interaction")
         print(z)
         print(pairwise_list[z])        
