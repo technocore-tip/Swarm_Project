@@ -12,7 +12,7 @@ from random import randint
 
 import numpy as np
 from itertools import combinations
-   
+
 import scipy.stats
 
 
@@ -21,7 +21,7 @@ def mt_shuffle():
     np.random.shuffle(pairwise_list)
 N=1000
 rho_bar=10
-mu=5
+mu=100
 l=5*rho_bar
 times=pow(2,-8)
 
@@ -38,7 +38,7 @@ dist = scipy.stats.truncnorm((min_val - rho_bar) / sigma_p, (max_val - rho_bar) 
 
 rho_k = dist.rvs(N)
 
-win = draw_windows(1024,1024) #draw window with width = 700 and height = 600
+win = draw_windows(2048,2048) #draw window with width = 700 and height = 600.
 robots = draw_swarm(N,win,l) #draw 7 swarm in win
 win.getMouse() #blocking call
 
@@ -60,7 +60,7 @@ while(1):
 #        print(robots[pairwise_list[z][0][0]-1])
 #        print(robots[pairwise_list[z][1][0]-1])
         xj,yj,xk,yk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win)
-    
+
         #time.sleep(10)
         #robots[pairwise_list[z][0][0]-1].move(xj + win.getWidth()/2,(win.getHeight()/2) - yj) # move bot to new position
         #robots[pairwise_list[z][1][0]-1].move(xk + win.getWidth()/2,(win.getHeight()/2) - yk)
@@ -70,7 +70,7 @@ while(1):
 #        print(robots[pairwise_list[z][1][0]-1])
         print("Interaction")
         print(z)
-        print(pairwise_list[z])        
-        #win.getMouse() 
-   # win.getMouse() 
+        print(pairwise_list[z])
+        #win.getMouse()
+   # win.getMouse()
     mt_shuffle()

@@ -17,7 +17,7 @@ def draw_swarm(n,win,l): #function for drawing robot nodes
 	robot =[]
 	for x in range(0,n):
 		#robot.append(Circle(Point( randint(20,win.getWidth-20) , randint(20,win.getHeight()-20) ), 0.5))
-		robot.append(Circle(Point( randint(-(win.getWidth()/16),win.getWidth()/16)+win.getWidth()/2, (win.getHeight()/2)-randint(-(win.getHeight()/16),win.getHeight()/16) ), 2))
+		robot.append(Circle(Point( randint(-(win.getWidth()/4),win.getWidth()/4)+win.getWidth()/4, (win.getHeight()/4)-randint(-(win.getHeight()/4),win.getHeight()/4) ), 2))
 		#print(robot)
 		#print('create robot with number ',x,' point x : ',x*200+40,', y : 200 , r : 5')
 		robot[x].setFill('blue')
@@ -28,8 +28,8 @@ def draw_swarm(n,win,l): #function for drawing robot nodes
 	pass
 
 def distance_vector(P1,P2,win):#function to calculate distance between two points
-    x1= P1.getX() - win.getWidth()/2 #win.getWidth()2 translate the given points to cartseian plane with origin at center of the plane instead at the side of window
-    x2 = P2.getX() - win.getWidth()/2
+    x1= P1.getX() - win.getWidth()/4 #win.getWidth()2 translate the given points to cartseian plane with origin at center of the plane instead at the side of window
+    x2 = P2.getX() - win.getWidth()/4
     
     y1=win.getHeight()/2 - P1.getY()
     y2=win.getHeight()/2 - P2.getY()
@@ -40,8 +40,8 @@ def distance_vector(P1,P2,win):#function to calculate distance between two point
     pass
 
 def position_vector(P,win):
-    x = P.getX() - win.getWidth()/2
-    y = win.getHeight()/2 - P.getY()
+    x = P.getX() - win.getWidth()/4
+    y = win.getHeight()/4 - P.getY()
     return x,y
 
 def distance_magnitude(x,y):
