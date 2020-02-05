@@ -27,6 +27,9 @@ def draw_swarm(n,win,l): #function for drawing robot nodes
 	return robot
 	pass
 
+#def stopping_condition(N,rho_k):
+
+
 def distance_vector(P1,P2,win):#function to calculate distance between two points
     x1= P1.getX() - win.getWidth()/4 #win.getWidth()2 translate the given points to cartseian plane with origin at center of the plane instead at the side of window
     x2 = P2.getX() - win.getWidth()/4

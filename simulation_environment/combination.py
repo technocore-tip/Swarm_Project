@@ -50,9 +50,9 @@ for i in range(1,N+1,1):
 pairwise_list= list(combinations(particles,2))
 mt_shuffle()
 
-
+step=0
 while(1):
-
+    step= step+1
     for z in range(len(pairwise_list)):
         robot_j = robots[pairwise_list[z][0][0]-1]
         rho_j= pairwise_list[z][0][1]
@@ -69,7 +69,7 @@ while(1):
         robots[pairwise_list[z][1][0]-1].move(xk,-yk)
 #        print(robots[pairwise_list[z][0][0]-1])
 #        print(robots[pairwise_list[z][1][0]-1])
-        print("Interaction")
+        print("Interaction : %d Step: %d",z,step)
         print(z)
         print(pairwise_list[z])
         #win.getMouse()
