@@ -21,7 +21,7 @@ def mt_shuffle():
     np.random.shuffle(pairwise_list)
 N=1000
 rho_bar=10
-mu=100
+mu=50
 l=5*rho_bar
 times=pow(2,-8)
 
@@ -37,8 +37,9 @@ max_val = 25
 dist = scipy.stats.truncnorm((min_val - rho_bar) / sigma_p, (max_val - rho_bar) / sigma_p, loc=rho_bar, scale=sigma_p)
 
 rho_k = dist.rvs(N)
-
-win = draw_windows(2048,2048) #draw window with width = 700 and height = 600.
+for i in range(len(rho_k)):
+    rho_k[i]=rho_bar
+win = draw_windows(1024,1024) #draw window with width = 700 and height = 600.
 robots = draw_swarm(N,win,l) #draw 7 swarm in win
 win.getMouse() #blocking call
 

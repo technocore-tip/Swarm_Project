@@ -40,7 +40,7 @@ def simulate_meeting_point(robots):
 
 if __name__ == '__main__':
 	#main program
-	win = draw_windows(1024,768) #draw window with width = 700 and height = 600
+	win = draw_windows(1024,1024) #draw window with width = 700 and height = 600
 	robots = draw_swarm(70,win) #draw 7 swarm in win
 	win.getMouse() #blocking call
 	simulate_meeting_point(robots) #start simulation meeting point
