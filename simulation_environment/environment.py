@@ -4,7 +4,7 @@ import threading
 import math
 from random import randint
 import numpy as np
-
+#swarm environment
 lock = threading.Lock()
 
 def draw_windows(w,h): #function for creating the simulation space
@@ -37,8 +37,8 @@ def distance_vector(P1,P2,win):#function to calculate distance between two point
     y1=win.getHeight()/2 - P1.getY()
     y2=win.getHeight()/2 - P2.getY()
 
-    x = x1 - x2 #P1.getX()-P2.getX()
-    y = y1 - y2 #P1.getY()-P2.getY()
+    x = x2 - x1 #P1.getX()-P2.getX()
+    y = y2 - y1 #P1.getY()-P2.getY()
     return x,y
     pass
 
@@ -81,14 +81,14 @@ def update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win):
 
 	if x_p >= 0 and y_p < 0:
 		theta= ((3*np.pi)/2) +np.arctan(y_p/x_p)
-
+        
 	#theta= np.arctan(y_p/x_p)
 	#    print("J particle movement")
-	xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
-	yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
+	xrj = -mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
+	yrj = -mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
 	#    print("K particle movement")
-	xrk = mu*np.cos(theta)*math.tanh(pdist-rho_k)*times
-	yrk = mu*np.sin(theta)*math.tanh(pdist-rho_k)*times
+	xrk = -mu*np.cos(theta)*math.tanh(pdist-rho_k)*times
+	yrk = -mu*np.sin(theta)*math.tanh(pdist-rho_k)*times
 #    print("J Previous Pos")
 	xj,yj= position_vector(robot_j.getCenter(),win)  #update position vectors
 	#    print(xj)

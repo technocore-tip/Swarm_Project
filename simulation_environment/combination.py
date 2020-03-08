@@ -14,31 +14,38 @@ import numpy as np
 from itertools import combinations
 
 import scipy.stats
-
+import matplotlib.pyplot as plt
 
 
 def mt_shuffle():
     np.random.shuffle(pairwise_list)
-N=1000
-rho_bar=10
+    
+def normal_distribution(mu,sigma):
+    rho_k=list()
+    
+    while (len(rho_k)!=N):
+        
+        s= np.random.normal(sigma,mu)
+        if s > 0:
+            rho_k.append(s)
+    
+    return rho_k
+    plt.hist(rho_k,30,density = True)
+    
+    plt.show()
+
+    
+N=1000 #number of particles
+rho_bar, sigma = 10, 0
 mu=50
 l=5*rho_bar
 times=pow(2,-8)
 
-sigma_p=0.25
+rho_k = normal_distribution(rho_bar,sigma)
 particles=list()
 
-min_val = 0.1
-max_val = 25
 
 
-
-# Plot distribution PDF
-dist = scipy.stats.truncnorm((min_val - rho_bar) / sigma_p, (max_val - rho_bar) / sigma_p, loc=rho_bar, scale=sigma_p)
-
-rho_k = dist.rvs(N)
-for i in range(len(rho_k)):
-    rho_k[i]=rho_bar
 win = draw_windows(1024,1024) #draw window with width = 700 and height = 600.
 robots = draw_swarm(N,win,l) #draw 7 swarm in win
 win.getMouse() #blocking call
@@ -50,8 +57,10 @@ for i in range(1,N+1,1):
 pairwise_list= list(combinations(particles,2))
 mt_shuffle()
 
+
 step=0
-while(1):
+
+while(1): #replace with energy function
     step= step+1
     for z in range(len(pairwise_list)):
         robot_j = robots[pairwise_list[z][0][0]-1]
