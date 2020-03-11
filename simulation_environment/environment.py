@@ -7,7 +7,7 @@ import numpy as np
 #swarm environment
 lock = threading.Lock()
 
-def draw_windows(w,h): #function for creating the simulation space
+def draw_windows(w,h): #function for crea.ting the simulation space
 	#create windows
 	#print('create windows with name : swarm, width : ',w,', height : ',h)
 	return GraphWin('swarm',w,h)
@@ -31,25 +31,25 @@ def draw_swarm(n,win,l): #function for drawing robot nodes
 
 
 def distance_vector(P1,P2,win):#function to calculate distance between two points
-    x1= P1.getX() - win.getWidth()/4 #win.getWidth()2 translate the given points to cartseian plane with origin at center of the plane instead at the side of window
-    x2 = P2.getX() - win.getWidth()/4
-
-    y1=win.getHeight()/2 - P1.getY()
-    y2=win.getHeight()/2 - P2.getY()
+    x1 = P1.getX()  - win.getWidth()/2 #win.getWidth()2 translate the given points to cartseian plane with origin at center of the plane instead at the side of window
+    x2 = P2.getX() - win.getWidth()/2
+    y1= -P1.getY() + win.getHeight()/2 
+    y2= -P2.getY() + win.getHeight()/2
 
     x = x2 - x1 #P1.getX()-P2.getX()
     y = y2 - y1 #P1.getY()-P2.getY()
-    return x,y
+    theta = np.arctan(y/x)
+    return x,y,theta
     pass
 
 def position_vector(P,win):
-    x = P.getX() - win.getWidth()/4
-    y = win.getHeight()/4 - P.getY()
+    x = P.getX() + win.getWidth()/2
+    y = P.getY() - win.getHeight()/2 
     return x,y
 
 def distance_magnitude(x,y):
 	#calculate magnitude of distance vector
-	return math.sqrt(x*x+y*y)
+	return math.sqrt((x*x)+(y*y))
 	pass
 
 def relative_distance(robot,robots,win):#calculate relative distance of a robot to all other robots
@@ -63,39 +63,42 @@ def relative_distance(robot,robots,win):#calculate relative distance of a robot 
 	return x_total,y_total
 
 def update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win):
-    x_p,y_p = distance_vector(robot_j.getCenter(),robot_k.getCenter(),win) #xj-xk , yj-yk
+    x_p,y_p,theta = distance_vector(robot_j.getCenter(),robot_k.getCenter(),win) #xj-xk , yj-yk
     pdist = distance_magnitude(x_p,y_p) # |rj - rk|
     print("distance_vector")
     print(x_p)
     print(y_p)
+    print(theta)
+    print("Distance Magnitude")
+    print(pdist)
 #    print("Attraction Repulsion")
 #    print("Theta")
-    if y_p > 0 and x_p > 0:
-        theta= np.arctan(y_p/x_p)
-    
-    if x_p < 0 and y_p > 0:
-        theta=(np.pi/2)+ np.arctan(y_p/x_p)
-    
-    if x_p < 0 and y_p < 0:
-        theta= (np.pi) +np.arctan(y_p/x_p)
-    
-    if x_p > 0 and y_p < 0:
-        theta= ((3*np.pi)/2) +np.arctan(y_p/x_p)
-    if x_p==0 and y_p <0:
-        theta = (3*np.pi)/2
-    if x_p==0 and y_p>0:
-        theta = np.pi/2
-    if x_p>0 and y_p==0:
-        theta =0
-    if x_p<0 and y_p ==0:
-        theta = np.pi
+    #if y_p > 0 and x_p > 0:
+    #    theta= np.arctan(y_p/x_p)
+    #if x_p < 0 and y_p > 0:
+    #    theta=np.pi - np.arctan(y_p/x_p)
+    #if x_p < 0 and y_p < 0:
+    #    theta= np.pi + np.arctan(y_p/x_p)
+    #if x_p > 0 and y_p < 0:
+    #    theta= ((3*np.pi)/2) +np.arctan(y_p/x_p)
+    #if x_p==0 and y_p <0:
+    #    theta = (3*np.pi)/2
+    #if x_p==0 and y_p>0:
+    #    theta = np.pi/2
+    #if x_p>0 and y_p==0:
+    #    theta =0
+    #if x_p==0 and y_p==0:
+    #    theta =0
+    #if x_p<0 and y_p ==0:
+    #    theta = np.pi
 	#theta= np.arctan(y_p/x_p)
 	#    print("J particle movement")
-    xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
-    yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
+    xrj = -mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
+    yrj = -mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
     	#    print("K particle movement")
-    xrk = mu*np.cos(-theta)*math.tanh(pdist-rho_k)*times
-    yrk = mu*np.sin(-theta)*math.tanh(pdist-rho_k)*times
+    xrk = -mu*np.cos(theta)*math.tanh(pdist-rho_k)*times
+    yrk = -mu*np.sin(theta)*math.tanh(pdist-rho_k)*times
+    
     #    print("J Previous Pos")
     xj,yj= position_vector(robot_j.getCenter(),win)  #update position vectors
     	#    print(xj)
@@ -110,12 +113,12 @@ def update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win):
     xk,yk= position_vector(robot_k.getCenter(),win)  #update position vectors
     	#    print(xk)
     	#    print(yk)
-    xk=  xrk
-    yk =  yrk
+    xk=  xk
+    yk =  yk
     #    print("K new Pos")
     #    print(xk)
     #    print(yk)
-    return xrj,yrj,xrk,yrk
+    return xrj,yrj,xrk,yrk,xj,yj,xk,yk
 	#calculate the pairwise distance
 
 
