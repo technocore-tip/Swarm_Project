@@ -35,15 +35,15 @@ def normal_distribution(mu,sigma):
         
         s= np.random.normal(sigma,mu)
         if s >= 0:
-            rho_k.append(s)
+            rho_k.append(10)
     plt.hist(rho_k,30,density = True)
     
     plt.show()    
     return rho_k
 
     
-N=1000 #number of particles
-rho_bar, sigma = 2, 0
+N=3 #number of particles
+rho_bar, sigma = 10, 0
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
@@ -77,9 +77,10 @@ while(1): #replace with energy function
         xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
         #time.sleep(10).
         #robots[pairwise_list[z][0][0]-1].move(xj + win.getWidth()/2,(win.getHeight()/2) - yj) # move bot to new position
-        #robots[pairwise_list[z][1][0]-1].move(xk + win.getWidth()/2,(win.getHeight()/2) - yk)
-        robot_j.move(xj,-yj) # move bot to new position
-        robot_k.move(-xk,yk)
+        #robots[pairwise_list[z][1][0]-1].move(xk + win.getWidth()/2,(win.getHeight()/2) - yk)..
+        
+        robot_j.move(xj,yj) # move bot to new position
+        robot_k.move(xk,yk)
         #print(robots[pairwise_list[z][0][0]-1])
         #print(robots[pairwise_list[z][1][0]-1])
         print("Interaction : %d Step: %d",z,step)

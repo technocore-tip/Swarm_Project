@@ -4,11 +4,13 @@ Created on Sat Jan  4 10:34:38 2020
 
 @author: Paul Vincent Nonat
 """
+from graphics import * 
 from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector
 import time
 import threading
 import math
-from random import randint
+from random import *
+import random
 
 import numpy as np
 from itertools import combinations
@@ -22,7 +24,6 @@ def mt_shuffle():
     
 def normal_distribution(mu,sigma):
     rho_k=list()
-    
     while (len(rho_k)!=N):
         
         s= np.random.normal(sigma,mu)
@@ -35,18 +36,16 @@ def normal_distribution(mu,sigma):
 
     
 N=10 #number of particles
-rho_bar, sigma = 0, 10
-mu=50
+rho_bar, sigma = 10, 0
+mu=100
 l=5*rho_bar
 times=pow(2,-8)
 
 rho_k = normal_distribution(rho_bar,sigma)
 particles=list()
 
-
-
 win = draw_windows(1024,1024) #draw window with width = 700 and height = 600.
-robots = draw_swarm(N,win,l) #draw 7 swarm in win
+robots = draw_swarm(N,win,l) #draw N swarm in win
 win.getMouse() #blocking call
 
 for i in range(1,N+1,1):    
@@ -54,32 +53,36 @@ for i in range(1,N+1,1):
 
 
 pairwise_list= list(combinations(particles,2))
+#pairwise_list = random.sample(particles, 2)
 mt_shuffle()
-
 
 step=0
 
 while(1): #replace with energy function
     step= step+1
     for z in range(len(pairwise_list)):
+       # pairwise_list = random.sample(particles, 2)
         robot_j = robots[pairwise_list[z][0][0]-1]
         rho_j= pairwise_list[z][0][1]
         robot_k= robots[pairwise_list[z][1][0]-1]
         rho_kk = pairwise_list[z][1][1]
-#        print(robots[pairwise_list[z][0][0]-1])
-#        print(robots[pairwise_list[z][1][0]-1])
-        xj,yj,xk,yk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
-
-        #time.sleep(10)
+        print(robots[pairwise_list[z][0][0]-1])
+        print(robots[pairwise_list[z][1][0]-1])
+        xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
+        #time.sleep(10).
         #robots[pairwise_list[z][0][0]-1].move(xj + win.getWidth()/2,(win.getHeight()/2) - yj) # move bot to new position
         #robots[pairwise_list[z][1][0]-1].move(xk + win.getWidth()/2,(win.getHeight()/2) - yk)
-        robots[pairwise_list[z][0][0]-1].move(xj,-yj) # move bot to new position
-        robots[pairwise_list[z][1][0]-1].move(xk,-yk)
+        robot_j.move(xj,yj) # move bot to new position
+        #robot_k.move(-xk,yk)
+        print("New Pos")
         print(robots[pairwise_list[z][0][0]-1])
         print(robots[pairwise_list[z][1][0]-1])
         print("Interaction : %d Step: %d",z,step)
         print(z)
         print(pairwise_list[z])
-       # win.getMouse()
+        #robots[pairwise_list[z][0][0]-1]= Circle(Point(x_newj+xj,y_newj+yj),2)
+        #robots[pairwise_list[z][1][0]-1]= Circle(Point(x_newk+xk,y_newk+yk),2)
+    #    win.getMouse()
    # win.getMouse()
     mt_shuffle()
+    #step=1
