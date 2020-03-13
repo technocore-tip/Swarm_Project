@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 N=1000
-mu, sigma = 10, 20
+mu, sigma = 5, 10
 rho_k=list()
 
 while (len(rho_k)!=N):
