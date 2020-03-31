@@ -93,7 +93,8 @@ while((np.abs(du))>epsilon):
         du=U-U_knot
     
     step = step+1
-    print("total runtime: " % (time.time() - simulation_time))
+total_time = time.time()-simulation_time
+print("total runtime: " %d,total_time)
         #robot_k.move(xk,yk)
     #for z in range(len(pairwise_list)):
     #    pairwise_list = random.sample(particles, 2)
