@@ -73,7 +73,7 @@ epsilon= pow(10,-3)
 while((np.abs(du))>epsilon): 
     objective_func = AverageMeter()
     interaction=1
-    plotter.plot('du/dt', 'Order Parameter', 'Objective Function',step, float(du))
+    plotter.plot('du/dt', 'Order Parameter U(t)', 'Objective Function',step, float(du))
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
         pairwise_list = random.sample(particles, 2)
