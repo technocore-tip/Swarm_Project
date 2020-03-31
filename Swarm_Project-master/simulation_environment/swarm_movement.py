@@ -42,7 +42,7 @@ simulation_time = time.time()
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 
 N=1000
-rho_bar, sigma =10, 100
+rho_bar, sigma =0, 100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
