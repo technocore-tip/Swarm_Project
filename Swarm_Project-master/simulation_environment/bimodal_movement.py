@@ -12,13 +12,15 @@ Created on Sat Jan  4 10:34:38 2020
 @author:Rowel S Facunla
 """
 from graphics import *
-from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector
+from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance
+
 import time
+from line_plotter import AverageMeter, VisdomLinePlotter
 import threading
 import math
 from random import *
 import random
-import seaborn as sns
+
 import numpy as np
 from itertools import combinations
 
@@ -46,13 +48,13 @@ def bimodal_distribution(rho_bar1,sigma1,rho_bar2,sigma2,N,split1,split2):
             dist2.append(s)
 
     rho_k =dist1 +dist2
-    plt.hist(rho_k,30,density=True)
-    sns.distplot(rho_k, hist=False)
-    plt.show()
+    plotter.plot_histogram('Frequency','rho_k',trial_no+' Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k
+plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
+simulation_time = time.time()
 
-
+trial_no="BD1"
 N=1000
 mu=100
 times=pow(2,-8)
@@ -60,7 +62,7 @@ times=pow(2,-8)
 rho_bar1=100
 rho_bar2=300
 sigma1=0
-sigma2=120
+sigma2=0
 split1=0.5
 split2=0.5
 
@@ -81,15 +83,57 @@ pairwise_list = random.sample(particles, 2)
 
 step=0
 
-while(1): #replace with energy function
-    pairwise_list = random.sample(particles, 2)
-    robot_j = robots[pairwise_list[0][0]-1]
-    rho_j= pairwise_list[0][1]
-    robot_k= robots[pairwise_list[1][0]-1]
-    rho_kk = pairwise_list[1][1]
-    xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
-    robot_j.move(xj,yj)
-    #robot_k.move(xk,yk)
+rho_kmean =np.mean(rho_k)# second term of the energy function
+combination= (N*(N-1))/2
+U_knot=0 #Order Parameter
+U=0 #Order Parameter
+du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
+epsilon= pow(10,-6)
+
+Uma=list() #Order Parameter Running Average
+Uma.append(du) #Average List
+
+while((np.abs(du))>epsilon or (np.abs(np.mean(Uma)))>epsilon): 
+    objective_func = AverageMeter()
+    averageobjective_func= AverageMeter()
+    
+    if len(Uma)==32: #pop the oldest value of the running average
+        del Uma[0]
+    
+    interaction=1
+    plotter.plot('du/dt', 'U(t)',trial_no+' Objective Function',step, float(du))
+    plotter.plot('du/dt', 'U ma',trial_no+' Objective Function',step, float(np.mean(Uma)))
+    while(interaction!=combination):
+        print("Interaction : %d Step: %d",interaction,step)
+        pairwise_list = random.sample(particles, 2)
+        robot_j = robots[pairwise_list[0][0]-1]
+        rho_j= pairwise_list[0][1]
+        robot_k= robots[pairwise_list[1][0]-1]
+        rho_kk = pairwise_list[1][1]
+        xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
+        robot_j.move(xj,yj)
+        interaction = interaction+1
+        print("du/dt",du)
+    if step==0:
+        total_relativedist=total_relativedistance(robots,win,N)
+        averageinterparticledist= (1/combination)*total_relativedist
+        U_knot= averageinterparticledist- rho_kmean
+        U=U_knot
+        du=U
+        Uma.append(U) #average list
+    if step>0:
+        total_relativedist=total_relativedistance(robots,win,N)
+        averageinterparticledist= (1/combination)*total_relativedist
+        U= averageinterparticledist- rho_kmean
+        du=U-U_knot
+        U_knot=U
+        Uma.append(U) #average List
+    
+    step = step+1
+total_time = time.time()-simulation_time
+print("total runtime: " %d,total_time)
+
+        #robot_k.move(xk,yk)
     #for z in range(len(pairwise_list)):
     #    pairwise_list = random.sample(particles, 2)
     #    robot_j = robots[pairwise_list[0][0]-1]

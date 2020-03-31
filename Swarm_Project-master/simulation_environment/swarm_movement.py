@@ -9,6 +9,7 @@ Created on Wed Mar 11 12:49:18 2020
 from graphics import *
 from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance
 
+import time
 from line_plotter import AverageMeter, VisdomLinePlotter
 import threading
 import math
@@ -75,7 +76,7 @@ epsilon= pow(10,-6)
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
 
-while((np.abs(du))>epsilon or (np.abs(Uma))>epsilon): 
+while((np.abs(du))>epsilon or (np.abs(np.mean(Uma)))>epsilon): 
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
     
