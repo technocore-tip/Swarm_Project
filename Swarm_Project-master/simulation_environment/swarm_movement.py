@@ -68,7 +68,7 @@ U_knot=np.inf
 U=np.inf
 du=np.inf
 epsilon= pow(10,-3)
-while((np.abs(du))!=epsilon): 
+while((np.abs(du))<epsilon): 
     interaction=1
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
@@ -80,6 +80,7 @@ while((np.abs(du))!=epsilon):
         xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
         robot_j.move(xj,yj)
         interaction = interaction+1
+        print("du/dt",du)
     if step==0:
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
