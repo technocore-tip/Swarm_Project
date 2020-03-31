@@ -8,7 +8,8 @@ Created on Wed Mar 11 12:49:18 2020
 # -*- coding: utf-8 -*-
 from graphics import *
 from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance
-import time
+
+from line_plotter import AverageMeter, VisdomLinePlotter
 import threading
 import math
 from random import *
@@ -32,12 +33,13 @@ def normal_distribution(mu,sigma):
         s= np.random.normal(sigma,mu)
         if s >= 0:
             rho_k.append(s)
-    plt.hist(rho_k,30,density = True)
+  #  plt.hist(rho_k,30,density = True)
 
-    plt.show()
+    #plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k
 simulation_time = time.time()
+plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 
 N=1000
 rho_bar, sigma =0, 100
@@ -64,12 +66,14 @@ step=0
 
 rho_kmean =np.mean(rho_k)# second term of the energy function
 combination= (N*(N-1))/2
-U_knot=np.inf
-U=np.inf
-du=np.inf
+U_knot=0
+U=0
+du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
 epsilon= pow(10,-3)
 while((np.abs(du))>epsilon): 
+    objective_func = AverageMeter()
     interaction=1
+    plotter.plot('du/dt', 'Order Parameter', 'Objective Function',step, float(du))
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
         pairwise_list = random.sample(particles, 2)
@@ -97,6 +101,7 @@ while((np.abs(du))>epsilon):
     step = step+1
 total_time = time.time()-simulation_time
 print("total runtime: " %d,total_time)
+
         #robot_k.move(xk,yk)
     #for z in range(len(pairwise_list)):
     #    pairwise_list = random.sample(particles, 2)
