@@ -38,8 +38,9 @@ def normal_distribution(mu,sigma):
     #plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k
-simulation_time = time.time()
+
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
+simulation_time = time.time()
 
 N=1000
 rho_bar, sigma =0, 100
@@ -66,14 +67,23 @@ step=0
 
 rho_kmean =np.mean(rho_k)# second term of the energy function
 combination= (N*(N-1))/2
-U_knot=0
-U=0
+U_knot=0 #Order Parameter
+U=0 #Order Parameter
 du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
-epsilon= pow(10,-3)
+epsilon= pow(10,-6)
+
+Uma=list() #Order Parameter Running Average
+Uma.append(du) #Average List
 while((np.abs(du))>epsilon): 
     objective_func = AverageMeter()
+    averageobjective_func= AverageMeter()
+    
+    if len(Uma)==32: #pop the oldest value of the running average
+        del Uma[0]
+    
     interaction=1
-    plotter.plot('du/dt', 'Order Parameter U(t)', 'Objective Function',step, float(du))
+    plotter.plot('du/dt', 'U(t)', 'Objective Function',step, float(du))
+    plotter.plot('du/dt', 'U ma', 'Objective Function',step, float(np.mean(Uma)))
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
         pairwise_list = random.sample(particles, 2)
@@ -91,12 +101,14 @@ while((np.abs(du))>epsilon):
         U_knot= averageinterparticledist- rho_kmean
         U=U_knot
         du=U
+        Uma.append(U) #average list
     if step>0:
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U= averageinterparticledist- rho_kmean
         du=U-U_knot
         U_knot=U
+        Uma.append(U) #average List
     
     step = step+1
 total_time = time.time()-simulation_time
