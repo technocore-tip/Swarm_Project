@@ -34,7 +34,7 @@ def normal_distribution(mu,sigma):
         if s >= 0:
             rho_k.append(s)
   #  plt.hist(rho_k,30,density = True)
-
+    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     #plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k
@@ -42,7 +42,7 @@ simulation_time = time.time()
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 
 N=1000
-rho_bar, sigma =0, 100
+rho_bar, sigma =10, 100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)

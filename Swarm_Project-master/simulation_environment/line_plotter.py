@@ -24,6 +24,10 @@ class VisdomLinePlotter(object):
             ))
         else:
             self.viz.line(X=np.array([x]), Y=np.array([y]), env=self.env, win=self.plots[var_name], name=split_name, update = 'append')
+    def plot_histogram(self,var_name,split_name,title_name,x):
+        if var_name not in self.plots:
+            self.plots[var_name] = self.viz.histogram(X=x,env=self.env, opts=dict(title=title_name,xlabel='Particle Preferred Distance',ylabel=var_name,numbins=30))
+
 
 class AverageMeter(object):
     """Computes and stores the average and current value"""
