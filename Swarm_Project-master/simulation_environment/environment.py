@@ -57,7 +57,7 @@ def total_relativedistance(robots,win,N):
     y_total=0
     for j in range(N-1):
         for k in range(j+1,N,1):
-            x,y=distance_vector(robots[j].getCenter(),robots[k].getCenter*())
+            x,y=distance_vector(robots[j].getCenter(),robots[k].getCenter(),win)
             x_total +=x
             y_total+=y
     return distance_magnitude(x_total,y_total)
