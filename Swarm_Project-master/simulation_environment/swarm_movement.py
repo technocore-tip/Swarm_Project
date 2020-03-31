@@ -68,7 +68,7 @@ U_knot=np.inf
 U=np.inf
 du=np.inf
 epsilon= pow(10,-3)
-while((np.abs(du))<epsilon): 
+while((np.abs(du))>epsilon): 
     interaction=1
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
@@ -93,7 +93,7 @@ while((np.abs(du))<epsilon):
         du=U-U_knot
     
     step = step+1
-print("total runtime: " % (time.time() - simulation_time))
+    print("total runtime: " % (time.time() - simulation_time))
         #robot_k.move(xk,yk)
     #for z in range(len(pairwise_list)):
     #    pairwise_list = random.sample(particles, 2)
