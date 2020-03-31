@@ -74,7 +74,8 @@ epsilon= pow(10,-6)
 
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
-while((np.abs(du))>epsilon): 
+
+while((np.abs(du))>epsilon or (np.abs(Uma))>epsilon): 
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
     
