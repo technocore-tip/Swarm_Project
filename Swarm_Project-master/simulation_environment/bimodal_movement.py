@@ -30,24 +30,26 @@ def mt_shuffle():
     np.random.shuffle(pairwise_list)
 
 def bimodal_distribution(rho_bar1,sigma1,rho_bar2,sigma2,N,split1,split2):
+    start_time = time.time()
     dist1=list()
     dist2=list()
 
-        
+
     while(len(dist1)!=N*split1):
         s=np.random.normal(rho_bar1,sigma1)
         if s>=0:
             dist1.append(s)
-    
+
     while(len(dist2)!=N*split2):
         s=np.random.normal(rho_bar2,sigma2)
         if s>=0:
             dist2.append(s)
-    
+
     rho_k =dist1 +dist2
     plt.hist(rho_k,30,density=True)
     sns.distplot(rho_k, hist=False)
     plt.show()
+    print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k
 
 
@@ -58,7 +60,7 @@ times=pow(2,-8)
 rho_bar1=100
 rho_bar2=300
 sigma1=0
-sigma2=0
+sigma2=120
 split1=0.5
 split2=0.5
 

@@ -2,17 +2,12 @@
 """
 Created on Wed Mar 11 12:49:18 2020
 
-@author: Paul Vincent Nonat
+@author: Paul Vincent Nonat, :Rowel S Facunla
 """
 
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Jan  4 10:34:38 2020
-
-@author:Rowel S Facunla
-"""
 from graphics import *
-from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector
+from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance
 import time
 import threading
 import math
@@ -30,6 +25,7 @@ def mt_shuffle():
     np.random.shuffle(pairwise_list)
 
 def normal_distribution(mu,sigma):
+    start_time = time.time()
     rho_k=list()
     while (len(rho_k)!=N):
 
@@ -39,10 +35,12 @@ def normal_distribution(mu,sigma):
     plt.hist(rho_k,30,density = True)
 
     plt.show()
+    print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k
+simulation_time = time.time()
 
 N=1000
-rho_bar, sigma =10, 100
+rho_bar, sigma =0, 100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
@@ -64,15 +62,38 @@ pairwise_list = random.sample(particles, 2)
 
 step=0
 
-while(1): #replace with energy function
-    pairwise_list = random.sample(particles, 2)
-    robot_j = robots[pairwise_list[0][0]-1]
-    rho_j= pairwise_list[0][1]
-    robot_k= robots[pairwise_list[1][0]-1]
-    rho_kk = pairwise_list[1][1]
-    xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
-    robot_j.move(xj,yj)
-    #robot_k.move(xk,yk)
+rho_kmean =np.mean(rho_k)# second term of the energy function
+combination= (N*(N-1))/2
+U_knot=np.inf
+U=np.inf
+du=np.inf
+epsilon= pow(10,-3)
+while((np.abs(du))!=epsilon): 
+    interaction=1
+    while(interaction!=combination):
+        print("Interaction : %d Step: %d",interaction,step)
+        pairwise_list = random.sample(particles, 2)
+        robot_j = robots[pairwise_list[0][0]-1]
+        rho_j= pairwise_list[0][1]
+        robot_k= robots[pairwise_list[1][0]-1]
+        rho_kk = pairwise_list[1][1]
+        xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
+        robot_j.move(xj,yj)
+        interaction = interaction+1
+    if step==0:
+        total_relativedist=total_relativedistance(robots,win,N)
+        averageinterparticledist= (1/combination)*total_relativedist
+        U_knot= averageinterparticledist- rho_kmean
+        
+    if step>0:
+        total_relativedist=total_relativedistance(robots,win,N)
+        averageinterparticledist= (1/combination)*total_relativedist
+        U_knot= averageinterparticledist- rho_kmean
+        du=U-U_knot
+    
+    step = step+1
+print("total runtime: " % (time.time() - simulation_time))
+        #robot_k.move(xk,yk)
     #for z in range(len(pairwise_list)):
     #    pairwise_list = random.sample(particles, 2)
     #    robot_j = robots[pairwise_list[0][0]-1]

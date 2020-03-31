@@ -52,6 +52,15 @@ def distance_magnitude(x,y):
 	return math.sqrt((x*x)+(y*y))
 	pass
 
+def total_relativedistance(robots,win,N):
+    x_total=0
+    y_total=0
+    for j in range(N-1):
+        for k in range(j+1,N,1):
+            x,y=distance_vector(robots[j].getCenter(),robots[k].getCenter*())
+            x_total +=x
+            y_total+=y
+    return distance_magnitude(x_total,y_total)
 def relative_distance(robot,robots,win):#calculate relative distance of a robot to all other robots
 	x_total=0
 	y_total=0
