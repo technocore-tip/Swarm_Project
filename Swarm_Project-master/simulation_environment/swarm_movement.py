@@ -85,12 +85,14 @@ while((np.abs(du))>epsilon):
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U_knot= averageinterparticledist- rho_kmean
-        
+        U=U_knot
+        du=U
     if step>0:
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
-        U_knot= averageinterparticledist- rho_kmean
+        U= averageinterparticledist- rho_kmean
         du=U-U_knot
+        U_knot=U
     
     step = step+1
 total_time = time.time()-simulation_time
