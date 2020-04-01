@@ -97,7 +97,7 @@ while((np.abs(du))>epsilon or (np.abs(np.mean(Uma)))>epsilon):
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
     
-    if len(Uma)==32: #pop the oldest value of the running average
+    if len(Uma)>=32: #pop the oldest value of the running average
         del Uma[0]
     
     interaction=1
@@ -120,14 +120,14 @@ while((np.abs(du))>epsilon or (np.abs(np.mean(Uma)))>epsilon):
         U_knot= averageinterparticledist- rho_kmean
         U=U_knot
         du=U
-        Uma.append(U) #average list
+        Uma.append(du) #average list
     if step>0:
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U= averageinterparticledist- rho_kmean
         du=U-U_knot
         U_knot=U
-        Uma.append(U) #average List
+        Uma.append(du) #average List
     
     step = step+1
 total_time = time.time()-simulation_time
