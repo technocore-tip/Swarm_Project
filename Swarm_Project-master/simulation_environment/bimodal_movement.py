@@ -89,17 +89,18 @@ U_knot=0 #Order Parameter
 U=0 #Order Parameter
 du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
 U=du
-epsilon= pow(10,-5)
+epsilon= pow(10,-6)
 
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
 dUma=np.mean(Uma)
 Uma_knot=0
-while((np.abs(du))>epsilon or (np.abs(dUma))>epsilon): 
+while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon): 
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
     #previous Uma
     if len(Uma)==32: #pop the oldest value of the running average
+        dUma=np.mean(Uma)-Uma_knot
         del Uma[0]
     
     interaction=1
@@ -140,7 +141,6 @@ while((np.abs(du))>epsilon or (np.abs(dUma))>epsilon):
         Uma_knot=np.mean(Uma)
         Uma.append(U) #average List
     
-    dUma=np.mean(Uma)-Uma_knot
     step = step+1
 total_time = time.time()-simulation_time
 print("total runtime: " %d,total_time)
