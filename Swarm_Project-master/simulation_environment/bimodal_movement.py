@@ -88,21 +88,27 @@ combination= (N*(N-1))/2
 U_knot=0 #Order Parameter
 U=0 #Order Parameter
 du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
-epsilon= pow(10,-6)
+U=du
+epsilon= pow(10,-5)
 
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
-
-while((np.abs(du))>epsilon or (np.abs(np.mean(Uma)))>epsilon): 
+dUma=np.mean(Uma)
+Uma_knot=0
+while((np.abs(du))>epsilon or (np.abs(dUma))>epsilon): 
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
-    
-    if len(Uma)>=32: #pop the oldest value of the running average
+    #previous Uma
+    if len(Uma)==32: #pop the oldest value of the running average
         del Uma[0]
     
     interaction=1
-    plotter.plot('du/dt', 'U(t)',trial_no+' Objective Function',step, float(du))
-    plotter.plot('du/dt', 'U ma',trial_no+' Objective Function',step, float(np.mean(Uma)))
+    plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
+    plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
+
+    plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
+    plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
+    
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
         pairwise_list = random.sample(particles, 2)
@@ -120,18 +126,26 @@ while((np.abs(du))>epsilon or (np.abs(np.mean(Uma)))>epsilon):
         U_knot= averageinterparticledist- rho_kmean
         U=U_knot
         du=U
-        Uma.append(du) #average list
+        
+        Uma.append(U) #average list
+        Uma_knot=np.mean(Uma)
+        
     if step>0:
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U= averageinterparticledist- rho_kmean
         du=U-U_knot
+        
         U_knot=U
-        Uma.append(du) #average List
+        Uma_knot=np.mean(Uma)
+        Uma.append(U) #average List
     
+    dUma=np.mean(Uma)-Uma_knot
     step = step+1
 total_time = time.time()-simulation_time
 print("total runtime: " %d,total_time)
+
+
 
         #robot_k.move(xk,yk)
     #for z in range(len(pairwise_list)):

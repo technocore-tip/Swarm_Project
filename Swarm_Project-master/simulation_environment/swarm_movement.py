@@ -43,6 +43,8 @@ def normal_distribution(mu,sigma):
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
+trial_no="BD1"
+
 N=1000
 rho_bar, sigma =0, 100
 mu=100
@@ -71,21 +73,27 @@ combination= (N*(N-1))/2
 U_knot=0 #Order Parameter
 U=0 #Order Parameter
 du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
-epsilon= pow(10,-6)
+U=du
+epsilon= pow(10,-5)
 
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
-
-while((np.abs(du))>epsilon or (np.abs(np.mean(Uma)))>epsilon): 
+dUma=np.mean(Uma)
+Uma_knot=0
+while((np.abs(du))>epsilon or (np.abs(dUma))>epsilon): 
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
-    
+    #previous Uma
     if len(Uma)==32: #pop the oldest value of the running average
         del Uma[0]
     
     interaction=1
-    plotter.plot('du/dt', 'U(t)', 'Objective Function',step, float(du))
-    plotter.plot('du/dt', 'U ma', 'Objective Function',step, float(np.mean(Uma)))
+    plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
+    plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
+
+    plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
+    plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
+    
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
         pairwise_list = random.sample(particles, 2)
@@ -103,43 +111,22 @@ while((np.abs(du))>epsilon or (np.abs(np.mean(Uma)))>epsilon):
         U_knot= averageinterparticledist- rho_kmean
         U=U_knot
         du=U
+        
         Uma.append(U) #average list
+        Uma_knot=np.mean(Uma)
+        
     if step>0:
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U= averageinterparticledist- rho_kmean
         du=U-U_knot
+        
         U_knot=U
+        Uma_knot=np.mean(Uma)
         Uma.append(U) #average List
     
+    dUma=np.mean(Uma)-Uma_knot
     step = step+1
 total_time = time.time()-simulation_time
 print("total runtime: " %d,total_time)
 
-        #robot_k.move(xk,yk)
-    #for z in range(len(pairwise_list)):
-    #    pairwise_list = random.sample(particles, 2)
-    #    robot_j = robots[pairwise_list[0][0]-1]
-    #    rho_j= pairwise_list[0][1]
-    #    robot_k= robots[pairwise_list[1][0]-1]
-    #    rho_kk = pairwise_list[1][1]
-#        print(robots[pairwise_list[z][0][0]-1])
-#        print(robots[pairwise_list[z][1][0]-1])
-    #    xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
-        #time.sleep(100)
-        #robots[pairwise_list[z][0][0]-1].move(xj + win.getWidth()/2,(win.getHeight()/2) - yj) # move bot to new position
-        #robots[pairwise_list[z][1][0]-1].move(xk + win.getWidth()/2,(win.getHeight()/2) - yk)
-    #    robot_j.move(xj,yj) # move bot to new position
-    #    print(xj)
-    #    print(yj)
-        #robot_k.move(xk,yk)
-        #print(robots[pairwise_list[z][0][0]-1])
-        #print(robots[pairwise_list[z][1][0]-1])
-        #print("Interaction : %d Step: %d",z,step)
-        #print(z)
-        #print(pairwise_list[z])
-        #robots[pairwise_list[0][0]-1] = Circle(Point(x_newj+xj,y_newj+yj),2)
-        #robots[pairwise_list[1][0]-1] = Circle(Point(x_newk+xk,y_newk+yk),2)
-    #win.getMouse()
-    #mt_shuffle()
-    #step=1
