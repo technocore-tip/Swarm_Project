@@ -52,7 +52,7 @@ def distance_magnitude(x,y):
 	return math.sqrt((x*x)+(y*y))
 	pass
 
-def total_relativedistance(robots,win,N):
+def total_relativedistance(robots,win,N): # for energy function
     x_total=0
     y_total=0
     for j in range(N-1):
@@ -61,6 +61,7 @@ def total_relativedistance(robots,win,N):
             x_total +=x
             y_total+=y
     return distance_magnitude(x_total,y_total)
+
 def relative_distance(robot,robots,win):#calculate relative distance of a robot to all other robots
 	x_total=0
 	y_total=0
@@ -71,61 +72,156 @@ def relative_distance(robot,robots,win):#calculate relative distance of a robot 
 		pass
 	return x_total,y_total
 
-def update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win):
+def get_nearbybots(robot_j,robots,win,xrj,yrj,theta,beta):
+    relative_dist=np.zeros((len(robots),4))
+    
+    i=0 
+    near_robotlist=list()
+    delta_r=distance_magnitude(xrj,yrj)
+    for r in robots:
+        relative_dist[i][0],relative_dist[i][1]= distance_vector(robot_j.getCenter(),r.getCenter(),win)
+        relative_dist[i][2] = distance_magnitude(relative_dist[i][0],relative_dist[i][1])-8 # 4 is the diameter of the bot
+              
+        relative_dist[i][3]= calculate_angle(relative_dist[i][0],relative_dist[i][1])    #relative_dist[i][3] phi    
+        
+        if relative_dist[i][2] <= delta_r and ((theta-beta >= relative_dist[i][3]) and (theta+beta <= relative_dist[i][3])):
+            near_robotlist.append(i)
+        i = i+1
+    
+    
+    if len(near_robotlist)==0: 
+        return xrj, yrj
+    
+    z=0
+    if len(near_robotlist)>1:
+        for k in range(len(near_robotlist)):
+            if k==0:
+                temp=np.abs(theta-relative_dist[near_robotlist[k]][3])
+                z=k
+            if k>0:
+                if np.abs(theta-relative_dist[near_robotlist[k]][3])<=temp:
+                    temp=np.abs(theta-relative_dist[near_robotlist[k]][3])
+                    z=k
+        return relative_dist[near_robotlist[z]][2]*np.cos(relative_dist[near_robotlist[z]][3]),relative_dist[near_robotlist[z]][2]*np.sin(relative_dist[near_robotlist[z]][3])
+    
+    
+    if len(near_robotlist)==1:
+        return relative_dist[near_robotlist[0]][2]*np.cos(relative_dist[near_robotlist[0]][3]),relative_dist[near_robotlist[0]][2]*np.sin(relative_dist[near_robotlist[0]][3])
+    
+
+def calculate_angle(x_p,y_p):
+    if x_p == 0 and y_p == 0: #1
+        slope = 0
+        theta= np.arctan(slope)
+    if x_p >0 and y_p==0: #2
+        theta=np.arctan(0)
+    
+    if x_p>0 and y_p>0: #3
+        slope= np.abs(y_p/x_p)
+        theta =np.arctan(slope)
+    if x_p==0 and y_p>0: #4
+        theta = (np.pi)/2
+    if x_p < 0 and y_p > 0: #5
+        slope= np.abs(y_p/x_p)      
+        theta = np.pi - np.arctan(slope)
+    if x_p < 0 and y_p ==0: #6
+        theta = np.pi
+    if x_p < 0 and y_p < 0: #7
+        slope= np.abs(y_p/x_p)    
+        theta = np.pi + np.arctan(slope)
+    if x_p == 0 and y_p < 0: #8
+        theta = (3*np.pi)/2
+    if x_p > 0 and y_p < 0:
+        slope= np.abs(y_p/x_p)
+        theta = (2*np.pi) - np.arctan(slope)
+    
+    return theta
+
+def update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win,robots):
     x_p,y_p= distance_vector(robot_j.getCenter(),robot_k.getCenter(),win) #xj-xk , yj-yk
     pdist = distance_magnitude(x_p,y_p) # |rj - rk|
+    theta= calculate_angle(x_p,y_p)
     #print("distance_vector")
     #print(x_p)
     #print(y_p)
     #print("Distance Magnitude")
     #print(pdist)
-    
-    if x_p == 0 and y_p == 0:
-        slope = 0
-    else:
-        slope = np.abs(y_p/x_p)
-    if x_p < 0 and y_p > 0:
-        theta = np.pi - np.arctan(slope)
-    elif x_p < 0 and y_p < 0:
-        theta = np.pi + np.arctan(slope)
-    elif x_p > 0 and y_p < 0:
-        theta = (2*np.pi) - np.arctan(slope)
-    elif x_p == 0 and y_p < 0:
-        theta = (3*np.pi)/2
-    elif x_p < 0 and y_p == 0:
-       theta = np.pi
-    else:
-        theta= np.arctan(slope)
+#    if x_p == 0 and y_p == 0: #1
+#        slope = 0
+#        theta= np.arctan(slope)
+#    if x_p >0 and y_p==0: #2
+#        theta=np.arctan(0)
+#        
+#    if x_p>0 and y_p>0: #3
+#        slope= np.abs(y_p/x_p)
+#        theta =np.arctan(slope)
+#    if x_p==0 and y_p>0: #4
+#        theta = (np.pi)/2
+#    if x_p < 0 and y_p > 0: #5
+#        slope= np.abs(y_p/x_p)      
+#        theta = np.pi - np.arctan(slope)
+#    if x_p < 0 and y_p ==0: #6
+#        theta = np.pi
+#    if x_p < 0 and y_p < 0: #7
+#        slope= np.abs(y_p/x_p)    
+#        theta = np.pi + np.arctan(slope)
+#    if x_p == 0 and y_p < 0: #8
+#        theta = (3*np.pi)/2
+#    if x_p > 0 and y_p < 0:
+#        slope= np.abs(y_p/x_p)
+#        theta = (2*np.pi) - np.arctan(slope)
+        
+
+#    if x_p == 0 and y_p == 0: #1
+#        slope = 0
+#    else:
+#        slope = np.abs(y_p/x_p)
+#    if x_p < 0 and y_p > 0:
+#        theta = np.pi - np.arctan(slope)
+#    elif x_p < 0 and y_p < 0:
+#        theta = np.pi + np.arctan(slope)
+#    elif x_p > 0 and y_p < 0:
+#        theta = (2*np.pi) - np.arctan(slope)
+#    elif x_p == 0 and y_p < 0:
+#        theta = (3*np.pi)/2
+#    elif x_p < 0 and y_p == 0:
+#       theta = np.pi
+#    else:
+#        theta= np.arctan(slope)
+
+        
     deg = theta*180/np.pi
+    
     print(x_p, y_p, deg)
 	#theta= np.arctan(y_p/x_p)
 	#    print("J particle movement")
     xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
     yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
+    xrj,yrj=get_nearbybots(robot_j,robots,win,xrj,yrj,theta,(45*np.pi/180))
     	#    print("K particle movement")
-    xrk = -mu*np.cos(theta)*math.tanh(pdist-rho_k)*times
-    yrk = -mu*np.sin(theta)*math.tanh(pdist-rho_k)*times
+    #xrk = -mu*np.cos(theta)*math.tanh(pdist-rho_k)*times
+    #yrk = -mu*np.sin(theta)*math.tanh(pdist-rho_k)*times
     
     #    print("J Previous Pos")
-    xj,yj= position_vector(robot_j.getCenter(),win)  #update position vectors
+    #xj,yj= position_vector(robot_j.getCenter(),win)  #update position vectors
     	#    print(xj)
     	#    print(yj)
     	#    print("J new Pos")
-    xj= xj + xrj
-    yj = yj + yrj
+    #xj= xj + xrj
+    #yj = yj + yrj
     	#    print(xj)
     	#    print(yj)
     	#
     	#    print("K Previous Pos")
-    xk,yk= position_vector(robot_k.getCenter(),win)  #update position vectors
+    #xk,yk= position_vector(robot_k.getCenter(),win)  #update position vectors
     	#    print(xk)
     	#    print(yk)
-    xk=  xk
-    yk =  yk
+    #xk=  xk
+    #yk =  yk
     #    print("K new Pos")
     #    print(xk)
     #    print(yk)
-    return xrj,yrj,xrk,yrk,xj,yj,xk,yk
+    return xrj,yrj#,xrk,yrk,xj,yj,xk,yk
 	#calculate the pairwise distance
 
 

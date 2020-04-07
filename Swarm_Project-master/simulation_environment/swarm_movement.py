@@ -45,7 +45,7 @@ simulation_time = time.time()
 
 trial_no="BD1"
 
-N=1000
+N=100
 rho_bar, sigma =0, 100
 mu=100
 l=5*rho_bar
@@ -86,6 +86,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
     #previous Uma
     if len(Uma)==32: #pop the oldest value of the running average
         dUma=np.mean(Uma)-Uma_knot
+        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
         del Uma[0]
     
     interaction=1
@@ -93,7 +94,6 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
     plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
 
     plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
-    plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
     
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
@@ -102,7 +102,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         rho_j= pairwise_list[0][1]
         robot_k= robots[pairwise_list[1][0]-1]
         rho_kk = pairwise_list[1][1]
-        xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
+        xj,yj=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win,robots)
         robot_j.move(xj,yj)
         interaction = interaction+1
         print("du/dt",du)
@@ -112,7 +112,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         U_knot= averageinterparticledist- rho_kmean
         U=U_knot
         du=U
-        
+        #xk,yk,x_newj,y_newj,x_newk,y_newk
         Uma.append(U) #average list
         Uma_knot=np.mean(Uma)
         

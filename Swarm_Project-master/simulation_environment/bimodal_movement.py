@@ -101,6 +101,8 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
     #previous Uma
     if len(Uma)==32: #pop the oldest value of the running average
         dUma=np.mean(Uma)-Uma_knot
+        Uma_knot = np.mean(Uma)
+        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
         del Uma[0]
     
     interaction=1
@@ -108,7 +110,6 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
     plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
 
     plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
-    plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
     
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
@@ -117,7 +118,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         rho_j= pairwise_list[0][1]
         robot_k= robots[pairwise_list[1][0]-1]
         rho_kk = pairwise_list[1][1]
-        xj,yj,xk,yk,x_newj,y_newj,x_newk,y_newk=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win)
+        xj,yj=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win,robots)
         robot_j.move(xj,yj)
         interaction = interaction+1
         print("du/dt",du)
@@ -129,7 +130,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         du=U
         
         Uma.append(U) #average list
-        Uma_knot=np.mean(Uma)
+        #Uma_knot=np.mean(Uma)
         
     if step>0:
         total_relativedist=total_relativedistance(robots,win,N)
@@ -138,7 +139,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         du=U-U_knot
         
         U_knot=U
-        Uma_knot=np.mean(Uma)
+        #Uma_knot=np.mean(Uma)
         Uma.append(U) #average List
     
     step = step+1
