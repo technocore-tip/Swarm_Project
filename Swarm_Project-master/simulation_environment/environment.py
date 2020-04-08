@@ -197,7 +197,7 @@ def update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win,robots):
 	#    print("J particle movement")
     xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
     yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
-    xrj,yrj=get_nearbybots(robot_j,robots,win,xrj,yrj,theta,(45*np.pi/180))
+    #xrj,yrj=get_nearbybots(robot_j,robots,win,xrj,yrj,theta,(45*np.pi/180))
     	#    print("K particle movement")
     #xrk = -mu*np.cos(theta)*math.tanh(pdist-rho_k)*times
     #yrk = -mu*np.sin(theta)*math.tanh(pdist-rho_k)*times

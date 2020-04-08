@@ -49,7 +49,7 @@ N=100
 rho_bar, sigma =0, 100
 mu=100
 l=5*rho_bar
-times=pow(2,-8)
+times=pow(2,-3)
 
 rho_k = normal_distribution(rho_bar,sigma)
 particles=list()
