@@ -128,5 +128,5 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
     
     step = step+1
 total_time = time.time()-simulation_time
-print("total runtime: " %d,total_time)
-
+print("total runtime: %d ",total_time)
+win.getMouse() #blocking call
