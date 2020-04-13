@@ -49,7 +49,7 @@ N=100
 rho_bar, sigma =0, 100
 mu=100
 l=5*rho_bar
-times=pow(2,-3)
+times=pow(2,-8)
 
 rho_k = normal_distribution(rho_bar,sigma)
 particles=list()
@@ -74,7 +74,7 @@ U_knot=0 #Order Parameter
 U=0 #Order Parameter
 du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
 U=du
-epsilon= pow(10,-6)
+epsilon= pow(9,-5)
 
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
@@ -84,10 +84,6 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
     #previous Uma
-    if len(Uma)==32: #pop the oldest value of the running average
-        dUma=np.mean(Uma)-Uma_knot
-        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
-        del Uma[0]
     
     interaction=1
     plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
@@ -125,8 +121,14 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         U_knot=U
         Uma_knot=np.mean(Uma)
         Uma.append(U) #average List
+
+    if len(Uma)==32: #pop the oldest value of the running average
+        dUma=np.mean(Uma)-Uma_knot
+        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
+        del Uma[0]
     
     step = step+1
+    
 total_time = time.time()-simulation_time
 print("total runtime: %d ",total_time)
 win.getMouse() #blocking call

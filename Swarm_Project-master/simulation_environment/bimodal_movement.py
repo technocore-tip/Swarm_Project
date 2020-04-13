@@ -54,15 +54,15 @@ def bimodal_distribution(rho_bar1,sigma1,rho_bar2,sigma2,N,split1,split2):
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="BD11"
+trial_no="BD24"
 N=1000
 mu=100
 times=pow(2,-8)
 
 rho_bar1=100
 rho_bar2=300
-sigma1=0
-sigma2=150
+sigma1=30
+sigma2=90
 split1=0.5
 split2=0.5
 
@@ -89,7 +89,7 @@ U_knot=0 #Order Parameter
 U=0 #Order Parameter
 du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
 U=du
-epsilon= pow(10,-3)
+epsilon= pow(9,-5)
 
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
@@ -99,11 +99,6 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
     #previous Uma
-    if len(Uma)==32: #pop the oldest value of the running average
-        dUma=np.mean(Uma)-Uma_knot
-        Uma_knot = np.mean(Uma)
-        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
-        del Uma[0]
     
     interaction=1
     plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
@@ -128,9 +123,9 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         U_knot= averageinterparticledist- rho_kmean
         U=U_knot
         du=U
-        
+        #xk,yk,x_newj,y_newj,x_newk,y_newk
         Uma.append(U) #average list
-        #Uma_knot=np.mean(Uma)
+        Uma_knot=np.mean(Uma)
         
     if step>0:
         total_relativedist=total_relativedistance(robots,win,N)
@@ -139,12 +134,20 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         du=U-U_knot
         
         U_knot=U
-        #Uma_knot=np.mean(Uma)
+        Uma_knot=np.mean(Uma)
         Uma.append(U) #average List
+
+    if len(Uma)==32: #pop the oldest value of the running average
+        dUma=np.mean(Uma)-Uma_knot
+        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
+        del Uma[0]
     
     step = step+1
+    
 total_time = time.time()-simulation_time
-print("total runtime: " %d,total_time)
+print("total runtime: %d ",total_time)
+win.getMouse() #blocking call
+
 
 
 
