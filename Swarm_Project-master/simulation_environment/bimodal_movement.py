@@ -54,7 +54,7 @@ def bimodal_distribution(rho_bar1,sigma1,rho_bar2,sigma2,N,split1,split2):
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="BD24"
+trial_no="BD23"
 N=1000
 mu=100
 times=pow(2,-8)
@@ -62,7 +62,7 @@ times=pow(2,-8)
 rho_bar1=100
 rho_bar2=300
 sigma1=30
-sigma2=90
+sigma2=60
 split1=0.5
 split2=0.5
 
@@ -89,7 +89,7 @@ U_knot=0 #Order Parameter
 U=0 #Order Parameter
 du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
 U=du
-epsilon= pow(9,-5)
+epsilon= pow(9,-4)
 
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
