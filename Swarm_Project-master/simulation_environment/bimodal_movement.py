@@ -89,7 +89,7 @@ U_knot=0 #Order Parameter
 U=0 #Order Parameter
 du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
 U=du
-epsilon= pow(9,-4)
+epsilon= pow(9,-5)
 
 Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
