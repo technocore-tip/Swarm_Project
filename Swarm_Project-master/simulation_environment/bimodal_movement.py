@@ -62,7 +62,7 @@ times=pow(2,-8)
 rho_bar1=100
 rho_bar2=300
 sigma1=20
-sigma2=90
+sigma2=120
 split1=0.5
 split2=0.5
 
