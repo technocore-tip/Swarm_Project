@@ -54,15 +54,15 @@ def bimodal_distribution(rho_bar1,sigma1,rho_bar2,sigma2,N,split1,split2):
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="BD20"
+trial_no="BD16"
 N=1000
 mu=100
 times=pow(2,-8)
 
 rho_bar1=100
 rho_bar2=300
-sigma1=20
-sigma2=120
+sigma1=10
+sigma2=150
 split1=0.5
 split2=0.5
 
