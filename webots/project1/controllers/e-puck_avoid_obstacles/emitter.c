@@ -29,8 +29,11 @@
 #include <webots/motor.h>
 #include <webots/nodes.h>
 #include <webots/robot.h>
+#include <webots/emitter.h>
 
+int wb_emitter_send(WbDeviceTag tag, const void *data, int size);
 /* Device stuff */
+static WbDeviceTag tag
 #define DISTANCE_SENSORS_NUMBER 8
 static WbDeviceTag distance_sensors[DISTANCE_SENSORS_NUMBER];
 static double distance_sensors_values[DISTANCE_SENSORS_NUMBER];
@@ -194,7 +197,9 @@ static void turn_left() {
 
 int main(int argc, char **argv) {
   wb_robot_init();
-
+  char message[128];
+sprintf(message, "hello%d", i);
+wb_emitter_send(tag, message, strlen(message) + 1);
   printf("Default controller of the e-puck robot started...\n");
 
   init_devices();

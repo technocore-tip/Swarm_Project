@@ -29,7 +29,9 @@
 #include <webots/motor.h>
 #include <webots/nodes.h>
 #include <webots/robot.h>
+#include <webots/emitter.h>
 
+int wb_emitter_send(WbDeviceTag tag, const void *data, int size);
 /* Device stuff */
 #define DISTANCE_SENSORS_NUMBER 8
 static WbDeviceTag distance_sensors[DISTANCE_SENSORS_NUMBER];
@@ -46,7 +48,7 @@ static WbDeviceTag leds[LEDS_NUMBER];
 static bool leds_values[LEDS_NUMBER];
 static const char *leds_names[LEDS_NUMBER] = {"led0", "led1", "led2", "led3", "led4", "led5", "led6", "led7", "led8", "led9"};
 
-static WbDeviceTag left_motor, right_motor;
+static WbDeviceTag left_motor, right_motor,emitters;
 
 #define LEFT 0
 #define RIGHT 1
@@ -108,6 +110,7 @@ static void init_devices() {
   // get a handler to the motors and set target position to infinity (speed control).
   left_motor = wb_robot_get_device("left wheel motor");
   right_motor = wb_robot_get_device("right wheel motor");
+  emitters = wb_robot_get_device("emitter");
   wb_motor_set_position(left_motor, INFINITY);
   wb_motor_set_position(right_motor, INFINITY);
   wb_motor_set_velocity(left_motor, 0.0);
@@ -115,7 +118,6 @@ static void init_devices() {
 
   step();
 }
-
 static void reset_actuator_values() {
   int i;
   for (i = 0; i < 2; i++)
@@ -192,24 +194,32 @@ static void turn_left() {
   passive_wait(0.2);
 }
 
+static void send_message(){
+  char message[128];
+    sprintf(message, "node%d", 1);
+    wb_emitter_send(emitters, message, strlen(message) + 1);
+    printf(message);
+passive_wait(0.2);
+}
 int main(int argc, char **argv) {
   wb_robot_init();
-
   printf("Default controller of the e-puck robot started...\n");
 
   init_devices();
 
   while (true) {
-    reset_actuator_values();
-    get_sensor_input();
-    blink_leds();
-    if (cliff_detected()) {
-      go_backwards();
-      turn_left();
-    } else {
-      run_braitenberg();
-    }
-    set_actuators();
+    send_message();
+    // reset_actuator_values();
+    // get_sensor_input();
+    // blink_leds();
+    
+    // if (cliff_detected()) {
+      // go_backwards();
+      // turn_left();
+    // } else {
+      // run_braitenberg();
+    // }
+    // set_actuators();
     step();
   };
 

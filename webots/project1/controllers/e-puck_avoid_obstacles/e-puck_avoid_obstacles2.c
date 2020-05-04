@@ -29,7 +29,9 @@
 #include <webots/motor.h>
 #include <webots/nodes.h>
 #include <webots/robot.h>
+#include <webots/emitter.h>
 
+int wb_emitter_send(WbDeviceTag tag, const void *data, int size);
 /* Device stuff */
 #define DISTANCE_SENSORS_NUMBER 8
 static WbDeviceTag distance_sensors[DISTANCE_SENSORS_NUMBER];
@@ -46,7 +48,7 @@ static WbDeviceTag leds[LEDS_NUMBER];
 static bool leds_values[LEDS_NUMBER];
 static const char *leds_names[LEDS_NUMBER] = {"led0", "led1", "led2", "led3", "led4", "led5", "led6", "led7", "led8", "led9"};
 
-static WbDeviceTag left_motor, right_motor;
+static WbDeviceTag left_motor, right_motor,emitters;
 
 #define LEFT 0
 #define RIGHT 1
@@ -108,11 +110,12 @@ static void init_devices() {
   // get a handler to the motors and set target position to infinity (speed control).
   left_motor = wb_robot_get_device("left wheel motor");
   right_motor = wb_robot_get_device("right wheel motor");
+  emitters = wb_robot_get_device("emitter");
   wb_motor_set_position(left_motor, INFINITY);
   wb_motor_set_position(right_motor, INFINITY);
   wb_motor_set_velocity(left_motor, 0.0);
   wb_motor_set_velocity(right_motor, 0.0);
-
+	
   step();
 }
 
@@ -194,7 +197,9 @@ static void turn_left() {
 
 int main(int argc, char **argv) {
   wb_robot_init();
-
+  char message[128];
+sprintf(message, "hello%d", i);
+wb_emitter_send(emitters, message, strlen(message) + 1);
   printf("Default controller of the e-puck robot started...\n");
 
   init_devices();
