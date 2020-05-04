@@ -1,0 +1,120 @@
+#VRML_SIM R2020a utf8
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.6351020342581937 -0.7383995036052166 -0.22674121627237104 0.9268742913885563
+  position -2.973202294359278 2.9767212590421117 2.842798793299823
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+WoodenBox {
+  translation -0.24000005855726841 0.09960778634615838 0.43999994144273136
+  rotation 0.7071067812102969 2.768466536191954e-13 -0.7071067811627982 -8.551669458603748e-07
+  size 0.2 0.2 0.2
+  mass 1
+}
+WoodenBox {
+  translation -0.1800302501734519 0.09960757893096123 -0.36000150000048026
+  rotation 0.06899658047326092 0.8235017077738654 -0.5631024855002186 -0.00011781331876258723
+  name "wooden box(1)"
+  size 0.2 0.2 0.2
+  mass 1
+}
+WoodenBox {
+  translation 0.39 0.289608 0.0599999
+  rotation -0.7071067811497713 1.2380797342366117e-11 0.7071067812233237 8.55166945849667e-07
+  name "wooden box(2)"
+  size 0.2 0.2 0.2
+  mass 1
+}
+E-puck {
+  translation -0.03624890014344827 -6.429615296365751e-05 0.20229969290253882
+  rotation 9.419024068354573e-05 0.9999997087180004 0.0007574246582970642 -2.7420686407639274
+  controller "front_commandpython"
+}
+Floor {
+  size 2 2
+}
+Solid {
+  translation 0.34 0.32 -0.49
+  children [
+    DEF ball Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0
+        roughness 1
+        metalness 0
+      }
+      geometry Sphere {
+        radius 0.12
+        subdivision 2
+      }
+    }
+  ]
+  boundingObject USE ball
+  physics Physics {
+  }
+}
+Solid {
+  translation 0 0.32 -0.14
+  children [
+    DEF ball Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0
+        roughness 1
+        metalness 0
+      }
+      geometry Sphere {
+        radius 0.12
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject USE ball
+  physics Physics {
+  }
+}
+Solid {
+  translation 0 0.05 1
+  children [
+    DEF Wall Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "textures/red_brick_wall.jpg"
+          ]
+        }
+        metalness 0
+      }
+      geometry Box {
+        size 2 0.1 0.05
+      }
+    }
+  ]
+  name "solid(2)"
+}
+Solid {
+  translation 0 0.05 -1
+  children [
+    USE Wall
+  ]
+  name "solid(3)"
+}
+Solid {
+  translation 1 0.05 0
+  rotation 0 1 0 1.5708
+  children [
+    USE Wall
+  ]
+  name "solid(4)"
+}
+Solid {
+  translation -1 0.05 0
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    USE Wall
+  ]
+  name "solid(5)"
+}
