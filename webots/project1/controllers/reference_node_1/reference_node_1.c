@@ -52,10 +52,10 @@ passive_wait(0.2);
 
 int main(int argc, char **argv) {
   wb_robot_init();
-  printf("Initializing Receiver Node 3 loc (1,1,0)\n");
+  printf("Initializing Receiver Node 1 loc (1,1,0)\n");
   init_devices();
   int channel=wb_receiver_get_channel(tag);
-  //printf("channel: %d\n",channel);
+ // printf("channel: %d\n",channel);
 
 while (true)
 {
@@ -74,10 +74,10 @@ while (true)
     sprintf(temp, "%f", signal);
     strcat(signal_streng," ");
     strcat(signal_streng,temp);
-   // printf("next packet\n");
+  //  printf("next packet\n");
   }
  // printf("all signal: %s \n",signal_streng);
- // printf("packet complete\n");
+  //printf("packet complete\n");
   send_message(signal_streng);
   passive_wait(0.2);
   memset(signal_streng, 0, 150);
