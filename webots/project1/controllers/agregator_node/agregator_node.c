@@ -52,15 +52,15 @@ passive_wait(0.2);
 
 int main(int argc, char **argv) {
   wb_robot_init();
-  printf("Initializing Receiver Node 3 loc (1,1,0)\n");
+  printf("Initializing Receiver Node 3 loc (-1,-1,0)\n");
   init_devices();
   int channel=wb_receiver_get_channel(tag);
-  //printf("channel: %d\n",channel);
+  printf("channel: %d\n",channel);
 
 while (true)
 {
-  char signal_streng[150]="ref_node1: ";
-  char temp[9] =" ";
+  //char signal_streng[150]="ref_node4: ";
+  //char temp[9] =" ";
   //signal_strength="a";
   while (wb_receiver_get_queue_length(tag) > 0) 
   {
@@ -68,20 +68,20 @@ while (true)
     const char *message = wb_receiver_get_data(tag);
     const double *dir = wb_receiver_get_emitter_direction(tag);
     double signal = wb_receiver_get_signal_strength(tag);
-    //printf("reference_node3: %s (signal=%g, dir=[%g %g %g])\n",
-    //       message, signal, dir[0], dir[1], dir[2]);
+    printf("agregator_node (dBm): %s (signal=%g, dir=[%g %g %g])\n",
+           message, signal, dir[0], dir[1], dir[2]);
     wb_receiver_next_packet(tag);
-    sprintf(temp, "%f", signal);
-    strcat(signal_streng," ");
-    strcat(signal_streng,temp);
-   // printf("next packet\n");
+    //sprintf(temp, "%f", signal);
+    //strcat(signal_streng," ");
+    //strcat(signal_streng,temp);
+    printf("next packet\n");
   }
- // printf("all signal: %s \n",signal_streng);
- // printf("packet complete\n");
-  send_message(signal_streng);
+  //printf("all signal: %s \n",signal_streng);
+  printf("packet complete\n");
+  //send_message(signal_streng);
   passive_wait(0.2);
-  memset(signal_streng, 0, 150);
-  memset(temp, 0,9);
+  //memset(signal_streng, 0, 150);
+  //memset(temp, 0,9);
       step();
 };
 
