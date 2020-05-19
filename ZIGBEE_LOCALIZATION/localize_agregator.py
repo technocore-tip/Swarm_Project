@@ -7,7 +7,7 @@ Created on Fri May 15 11:26:38 2020
 import numpy as np
 
 RSSI_strings=np.empty(4, dtype='object')
-
+RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
 message ="ref-node1:node1_0.100575 node2_0.109614 node3_0.123614"
 
 if message.find("ref-node1:",0,10) !=-1: #spit the transmitted message from reference node

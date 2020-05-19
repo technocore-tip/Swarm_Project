@@ -12,6 +12,7 @@ message=list()
 message_counter=0
 while robot.step(timestep) != -1:	 
 	RSSI_strings=np.empty(4, dtype='object')
+	RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
 	if receiver.getQueueLength() > 0 and message_counter!=4:
 		message = receiver.getData().decode('utf-8')
 		print(message)
