@@ -209,17 +209,17 @@ int main(int argc, char **argv) {
 
   while (true) {
     send_message();
-    // reset_actuator_values();
-    // get_sensor_input();
-    // blink_leds();
+     reset_actuator_values();
+     get_sensor_input();
+     blink_leds();
     
-    // if (cliff_detected()) {
-      // go_backwards();
-      // turn_left();
-    // } else {
-      // run_braitenberg();
-    // }
-    // set_actuators();
+     if (cliff_detected()) {
+       go_backwards();
+       turn_left();
+     } else {
+       run_braitenberg();
+     }
+     set_actuators();
     step();
   };
 

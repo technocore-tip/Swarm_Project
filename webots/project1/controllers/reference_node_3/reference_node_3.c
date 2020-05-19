@@ -46,7 +46,7 @@ static void send_message(char *signal_strength){
   //char message[128];
   //sprintf(message, "node%d", 2);
     wb_emitter_send(emitters, signal_strength, strlen(signal_strength) + 1);
-    printf("%s\n",signal_strength);
+//    printf("%s\n",signal_strength);
 passive_wait(0.2);
 }
 
