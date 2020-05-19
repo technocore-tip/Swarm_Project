@@ -196,7 +196,7 @@ static void turn_left() {
 
 static void send_message(){
   char message[128];
-    sprintf(message, "node%d", 1);
+    sprintf(message, "node%d_", 1);
     wb_emitter_send(emitters, message, strlen(message) + 1);
     printf(message);
 passive_wait(0.2);

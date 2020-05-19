@@ -68,12 +68,14 @@ while (true)
     const char *message = wb_receiver_get_data(tag);
     const double *dir = wb_receiver_get_emitter_direction(tag);
     double signal = wb_receiver_get_signal_strength(tag);
-    //printf("reference_node1: %s (signal=%g, dir=[%g %g %g])\n",
-    //       message, signal, dir[0], dir[1], dir[2]);
+ //   printf("reference_node1: %s (signal=%g, dir=[%g %g %g])\n",
+ //          message, signal, dir[0], dir[1], dir[2]);
     wb_receiver_next_packet(tag);
     sprintf(temp, "%f", signal);
-    strcat(signal_streng," ");
+    strcat(signal_streng,message);
     strcat(signal_streng,temp);
+    strcat(signal_streng," ");
+    //strcat(signal_streng,temp);
   //  printf("next packet\n");
   }
   //printf("all signal: %s \n",signal_streng);
