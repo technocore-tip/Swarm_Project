@@ -30,6 +30,7 @@ while robot.step(timestep) != -1:
 			message_counter+=1
 		receiver.nextPacket()
 	print("DONE")
+	print(message_counter)
 	if message_counter ==4:
 		print(RSSI_strings)
 		for x in range(RSSI_strings.size):
