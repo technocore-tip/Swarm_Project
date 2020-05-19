@@ -8,7 +8,7 @@ timestep =10
 receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
-
+z=10
 message_counter=0
 RSSI_strings=np.empty(4, dtype='object')
 RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
@@ -48,10 +48,11 @@ while robot.step(timestep) != -1:
 	#print(RSSI_strings[0])
 	# print(len(RSSI_strings[0]))
 	if len(RSSI_strings[0]) > 1:
-		del RSSI_strings[0][len(RSSI_strings[0])-1]
-		del RSSI_strings[1][len(RSSI_strings[1])-1]
-		del RSSI_strings[2][len(RSSI_strings[2])-1]
-		del RSSI_strings[3][len(RSSI_strings[3])-1]
+		for i in range(z):
+			del RSSI_strings[0][len(RSSI_strings[0])-1]
+			del RSSI_strings[1][len(RSSI_strings[1])-1]
+			del RSSI_strings[2][len(RSSI_strings[2])-1]
+			del RSSI_strings[3][len(RSSI_strings[3])-1]
 		message_counter=0
 		# print(RSSI_strings)
 		for x in range(RSSI_strings.size):
