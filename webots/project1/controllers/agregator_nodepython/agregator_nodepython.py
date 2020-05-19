@@ -30,6 +30,7 @@ while robot.step(timestep) != -1:
 			message_counter+=1
 		receiver.nextPacket()
 	print("DONE")
+	print(RSSI_strings)
 	for x in range(RSSI_strings.size):
 		for y in range(len(RSSI_strings[x])):
 			RSSI_strings[x][y]=RSSI_strings[x][y].split("_",-1) #split the RSSI values from their respective node no.
