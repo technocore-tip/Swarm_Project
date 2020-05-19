@@ -8,7 +8,7 @@ timestep =60
 receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
-message=list()
+
 message_counter=0
 while robot.step(timestep) != -1:	 
 	RSSI_strings=np.empty(4, dtype='object')
@@ -48,3 +48,4 @@ while robot.step(timestep) != -1:
 		x,y=xy[2][0],xy[0][1]
 
 		print("node=",n,"x=",x,"y=",y)
+		message_counter=0
