@@ -71,5 +71,5 @@ while robot.step(timestep) != -1:
 			xy=a/X
 			x,y=xy[2][0],xy[0][1]
 
-			print("Real-Time Location :node=",n,"x=",x,"y=",y)
+			print("Real-Time Location (m):node=",n,"x=",x,"y=",y)
 		RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
