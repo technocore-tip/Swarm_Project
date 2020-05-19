@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 
 while (true)
 {
-  char signal_streng[150]="ref_node4:";
+  char signal_streng[150]="ref-node4:";
   char temp[9] =" ";
   //signal_strength="a";
   while (wb_receiver_get_queue_length(tag) > 0) 
