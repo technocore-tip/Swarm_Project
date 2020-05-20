@@ -6,7 +6,8 @@ Created on Fri May 15 11:26:38 2020
 """
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 headers=['D1','D2','D3','D4','x','y']
 df= pd.read_csv('rss_experiment.csv',names=headers)
 
@@ -35,3 +36,23 @@ for n in range(1,df.shape[0],1):
     result.append([x,y,rmse])
     error.append(rmse)
     print("Trial=",n,"x=",x,"y=",y,"RMSE=",rmse)
+
+estimated_x = list()
+estimated_y = list()
+for i in range(len(result)):
+    estimated_x.append(result[i][0])
+    estimated_y.append(result[i][1])
+    
+ref_nodex=[2,-2,-2,2]
+ref_nodey=[2,2,-2,-2]
+
+plt.scatter(actual_x, actual_y, marker='*', color=['blue'])
+plt.scatter(estimated_x, estimated_y, marker='+', color=['red'])
+plt.scatter(ref_nodex, ref_nodey, marker='o', color=['black'])
+plt.legend(['Actual','Estimated','Reference Node'],loc='lower center')
+plt.xlabel('X(m)', fontsize=16)
+plt.ylabel('Y(m)', fontsize=16)
+plt.title('Robot Localization',fontsize=20)
+
+plt.savefig('localization result.png', dpi=600)
+plt.show()
