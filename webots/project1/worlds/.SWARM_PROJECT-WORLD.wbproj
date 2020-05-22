@@ -1,6 +1,6 @@
 Webots Project File version R2020a
-perspectives: 000000ff00000000fd00000003000000000000000000000000fc0100000001fb0000001a0044006f00630075006d0065006e0074006100740069006f006e0000000000ffffffff0000005400ffffff000000010000051400000476fc0200000001fb0000001400540065007800740045006400690074006f0072010000002400000476000000d000ffffff0000000300000f000000033ffc0100000001fb0000000e0043006f006e0073006f006c0065010000000000000f000000006e00ffffff000009e60000047600000001000000020000000100000008fc00000000
-simulationViewPerspectives: 000000ff0000000100000002000001af00000c210100000006010000000100
+perspectives: 000000ff00000000fd00000003000000000000000000000000fc0100000001fb0000001a0044006f00630075006d0065006e0074006100740069006f006e0000000000ffffffff0000005400ffffff000000010000065b0000065efc0200000001fb0000001400540065007800740045006400690074006f007201000000240000065e000000d000ffffff0000000300000f0000000157fc0100000001fb0000000e0043006f006e0073006f006c0065010000000000000f000000006e00ffffff0000089f0000065e00000001000000020000000100000008fc00000000
+simulationViewPerspectives: 000000ff00000001000000020000027e000003460100000006010000000100
 sceneTreePerspectives: 000000ff0000000100000002000000c0000000fc0100000006010000000200
 maximizedDockId: -1
 centralWidgetVisible: 1
@@ -8,19 +8,10 @@ projectionMode: PERSPECTIVE
 selectionDisabled: 0
 viewpointLocked: 0
 orthographicViewHeight: 1
-textFiles: 4 "controllers/reference_node_1/reference_node_1.c" "controllers/reference_node_2/reference_node_2.c" "controllers/reference_node_3/reference_node_3.c" "controllers/reference_node_4/reference_node_4.c" "controllers/emitter2/emitter2.c"
-renderingDevicePerspectives: reference_node1(3):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(4):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(6):camera;1;1;0;0
+textFiles: 0 "controllers/emitter2/emitter2.c" "controllers/reference_node_1/reference_node_1.c"
+renderingDevicePerspectives: reference_node4:camera;1;1;0;0
 renderingDevicePerspectives: reference_node1(8):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(2):camera;1;0.820513;0;0
-renderingDevicePerspectives: reference_node1(9):camera;1;1;0;0
-renderingDevicePerspectives: reference_node2:camera;1;0.820513;0;0
-renderingDevicePerspectives: reference_node1(1):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(7):camera;1;1;0;0
-renderingDevicePerspectives: agregator_node:camera;1;0.820513;0;0
-renderingDevicePerspectives: reference_node1(10):camera;1;1;0;0
-renderingDevicePerspectives: reference_node3:camera;1;0.820513;0;0
-renderingDevicePerspectives: reference_node1:camera;1;0.820513;0;0
-renderingDevicePerspectives: reference_node4:camera;1;0.820513;0;0
-renderingDevicePerspectives: reference_node1(5):camera;1;1;0;0
+renderingDevicePerspectives: reference_node2:camera;1;1;0;0
+renderingDevicePerspectives: agregator_node:camera;1;1;0;0
+renderingDevicePerspectives: reference_node3:camera;1;1;0;0
+renderingDevicePerspectives: reference_node1:camera;1;1;0;0

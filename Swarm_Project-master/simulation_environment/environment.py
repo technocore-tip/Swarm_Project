@@ -141,86 +141,14 @@ def update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win,robots):
     x_p,y_p= distance_vector(robot_j.getCenter(),robot_k.getCenter(),win) #xj-xk , yj-yk
     pdist = distance_magnitude(x_p,y_p) # |rj - rk|
     theta= calculate_angle(x_p,y_p)
-    #print("distance_vector")
-    #print(x_p)
-    #print(y_p)
-    #print("Distance Magnitude")
-    #print(pdist)
-#    if x_p == 0 and y_p == 0: #1
-#        slope = 0
-#        theta= np.arctan(slope)
-#    if x_p >0 and y_p==0: #2
-#        theta=np.arctan(0)
-#        
-#    if x_p>0 and y_p>0: #3
-#        slope= np.abs(y_p/x_p)
-#        theta =np.arctan(slope)
-#    if x_p==0 and y_p>0: #4
-#        theta = (np.pi)/2
-#    if x_p < 0 and y_p > 0: #5
-#        slope= np.abs(y_p/x_p)      
-#        theta = np.pi - np.arctan(slope)
-#    if x_p < 0 and y_p ==0: #6
-#        theta = np.pi
-#    if x_p < 0 and y_p < 0: #7
-#        slope= np.abs(y_p/x_p)    
-#        theta = np.pi + np.arctan(slope)
-#    if x_p == 0 and y_p < 0: #8
-#        theta = (3*np.pi)/2
-#    if x_p > 0 and y_p < 0:
-#        slope= np.abs(y_p/x_p)
-#        theta = (2*np.pi) - np.arctan(slope)
-        
-
-#    if x_p == 0 and y_p == 0: #1
-#        slope = 0
-#    else:
-#        slope = np.abs(y_p/x_p)
-#    if x_p < 0 and y_p > 0:
-#        theta = np.pi - np.arctan(slope)
-#    elif x_p < 0 and y_p < 0:
-#        theta = np.pi + np.arctan(slope)
-#    elif x_p > 0 and y_p < 0:
-#        theta = (2*np.pi) - np.arctan(slope)
-#    elif x_p == 0 and y_p < 0:
-#        theta = (3*np.pi)/2
-#    elif x_p < 0 and y_p == 0:
-#       theta = np.pi
-#    else:
-#        theta= np.arctan(slope)
-
         
     deg = theta*180/np.pi
     
     print(x_p, y_p, deg)
-	#theta= np.arctan(y_p/x_p)
-	#    print("J particle movement")
+
     xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
     yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
-    #xrj,yrj=get_nearbybots(robot_j,robots,win,xrj,yrj,theta,(45*np.pi/180))
-    	#    print("K particle movement")
-    #xrk = -mu*np.cos(theta)*math.tanh(pdist-rho_k)*times
-    #yrk = -mu*np.sin(theta)*math.tanh(pdist-rho_k)*times
-    
-    #    print("J Previous Pos")
-    #xj,yj= position_vector(robot_j.getCenter(),win)  #update position vectors
-    	#    print(xj)
-    	#    print(yj)
-    	#    print("J new Pos")
-    #xj= xj + xrj
-    #yj = yj + yrj
-    	#    print(xj)
-    	#    print(yj)
-    	#
-    	#    print("K Previous Pos")
-    #xk,yk= position_vector(robot_k.getCenter(),win)  #update position vectors
-    	#    print(xk)
-    	#    print(yk)
-    #xk=  xk
-    #yk =  yk
-    #    print("K new Pos")
-    #    print(xk)
-    #    print(yk)
+
     return xrj,yrj#,xrk,yrk,xj,yj,xk,yk
 	#calculate the pairwise distance
 

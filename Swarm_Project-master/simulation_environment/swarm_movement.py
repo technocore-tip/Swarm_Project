@@ -10,7 +10,7 @@ from graphics import *
 from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance
 
 import time
-from line_plotter import AverageMeter, VisdomLinePlotter
+#from line_plotter import AverageMeter, VisdomLinePlotter
 import threading
 import math
 from random import *
@@ -35,12 +35,12 @@ def normal_distribution(mu,sigma):
         if s >= 0:
             rho_k.append(s)
   #  plt.hist(rho_k,30,density = True)
-    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
+#    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     #plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k
 
-plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
+#plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
 trial_no="BD1"

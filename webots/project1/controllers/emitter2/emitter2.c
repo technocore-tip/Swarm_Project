@@ -1,24 +1,3 @@
-/*
- * Copyright 1996-2020 Cyberbotics Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Description:  Default controller of the e-puck robot
- */
-
-/* include headers */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,7 +9,8 @@
 #include <webots/nodes.h>
 #include <webots/robot.h>
 #include <webots/emitter.h>
-
+#include <webots/receiver.h>
+#include <webots/inertial_unit.h>
 int wb_emitter_send(WbDeviceTag tag, const void *data, int size);
 /* Device stuff */
 #define DISTANCE_SENSORS_NUMBER 8
@@ -48,7 +28,7 @@ static WbDeviceTag leds[LEDS_NUMBER];
 static bool leds_values[LEDS_NUMBER];
 static const char *leds_names[LEDS_NUMBER] = {"led0", "led1", "led2", "led3", "led4", "led5", "led6", "led7", "led8", "led9"};
 
-static WbDeviceTag left_motor, right_motor,emitters;
+static WbDeviceTag left_motor, right_motor,emitters,imu,receivers;
 
 #define LEFT 0
 #define RIGHT 1
@@ -108,14 +88,19 @@ static void init_devices() {
   }
 
   // get a handler to the motors and set target position to infinity (speed control).
+  receivers = wb_robot_get_device("receiver");
   left_motor = wb_robot_get_device("left wheel motor");
   right_motor = wb_robot_get_device("right wheel motor");
   emitters = wb_robot_get_device("emitter");
+  imu = wb_robot_get_device("inertial_unit");
+  
+  wb_receiver_enable(receivers, 60);
+  wb_inertial_unit_enable(imu,get_time_step());
   wb_motor_set_position(left_motor, INFINITY);
   wb_motor_set_position(right_motor, INFINITY);
   wb_motor_set_velocity(left_motor, 0.0);
   wb_motor_set_velocity(right_motor, 0.0);
-
+ 
   step();
 }
 static void reset_actuator_values() {
@@ -194,33 +179,48 @@ static void turn_left() {
   passive_wait(0.2);
 }
 
+static void turn_right() {
+  wb_motor_set_velocity(left_motor, MAX_SPEED);
+  wb_motor_set_velocity(right_motor,-MAX_SPEED);
+  passive_wait(0.2);
+}
+
+static float orientation_angle(){
+const double *orientation = wb_inertial_unit_get_roll_pitch_yaw(imu);
+float angle=0;
+  if(orientation[2]<0)
+  {
+      angle=orientation[2]+ (2*3.14159265358979323846);
+  }
+  else
+  {
+    angle=orientation[2];
+  }
+return angle;
+}
 static void send_message(){
   char message[128];
-    sprintf(message, "node%d_", 1);
-    wb_emitter_send(emitters, message, strlen(message) + 1);
-    printf(message);
-passive_wait(0.2);
+  sprintf(message, "%d_", 1);
+  wb_emitter_send(emitters, message, strlen(message) + 1);
+  passive_wait(0.2);
 }
+
 int main(int argc, char **argv) {
   wb_robot_init();
   printf("Default controller of the e-puck robot started...\n");
 
   init_devices();
-
+    step();
   while (true) {
     send_message();
-     reset_actuator_values();
-     get_sensor_input();
-     blink_leds();
-    
-     if (cliff_detected()) {
-       go_backwards();
-       turn_left();
-     } else {
-       run_braitenberg();
-     }
-     set_actuators();
-    step();
+        while (wb_receiver_get_queue_length(receivers) > 0) 
+      {
+      const char *message = wb_receiver_get_data(receivers);
+      
+      printf("message: %s\n",message);
+      wb_receiver_next_packet(receivers);
+
+      }
   };
 
   return EXIT_SUCCESS;
