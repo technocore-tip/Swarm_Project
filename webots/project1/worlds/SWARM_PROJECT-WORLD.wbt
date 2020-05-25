@@ -2,8 +2,8 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.43016353154314396 -0.8566637481049089 -0.2847570171447581 1.3370208282214606
-  position -4.535300805703254 4.634189114135933 3.5275597963440415
+  orientation -0.3488840340391003 -0.8763342995263208 -0.3321417261747108 1.6718320893342458
+  position -5.164348803786489 5.06552982347579 1.7398263480814098
 }
 TexturedBackground {
 }
@@ -21,8 +21,6 @@ RectangleArena {
   floorTileSize 5.5 5.5
 }
 E-puck {
-  hidden rotation_1 1 0 0 2.9802322387695313e-08
-  hidden rotation_2 1 0 0 2.9802322387695313e-08
   translation 0.17458053031271265 -6.396824217537976e-05 2.4250808006057074
   rotation -2.9755607194814957e-06 -0.9999999999935943 1.9891918340298094e-06 1.964221330237872
   name "agregator_node"
@@ -31,8 +29,6 @@ E-puck {
   receiver_channel 2
 }
 E-puck {
-  hidden rotation_1 -1 0 0 1.5769906706002898e-07
-  hidden rotation_2 -1 0 0 1.6049041769309358e-07
   translation -1.999928969669544 -0.00010693071597189102 -1.9999272357404763
   rotation 0.003827482411067194 0.9999914358491975 -0.0015743591246261946 0.005832513316758309
   name "reference_node3"
@@ -40,8 +36,6 @@ E-puck {
   emitter_channel 2
 }
 E-puck {
-  hidden rotation_1 1 0 0 1.5769906706002898e-07
-  hidden rotation_2 -0.9999999999999999 0 0 3.734220292014386e-07
   translation -1.999664394201283 -0.00010693071727483315 1.9999394589094406
   rotation -0.0010441733952217883 0.9999991029044277 -0.0008389828726177437 0.010694888641553263
   name "reference_node4"
@@ -49,8 +43,6 @@ E-puck {
   emitter_channel 2
 }
 E-puck {
-  hidden rotation_1 -1 0 0 4.796229880878663e-07
-  hidden rotation_2 -1 0 0 1.6049041769309358e-07
   translation 1.9999312325378897 -0.00010693052226607921 -1.9999256125080271
   rotation 0.003474470000402594 0.9999907019642117 0.00255422069124589 0.006044689693039481
   name "reference_node2"
@@ -58,8 +50,6 @@ E-puck {
   emitter_channel 2
 }
 E-puck {
-  hidden rotation_1 -1 0 0 1.5769906706002898e-07
-  hidden rotation_2 -1 0 0 5.16191365590357e-08
   translation 2.0015002060143434 -0.00010693068059372361 1.9990982266585573
   rotation -0.0007382209624596116 0.9999997162518431 0.0001500867871604706 -0.028506670654396476
   name "reference_node1"
@@ -102,7 +92,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.02599999999999798 0.02 0
+        translation -0.025999999999997882 0.02 0
         rotation -1 0 0 1.4711840394975353
         children [
           DEF EPUCK_WHEEL Transform {
@@ -1614,8 +1604,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity -0.00015990010689817308 -8.541012285609403e-06 3.626560144265084e-05
-  angularVelocity 0.005319571167005922 -1.1057109659968112 0.009656478485089976
 }
 Robot {
   translation -0.6987141735406527 -7.058557216674602e-05 -0.15832562315940504
@@ -1653,7 +1641,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999997976 0.02 0
+        translation -0.025999999999997782 0.02 0
         rotation -0.9999999999999999 0 0 3.761155507639961
         children [
           DEF EPUCK_WHEEL Transform {
@@ -3165,8 +3153,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity -0.00011218444931504315 -2.3160801758172823e-07 3.2373661622321515e-05
-  angularVelocity -0.0012885306649069114 1.102716382716838 0.0063241130107408155
 }
 Robot {
   translation 0.1379732341656537 -6.833356681095609e-05 0.052653995485969024
@@ -3356,7 +3342,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999994357 0.02 0
+        translation 0.025999999999994552 0.02 0
         rotation -1 0 0 1.0725481568112785
         children [
           Transform {
@@ -4716,8 +4702,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity 3.9659746008017094e-05 -8.720805045706148e-06 -6.96199719310345e-05
-  angularVelocity -0.001446088227372158 -1.1048116369248462 -0.0031066713883155044
 }
 Robot {
   translation -0.5945134548398883 -7.063616202610673e-05 0.4693415237808276
@@ -4755,7 +4739,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.02599999999999798 0.02 0
+        translation -0.025999999999997882 0.02 0
         rotation 1 0 0 5.460334427456682
         children [
           DEF EPUCK_WHEEL Transform {
@@ -4907,7 +4891,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999994347 0.02 0
+        translation 0.02599999999999425 0.02 0
         rotation -1 0 0 4.654771623857655
         children [
           Transform {
@@ -6267,8 +6251,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity -8.541805490296656e-05 3.9633961020123015e-08 5.063479171317418e-07
-  angularVelocity 0.005507630688964541 -1.1043106126279327 0.005268477340262746
 }
 Robot {
   translation 0.07076515877827058 -6.833356856247169e-05 0.46289429628421175
@@ -6306,8 +6288,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.02599999999999799 0.02 0
-        rotation -1 0 0 1.6218950303382427
+        translation -0.025999999999998184 0.02 0
+        rotation -1 0 0 1.6218950303382424
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -6458,7 +6440,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999994347 0.02 0
+        translation 0.02599999999999425 0.02 0
         rotation -1 0 0 1.0725481573715272
         children [
           Transform {
@@ -7818,8 +7800,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity 3.965218082614117e-05 -8.720794048387145e-06 -6.961701735916362e-05
-  angularVelocity -0.001445873791420069 -1.1048116369432583 -0.0031061796558339164
 }
 Robot {
   translation -0.1839542704079325 -7.058807984425958e-05 -0.6636003932274402
@@ -9369,8 +9349,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity -8.077481475634584e-06 1.5646249049641927e-07 0.00026813471687838327
-  angularVelocity 0.001403221765273065 -1.1108438602286377 0.00020835146915414312
 }
 Robot {
   translation -0.25148348042129665 -7.268734128952105e-05 0.806636871977119
@@ -9408,7 +9386,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.02599999999999799 0.02 0
+        translation -0.025999999999997796 0.02 0
         rotation 1 0 0 5.000703293583436
         children [
           DEF EPUCK_WHEEL Transform {
@@ -10920,8 +10898,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity 0.011030297933905472 -7.957424798356212e-06 0.08043454545673537
-  angularVelocity 0.20279967615820482 0.00371215454564004 -0.02783684836314411
 }
 Robot {
   translation 0.4503821952787665 -7.34622312926099e-05 -0.5253184899113914
@@ -10959,7 +10935,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999997914 0.02 0
+        translation -0.025999999999998108 0.02 0
         rotation -1 0 0 0.36293991315804697
         children [
           DEF EPUCK_WHEEL Transform {
@@ -12471,8 +12447,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity -0.045352922694780425 -0.00012945250353467355 0.07872157458589214
-  angularVelocity 0.7258069913505524 -0.005124297824500979 0.41949651887557476
 }
 Robot {
   translation 0.5089766569806129 -7.274222991543282e-05 0.5133951619311292
@@ -12662,7 +12636,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999994392 0.02 0
+        translation 0.025999999999994586 0.02 0
         rotation -1 0 0 1.560490313936413
         children [
           Transform {
@@ -14022,8 +13996,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity -0.04666125158844796 1.1772516624506028e-06 0.054580233319766865
-  angularVelocity -0.31788877684244266 -0.0033656633886811997 -0.2718573112040943
 }
 Robot {
   translation 0.796006198634436 -7.219156005374046e-05 -0.16080021338870798
@@ -14213,7 +14185,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.02599999999999438 0.02 0
+        translation 0.025999999999994184 0.02 0
         rotation -1 0 0 1.7030076186828471
         children [
           Transform {
@@ -15573,8 +15545,6 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
-  linearVelocity -0.04050048987159477 -1.1500979201718687e-05 0.07034147795393997
-  angularVelocity 0.17620648136096673 -0.0032120173620041907 0.10185608110667577
 }
 SolidBox {
   translation -1.9994018482613243 0.07234401593012858 1.9997947039253654
