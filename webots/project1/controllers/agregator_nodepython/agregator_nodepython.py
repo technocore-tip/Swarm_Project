@@ -66,7 +66,7 @@ receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
 N=10
-rho_bar, sigma =0, 100
+rho_bar, sigma =0, 10
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
