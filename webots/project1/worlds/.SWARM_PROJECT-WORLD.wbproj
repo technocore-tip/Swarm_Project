@@ -1,5 +1,5 @@
 Webots Project File version R2020a
-perspectives: 000000ff00000000fd00000003000000000000000000000000fc0100000001fb0000001a0044006f00630075006d0065006e0074006100740069006f006e0000000000ffffffff0000005400ffffff0000000100000611000005e0fc0200000001fb0000001400540065007800740045006400690074006f007203000008ef0000004c00000611000005e00000000300000f00000001d5fc0100000001fb0000000e0043006f006e0073006f006c0065010000000000000f000000006e00ffffff00000f00000005e000000001000000020000000100000008fc00000000
+perspectives: 000000ff00000000fd00000003000000000000000000000000fc0100000001fb0000001a0044006f00630075006d0065006e0074006100740069006f006e0000000000ffffffff0000005400ffffff0000000100000611000005e0fc0200000001fb0000001400540065007800740045006400690074006f007202000008ef0000004c00000611000005e00000000300000f00000001d5fc0100000001fb0000000e0043006f006e0073006f006c0065010000000000000f000000006e00ffffff00000f00000005e000000001000000020000000100000008fc00000000
 simulationViewPerspectives: 000000ff0000000100000002000001fe000006e50100000006010000000100
 sceneTreePerspectives: 000000ff0000000100000002000000c0000000fc0100000006010000000200
 maximizedDockId: -1
@@ -8,29 +8,20 @@ projectionMode: PERSPECTIVE
 selectionDisabled: 0
 viewpointLocked: 0
 orthographicViewHeight: 1
-textFiles: 10 "controllers/node10/node10.c" "controllers/node11/node11.c" "controllers/node12/node12.c" "controllers/node13/node13.c" "controllers/node14/node14.c" "controllers/node15/node15.c" "controllers/node16/node16.c" "controllers/node17/node17.c" "controllers/node18/node18.c" "controllers/node19/node19.c" "controllers/node20/node20.c"
-renderingDevicePerspectives: reference_node1(9):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(8):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(6):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(15):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(17):camera;1;1;0;0
+textFiles: 8 "controllers/node1/node1.c" "controllers/node2/node2.c" "controllers/node3/node3.c" "controllers/node4/node4.c" "controllers/node5/node5.c" "controllers/node6/node6.c" "controllers/node7/node7.c" "controllers/node8/node8.c" "controllers/node9/node9.c" "controllers/node10/node10.c"
+renderingDevicePerspectives: agregator_node:camera;1;1;0;0
+renderingDevicePerspectives: reference_node1(2):camera;1;1;0;0
 renderingDevicePerspectives: reference_node1(7):camera;1;1;0;0
+renderingDevicePerspectives: reference_node1:camera;1;1;0;0
 renderingDevicePerspectives: reference_node1(4):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(20):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(19):camera;1;1;0;0
+renderingDevicePerspectives: reference_node1(8):camera;1;1;0;0
 renderingDevicePerspectives: reference_node1(1):camera;1;1;0;0
 renderingDevicePerspectives: reference_node3:camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(11):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(13):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1:camera;1;1;0;0
+renderingDevicePerspectives: reference_node1(9):camera;1;1;0;0
 renderingDevicePerspectives: reference_node1(10):camera;1;1;0;0
-renderingDevicePerspectives: reference_node2:camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(3):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(2):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(18):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(12):camera;1;1;0;0
-renderingDevicePerspectives: agregator_node:camera;1;1;0;0
-renderingDevicePerspectives: reference_node4:camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(14):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(16):camera;1;1;0;0
 renderingDevicePerspectives: reference_node1(5):camera;1;1;0;0
+renderingDevicePerspectives: reference_node2:camera;1;1;0;0
+renderingDevicePerspectives: reference_node1(6):camera;1;1;0;0
+renderingDevicePerspectives: reference_node1(11):camera;1;1;0;0
+renderingDevicePerspectives: reference_node4:camera;1;1;0;0
+renderingDevicePerspectives: reference_node1(3):camera;1;1;0;0

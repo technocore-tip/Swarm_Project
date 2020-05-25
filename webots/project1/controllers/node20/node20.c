@@ -220,7 +220,7 @@ int main(int argc, char **argv) {
          const char *message = wb_receiver_get_data(receivers);
          char * token = strtok(message, " ");
          int message_counter=0,node_id;
-         float xj,yj,magnitude,angle;         
+         float magnitude,angle;         
          while( token != NULL ) {
 
             if(message_counter==0)
@@ -229,14 +229,6 @@ int main(int argc, char **argv) {
               {
                 node_id=atoi(token);
                }
-            }
-            if(message_counter==1)
-            {
-               xj=atof(token);
-            }
-            if(message_counter==2)
-            {
-               yj=atof(token);               
             }
             if(message_counter==3)
             {
@@ -282,8 +274,6 @@ int main(int argc, char **argv) {
             
          }
          message_counter=0;
-         xj=0;
-         yj=0;
          magnitude=0;
          node_id=0;
          wb_receiver_next_packet(receivers);
