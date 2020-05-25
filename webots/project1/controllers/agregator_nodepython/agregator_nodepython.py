@@ -53,7 +53,7 @@ def localize_robots(RSSI_strings):
 			message=str(robotjk[0][0])+' '+str(xj)+' '+str(yj)+' '+str(magnitude)+' '+str(angle)
 			#message = 'message_frommain'
 			sender.send(message.encode('utf-8'))
-			print(message)
+			#print(message)
 	RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
 
 	#return robots

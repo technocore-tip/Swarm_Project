@@ -273,9 +273,9 @@ int main(int argc, char **argv) {
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
             step();
-            float t= magnitude/MAX_SPEED;
-            wb_motor_set_velocity(left_motor,MAX_SPEED);
-            wb_motor_set_velocity(right_motor,MAX_SPEED);
+            float t= magnitude/(MAX_SPEED*0.1);
+            wb_motor_set_velocity(left_motor,0.1*MAX_SPEED);
+            wb_motor_set_velocity(right_motor,0.1*MAX_SPEED);
             passive_wait(t);
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
@@ -287,7 +287,7 @@ int main(int argc, char **argv) {
          magnitude=0;
          node_id=0;
          wb_receiver_next_packet(receivers);
-
+         step();
       }
   };
 
