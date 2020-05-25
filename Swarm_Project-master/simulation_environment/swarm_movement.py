@@ -45,8 +45,8 @@ simulation_time = time.time()
 
 trial_no="BD1"
 
-N=10
-rho_bar, sigma =0, 300
+N=20
+rho_bar, sigma =0, 100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
