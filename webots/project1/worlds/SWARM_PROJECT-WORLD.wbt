@@ -2,8 +2,8 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.3488840340391003 -0.8763342995263208 -0.3321417261747108 1.6718320893342458
-  position -5.164348803786489 5.06552982347579 1.7398263480814098
+  orientation -0.11858349321797278 -0.8854290197614577 -0.449392263062558 2.6961595079459455
+  position -1.0037780639311178 2.209970851900462 -1.7517736752386135
 }
 TexturedBackground {
 }
@@ -21,44 +21,64 @@ RectangleArena {
   floorTileSize 5.5 5.5
 }
 E-puck {
-  translation 0.17458053031271265 -6.396824217537976e-05 2.4250808006057074
-  rotation -2.9755607194814957e-06 -0.9999999999935943 1.9891918340298094e-06 1.964221330237872
+  hidden position_0_0 3.099905185777864e-08
+  hidden position_0_1 -3.099911705106706e-08
+  hidden rotation_1 -1 0 0 2.9802322387695313e-08
+  hidden rotation_2 1 0 0 2.9802322387695313e-08
+  translation 0.17458053031265627 -6.396824217515772e-05 2.4250808006056874
+  rotation -2.9753827539579976e-06 -0.9999999999935946 1.989458362272133e-06 1.9642213340274117
   name "agregator_node"
   controller "agregator_nodepython"
   emitter_channel 3
   receiver_channel 2
 }
 E-puck {
-  translation -1.999928969669544 -0.00010693071597189102 -1.9999272357404763
-  rotation 0.003827482411067194 0.9999914358491975 -0.0015743591246261946 0.005832513316758309
+  hidden position_0_0 5.2990959777351753e-08
+  hidden position_0_1 -5.3371176811367604e-08
+  hidden rotation_1 -1 0 0 5.16191365590357e-08
+  hidden rotation_2 1 0 0 5.16191365590357e-08
+  translation -1.999928969671361 -0.00010693071609452036 -1.9999272357403082
+  rotation 0.003827484224757374 0.999991435841414 -0.0015743596591311607 0.005832512130373022
   name "reference_node3"
   controller "reference_node_3"
   emitter_channel 2
 }
 E-puck {
-  translation -1.999664394201283 -0.00010693071727483315 1.9999394589094406
-  rotation -0.0010441733952217883 0.9999991029044277 -0.0008389828726177437 0.010694888641553263
+  hidden position_0_0 -5.299217743038605e-08
+  hidden position_0_1 -5.33701011007065e-08
+  hidden rotation_1 1 0 0 5.16191365590357e-08
+  hidden rotation_2 1 0 0 5.16191365590357e-08
+  translation -1.9996643942026324 -0.00010693071729620841 1.9999394589523478
+  rotation -0.0010442398820261004 0.9999991028351414 -0.000838982706085239 0.010694888638588607
   name "reference_node4"
   controller "reference_node_4"
   emitter_channel 2
 }
 E-puck {
-  translation 1.9999312325378897 -0.00010693052226607921 -1.9999256125080271
-  rotation 0.003474470000402594 0.9999907019642117 0.00255422069124589 0.006044689693039481
+  hidden position_0_0 5.332386281696747e-08
+  hidden position_0_1 5.303897115418448e-08
+  hidden rotation_1 -1 0 0 5.16191365590357e-08
+  hidden rotation_2 -1 0 0 5.16191365590357e-08
+  translation 1.9999312325389988 -0.00010693052214158331 -1.999925612550889
+  rotation 0.003474471367595782 0.999990701958589 0.002554221032768039 0.006044689689385053
   name "reference_node2"
   controller "reference_node_2"
   emitter_channel 2
 }
 E-puck {
-  translation 2.0015002060143434 -0.00010693068059372361 1.9990982266585573
-  rotation -0.0007382209624596116 0.9999997162518431 0.0001500867871604706 -0.028506670654396476
+  hidden position_0_0 5.3052397006943184e-08
+  hidden position_0_1 5.3310079383871786e-08
+  hidden rotation_1 -0.9999999999999999 0 0 5.16191365590357e-08
+  hidden rotation_2 -1 0 0 5.16191365590357e-08
+  translation 2.0015002060143336 -0.00010693068063442716 1.9990982266156496
+  rotation -0.0007382458401940025 0.9999997162335348 0.0001500864071457599 -0.028506670652549054
   name "reference_node1"
   controller "reference_node_1"
   emitter_channel 2
 }
 Robot {
-  translation -0.6364761087606091 -6.750092979111375e-05 -0.633834499583866
-  rotation 0.000736602751487519 -0.9999996322295427 0.00043926889930804273 1.0915768426751766
+  translation -0.6365323549007159 -7.063937024865546e-05 -0.6339436709279233
+  rotation -0.0008351078471937469 -0.999999629056349 0.00021090767601546123 -0.5013189208533528
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -76,7 +96,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 494.54868179326525
+        position 492.28809832245423
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -92,8 +112,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999997882 0.02 0
-        rotation -1 0 0 1.4711840394975353
+        translation -0.026079636157403552 0.020008080329364495 -4.008951244505177e-05
+        rotation -0.9999842209880582 -0.0008309976499177285 -0.005555827374228782 -0.789057088442687
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -228,7 +248,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4130.594692943339
+        position 4132.855276508041
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -244,8 +264,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.02599999999999435 0.02 0
-        rotation -0.9999999999999999 0 0 1.2232596287937822
+        translation 0.025999999999994357 0.02 0
+        rotation -1 0 0 3.483843193495629
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -257,6 +277,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity -0.013392415479342269 -6.870900119971253e-08 -0.025723739826193394
+        angularVelocity -1.3931467646273805 1.1124353386674835 0.7298453117053935
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -1604,10 +1626,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity -1.8835439615521932e-05 -1.5250503973144724e-07 -0.00016234642960265185
+  angularVelocity -0.0022737618789865533 1.1058607650502743 0.001107733221302215
 }
 Robot {
-  translation -0.6987141735406527 -7.058557216674602e-05 -0.15832562315940504
-  rotation 0.00026180753997453635 -0.9999999149033868 0.0003188260204636011 1.7448702160115421
+  translation -0.6953802208268486 -6.90404657224565e-05 -0.16781115121344448
+  rotation -0.08324306245848684 -0.9964256020951389 -0.014374005769876678 0.32988711199551557
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -1625,7 +1649,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 496.83865326140767
+        position 495.3292608660564
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -1641,8 +1665,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999997782 0.02 0
-        rotation -0.9999999999999999 0 0 3.761155507639961
+        translation -0.025999999999997768 0.02 0
+        rotation -1 0 0 2.251763112288705
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -1773,11 +1797,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity 0.030876648834973142 -9.19077284433633e-06 -0.089810029487518
+        angularVelocity -4.490801106867791 -0.005552425821563957 -1.5438137698317815
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4126.554718492343
+        position 4129.064110936583
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -1794,7 +1820,7 @@ Robot {
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
         translation 0.02599999999999435 0.02 0
-        rotation 0.9999999999999999 0 0 2.8167148222021594
+        rotation 0.9999999999999999 0 0 0.30732237796226763
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -1806,6 +1832,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity 0.03050331453977347 -2.1321618858793927e-05 -0.0899559987287613
+        angularVelocity -4.497112336690728 0.0032369882227028315 -1.5252988738561706
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -3153,10 +3181,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity 0.029347034206627733 -1.9556350721501307e-05 -0.0859577052326116
+  angularVelocity -0.7971273635377497 -0.004232934034879308 -0.272716352143553
 }
 Robot {
-  translation 0.1379732341656537 -6.833356681095609e-05 0.052653995485969024
-  rotation 0.0009079367451946347 -0.9999993969574236 0.0006178475991657623 1.197635619238012
+  translation 0.13790525012308402 -7.06276469989442e-05 0.05255976798127713
+  rotation 0.000491086203881321 -0.9999998776927215 -5.872718515908969e-05 -0.3952383557487252
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -3174,7 +3204,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 494.69939278346993
+        position 492.4388096044215
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -3191,7 +3221,7 @@ Robot {
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
         translation -0.025999999999997983 0.02 0
-        rotation -1 0 0 1.621895029702222
+        rotation 1 0 0 0.6386881493461886
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -3322,11 +3352,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity 0.010507714361137723 5.2383945625642295e-09 0.02643603044898701
+        angularVelocity 1.4476457583960038 1.1137857079750215 -0.572582481724877
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4130.443981471357
+        position 4132.704564800597
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -3342,8 +3374,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999994552 0.02 0
-        rotation -1 0 0 1.0725481568112785
+        translation 0.025999999999994555 0.02 0
+        rotation -1 0 0 3.3331314860513133
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -3355,6 +3387,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity -0.010698167971458979 -1.2002171563274315e-07 -0.027272680787582222
+        angularVelocity -1.472806010146245 1.113845608829055 0.5821097123836223
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -4702,10 +4736,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity -7.286420234210382e-05 -2.5715331721206006e-07 -0.0003559754158060098
+  angularVelocity -0.012580033137340258 1.1072301065183094 0.004764022152135653
 }
 Robot {
-  translation -0.5945134548398883 -7.063616202610673e-05 0.4693415237808276
-  rotation 0.0003586295231463207 -0.9999999262941688 0.000137100409870166 0.7940575196627035
+  translation -0.5954741468119753 -6.805952411460814e-05 0.45172420531259305
+  rotation 0.0032196719064066038 -0.9999945962582596 0.0006642041069266063 0.4120019599928474
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -4723,7 +4759,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 500.1835339406702
+        position 500.5059290571578
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -4739,8 +4775,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999997882 0.02 0
-        rotation 1 0 0 5.460334427456682
+        translation -0.025999999999997876 0.02 0
+        rotation 1 0 0 5.137939310969084
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -4871,11 +4907,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity 0.010971220538822478 -1.6297542125176616e-06 -0.026680681261287864
+        angularVelocity -1.4439019608773036 -1.1146324764119122 -0.5979025403643194
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4121.459834324044
+        position 4122.88744378386
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -4891,8 +4929,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.02599999999999425 0.02 0
-        rotation -1 0 0 4.654771623857655
+        translation 0.025999999999994243 0.02 0
+        rotation -1 0 0 6.08238108367392
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -4904,6 +4942,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity -0.011100116329600344 -2.1393644118905696e-06 0.02668120534269797
+        angularVelocity 1.4575446700560508 -1.1142140598667398 0.6036667825651105
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -6251,10 +6291,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity -4.631925348618792e-05 -8.944107562977405e-06 -2.3757313054358752e-05
+  angularVelocity 0.006854713729425108 -1.109216800570813 0.0027977726714641243
 }
 Robot {
-  translation 0.07076515877827058 -6.833356856247169e-05 0.46289429628421175
-  rotation 0.0009079084941878221 -0.9999993969951138 0.0006178281111607989 1.197635560007198
+  translation 0.07069717480166306 -7.062764721907713e-05 0.4628000687271853
+  rotation 0.0004909933184665733 -0.9999998777392768 -5.871109581658678e-05 -0.39523841342250243
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -6272,7 +6314,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 494.69939278410595
+        position 492.4388096050553
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -6288,8 +6330,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999998184 0.02 0
-        rotation -1 0 0 1.6218950303382424
+        translation -0.02599999999999819 0.02 0
+        rotation 1 0 0 0.6386881487123848
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -6420,11 +6462,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity 0.010507719786629115 5.239897005185072e-09 0.026436040002008325
+        angularVelocity 1.4476462323842667 1.1137857094923844 -0.5725827598850265
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4130.443981471917
+        position 4132.704564801155
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -6440,8 +6484,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.02599999999999425 0.02 0
-        rotation -1 0 0 1.0725481573715272
+        translation 0.025999999999994243 0.02 0
+        rotation -1 0 0 3.333131486609743
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -6453,6 +6497,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity -0.010698165625894925 -1.200196834805227e-07 -0.02727266996489052
+        angularVelocity -1.4728054695497406 1.1138456053600627 0.5821096026838575
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -7800,10 +7846,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity -7.286139609481784e-05 -2.571528424747785e-07 -0.0003559676997749095
+  angularVelocity -0.012579525935655783 1.107230105560047 0.004763827966152851
 }
 Robot {
-  translation -0.1839542704079325 -7.058807984425958e-05 -0.6636003932274402
-  rotation -8.511105343397517e-05 -0.9999997640476126 0.0006816603461468991 -2.871197656493794
+  translation -0.18862304375584069 -7.055640877552324e-05 -0.6467982303363752
+  rotation -0.0002544185572749338 -0.9999999344152086 0.0002577610831095504 -1.562721612334604
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -7821,7 +7869,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 500.1835330273901
+        position 502.91721224651565
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -7838,7 +7886,7 @@ Robot {
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
         translation -0.025999999999997983 0.02 0
-        rotation 1 0 0 5.460335340736758
+        rotation 0.9999999999999999 0 0 2.7266561216112377
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -7969,11 +8017,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity -0.028880725017799858 1.8100180465487346e-09 0.0002643775262823583
+        angularVelocity 0.01683114296323379 -1.1089599358645068 1.5760551753529517
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4121.4598353672345
+        position 4120.476156433254
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -7989,8 +8039,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.02599999999999435 0.02 0
-        rotation -1 0 0 4.654772667048078
+        translation 0.025999999999994347 0.02 0
+        rotation -1 0 0 3.6710937330674502
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -8002,6 +8052,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity 0.028607490395489755 -4.698118911681471e-08 -0.0003725924166617404
+        angularVelocity -0.016452853575161006 -1.1089971086083605 -1.5642011253507435
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -9349,10 +9401,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity -0.00010791642035251481 -3.590663286463917e-07 -5.902600172039878e-05
+  angularVelocity 0.00019399334045216358 -1.102433321925126 0.005926829044946071
 }
 Robot {
-  translation -0.25148348042129665 -7.268734128952105e-05 0.806636871977119
-  rotation 9.317624666136804e-05 -0.9999964631798518 0.0026579966091123054 3.0055070798991754
+  translation -0.25150648795566155 -7.05804993087096e-05 0.8065469750788049
+  rotation -0.000803173991125294 -0.9999994286323575 -0.0007054406411942266 1.413081456404064
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -9370,7 +9424,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 500.64316507454345
+        position 498.3825819585923
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -9386,8 +9440,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999997796 0.02 0
-        rotation 1 0 0 5.000703293583436
+        translation -0.02599999999999779 0.02 0
+        rotation -1 0 0 5.305084204824602
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -9518,11 +9572,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity -0.029119498520254628 2.1466945585579247e-07 0.003978408001882187
+        angularVelocity 0.21541350150515126 1.1250861494119768 1.5435727282994884
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4122.389251078204
+        position 4124.6498342381365
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -9538,8 +9594,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.02599999999999435 0.02 0
-        rotation -1 0 0 5.584188378017883
+        translation 0.025999999999994344 0.02 0
+        rotation 1 0 0 4.72159907640915
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -9551,6 +9607,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity 0.028657422185520733 -1.991940508094791e-07 -0.00404397048538507
+        angularVelocity -0.21840859512771865 1.1251888418395097 -1.5667544424146076
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -10898,10 +10956,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity -0.0002877709614639972 1.4109436587096275e-11 -1.9313354501770376e-05
+  angularVelocity -0.0015055057987900277 1.1185883479848515 -0.011589985313860653
 }
 Robot {
-  translation 0.4503821952787665 -7.34622312926099e-05 -0.5253184899113914
-  rotation 0.00021891346883425679 -0.9999998344249686 -0.0005321906876167977 -2.6193206411642618
+  translation 0.45038818930062147 -7.045358557925332e-05 -0.5252727439622161
+  rotation -1.6535961404387324e-05 -0.9999999997092278 1.7552956895910986e-05 -1.523495111814389
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -10919,7 +10979,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 418.04221398077067
+        position 419.5994643534433
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -10935,8 +10995,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999998108 0.02 0
-        rotation -1 0 0 0.36293991315804697
+        translation -0.025999999999998115 0.02 0
+        rotation -1 0 0 1.9201902858306736
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -11067,11 +11127,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity -0.02866050603241064 6.14775527818523e-08 -0.0008629082736625624
+        angularVelocity -0.04488809367783383 -1.1093502648498337 1.5657818274760384
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4080.5589582478883
+        position 4079.001707822329
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -11087,8 +11149,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999994385 0.02 0
-        rotation -1 0 0 1.4530073907793908
+        translation 0.025999999999994382 0.02 0
+        rotation 1 0 0 0.1042430347798395
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -11100,6 +11162,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity 0.028826703242066286 -6.554652509649351e-09 0.0007706069425296356
+        angularVelocity 0.04499083772791823 -1.1093590922652414 -1.5733648963963631
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -12447,10 +12511,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity 6.444784325830325e-05 -1.0583112929415055e-06 -4.594640964128445e-05
+  angularVelocity 5.113762794461323e-05 -1.102832315008005 -0.0037915360836431843
 }
 Robot {
-  translation 0.5089766569806129 -7.274222991543282e-05 0.5133951619311292
-  rotation 0.002705298836126559 -0.9999712970729994 -0.007077173754446157 -2.434451297704732
+  translation 0.5089211717388404 -7.041858025087604e-05 0.513414794279206
+  rotation -0.0006484242108187412 -0.9999996585460283 0.0005123025178937475 -1.3367657201039316
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -12468,7 +12534,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 414.934730332278
+        position 416.49197941125186
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -12485,7 +12551,7 @@ Robot {
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
         translation -0.025999999999997907 0.02 0
-        rotation 1 0 0 2.7445437353346405
+        rotation 1 0 0 1.1872946563607583
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -12616,11 +12682,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity -0.028866286950730437 -2.576854122526871e-07 -0.006220497492794238
+        angularVelocity -0.3372930241687244 -1.1197346186188863 1.5447715527333108
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4080.6664411710453
+        position 4079.1091920720723
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -12636,8 +12704,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999994586 0.02 0
-        rotation -1 0 0 1.560490313936413
+        translation 0.02599999999999459 0.02 0
+        rotation -0.9999999999999999 0 0 0.0032412149634790184
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -12649,6 +12717,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity 0.0278525237513292 1.0987605345569994e-07 0.006140804529468817
+        angularVelocity 0.3331490298008299 -1.119794037022203 -1.5232681737485145
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -13996,10 +14066,12 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity -0.0004532173849492052 -1.320714808817536e-06 -3.767069173874986e-05
+  angularVelocity -0.002062249681981867 -1.1132272163809855 0.010753584937279216
 }
 Robot {
-  translation 0.796006198634436 -7.219156005374046e-05 -0.16080021338870798
-  rotation -0.0006821562368446644 -0.9999958608423208 0.002795167453676691 -2.619492396373416
+  translation 0.7960121783323321 -7.045054912774296e-05 -0.16075266558255707
+  rotation 0.0003633699775278196 -0.999999867029143 -0.00036592889429012113 -1.523655317853549
   children [
     InertialUnit {
       translation 0 0.05 0
@@ -14017,7 +14089,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 418.2922145879136
+        position 419.8494650116362
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -14033,8 +14105,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation -0.025999999999997907 0.02 0
-        rotation -1 0 0 0.6129405203009569
+        translation -0.0259999999999979 0.02 0
+        rotation -1 0 0 2.170190944023578
         children [
           DEF EPUCK_WHEEL Transform {
             rotation 0 0 1 1.57
@@ -14165,11 +14237,13 @@ Robot {
           density -1
           mass 0.005
         }
+        linearVelocity -0.028883950033376335 1.1405606725748844e-08 -0.00085965099538787
+        angularVelocity -0.04485309380810241 -1.1094850332925585 1.5767082349862365
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4080.8089584757918
+        position 4079.2517081077885
         axis -1 0 0
         anchor 0 0.02 0
       }
@@ -14186,7 +14260,7 @@ Robot {
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
         translation 0.025999999999994184 0.02 0
-        rotation -1 0 0 1.7030076186828471
+        rotation -1 0 0 0.1457572506796207
         children [
           Transform {
             rotation 0 1 0 3.14159
@@ -14198,6 +14272,8 @@ Robot {
         name "right wheel"
         boundingObject USE EPUCK_WHEEL_BOUNDING_OBJECT
         physics USE EPUCK_WHEEL_PHYSICS
+        linearVelocity 0.028607487252860716 3.179211733872928e-08 0.000764553552278909
+        angularVelocity 0.04451846646082842 -1.1093778670389949 -1.5624530202338607
       }
     }
     DEF BATTERY_CONNECTOR Transform {
@@ -15545,34 +15621,36 @@ Robot {
   cpuConsumption 1.11
   window "e-puck"
   remoteControl "e-puck_bluetooth"
+  linearVelocity -0.00010259611248868147 -1.0425189567797573e-06 -4.365826551021965e-05
+  angularVelocity -0.00017503358547051013 -1.1029088467024692 0.007127634251616877
 }
 SolidBox {
-  translation -1.9994018482613243 0.07234401593012858 1.9997947039253654
-  rotation 0.0014355626164574582 0.9999983291898819 0.001131714371469834 -0.00785206937524386
+  translation -1.9994018482350502 0.07234401625193057 1.9997947038815
+  rotation 0.0014356531140585084 0.9999983290611775 0.0011317132981382729 -0.007852069379960242
   name "box(4)"
   size 0.05 0.05 0.05
   physics Physics {
   }
 }
 SolidBox {
-  translation -1.9996613815036635 0.07234401128056746 -1.9996434810593249
-  rotation -0.011613866275997649 0.9999208920964485 0.004829871547521473 -0.0019228614286725182
+  translation -1.9996613814766977 0.0723440105435405 -1.9996434809884125
+  rotation -0.011613862218828819 0.999920892154935 0.00482986919501358 -0.001922862615074632
   name "box(1)"
   size 0.05 0.05 0.05
   physics Physics {
   }
 }
 SolidBox {
-  translation 1.9996626979536296 0.07234401137931071 -1.9996564928490286
-  rotation -0.013574394277431404 0.9998588544385465 -0.00989984953613209 -0.0015545424235617372
+  translation 1.999662697906297 0.07234401027108084 -1.9996564928251381
+  rotation -0.013574400659521313 0.9998588543396627 -0.009899850772209595 -0.0015545424274044253
   name "box(2)"
   size 0.05 0.05 0.05
   physics Physics {
   }
 }
 SolidBox {
-  translation 2.001659589157592 0.07234401415697592 1.9993707009840633
-  rotation -0.0007556303302339671 0.9999997027471007 0.00015339007259618868 -0.02790630165642222
+  translation 2.0016595891685607 0.07234401370654804 1.9993707010587645
+  rotation -0.0007556557258567558 0.9999997027279712 0.0001533896778057379 -0.02790630165458673
   name "box(3)"
   size 0.05 0.05 0.05
   physics Physics {

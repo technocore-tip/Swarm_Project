@@ -273,9 +273,10 @@ int main(int argc, char **argv) {
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
             step();
-            wb_motor_set_velocity(left_motor, magnitude*10);
-            wb_motor_set_velocity(right_motor,magnitude*10);
-            passive_wait(0.2);
+            float t= magnitude/MAX_SPEED;
+            wb_motor_set_velocity(left_motor,MAX_SPEED);
+            wb_motor_set_velocity(right_motor,MAX_SPEED);
+            passive_wait(t);
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
             
