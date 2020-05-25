@@ -249,7 +249,7 @@ int main(int argc, char **argv) {
             token = strtok(NULL, " ");
             message_counter++;
          }
-if(node_id == node_no)
+         if(node_id == node_no)
          {
            float current_angle = orientation_angle();
            //printf("current angle %f\n",current_angle);

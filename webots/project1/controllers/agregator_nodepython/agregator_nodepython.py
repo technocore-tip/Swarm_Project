@@ -1,10 +1,12 @@
 from controller import Robot
-from controller import Receiver
+from controller import Receiver, Emitter
 import time
-import numpy as np         
+import numpy as np
 from itertools import combinations
-import q
+import struct
+import random
 from pairwise_actions import distance_vector,distance_magnitude,update_pairwisedistance
+
 def normal_distribution(mu,sigma,N):
     start_time = time.time()
     rho_k=list()
@@ -44,20 +46,26 @@ def localize_robots(RSSI_strings):
 		if len(robots)>2:
 			robotjk = random.sample(robots,2)
 			#print(robotjk)
-			xj,yj=update_pairwisedistance(robotjk[0][1],robotjk[0][2],rho_k[robotjk[0][0]-1],robotjk[1][1],robotjk[1][2],rho_k[robotjk[1][0]-1],times,mu)
-			#send this xj yj to robot j 
-			print("xj =",xj,"yj",yj)
+			#print(robotjk[0][0])
+			xj,yj,angle,magnitude=update_pairwisedistance(robotjk[0][1],robotjk[0][2],rho_k[robotjk[0][0]-1],robotjk[1][1],robotjk[1][2],rho_k[robotjk[1][0]-1],times,mu)
+			#send this xj yj to robot j
+
+			message=str(robotjk[0][0])+' '+str(xj)+' '+str(yj)+' '+str(magnitude)+' '+str(angle)
+			#message = 'message_frommain'
+			sender.send(message.encode('utf-8'))
+			print(message)
 	RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
-	
+
 	#return robots
 
 robot = Robot()
 timestep =32
 
+sender = robot.getEmitter('emitter')
 receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
-N=1
+N=10
 rho_bar, sigma =0, 100
 mu=100
 l=5*rho_bar
@@ -69,45 +77,45 @@ message_counter=0
 RSSI_strings=np.empty(4, dtype='object')
 RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
 
-# while robot.step(timestep) != -1:	 
-	# if receiver.getQueueLength() > 0: 
-		# message = receiver.getData().decode('utf-8')
-		# if message.find("ref-node1:",0,10) !=-1:
-			# message.rstrip('\x00')
-			# RSSI_strings[0]= message.split(" ",-1)
-			# if RSSI_strings[0].count('\x00') > 0:
-				# RSSI_strings[0].remove('\x00')
-			# del RSSI_strings[0][0]
-			# message_counter+=1
-		# if message.find("ref-node2:",0,10) !=-1:
-			# message.rstrip('\x00')
-			# RSSI_strings[1]=  message.split(" ",-1)
-			# if RSSI_strings[1].count('\x00') > 0:
-				# RSSI_strings[1].remove('\x00')
-			# del RSSI_strings[1][0]
-			# message_counter+=1
-		# if message.find("ref-node3:",0,10) !=-1:
-			# message.rstrip('\x00')
-			# RSSI_strings[2]=  message.split(" ",-1)
-			# if RSSI_strings[2].count('\x00') > 0:
-				# RSSI_strings[2].remove('\x00')
-			# del RSSI_strings[2][0]
-			# message_counter+=1
-		# if message.find("ref-node4:",0,10) !=-1:
-			# message.rstrip('\x00')
-			# RSSI_strings[3]=  message.split(" ",-1)
-			# if RSSI_strings[3].count('\x00') > 0:
-				# RSSI_strings[3].remove('\x00')
-			# del RSSI_strings[3][0]
-			# message_counter+=1
-		# receiver.nextPacket()
-		
-	# if len(RSSI_strings[0]) > 1:
-		# for i in range(N):
-			# del RSSI_strings[0][len(RSSI_strings[0])-1]
-			# del RSSI_strings[1][len(RSSI_strings[1])-1]
-			# del RSSI_strings[2][len(RSSI_strings[2])-1]
-			# del RSSI_strings[3][len(RSSI_strings[3])-1]
-		# message_counter=0
-		print(RSSI_strings)
-		# localize_robots(RSSI_strings)
+while robot.step(timestep) != -1:
+	if receiver.getQueueLength() > 0:
+		message = receiver.getData().decode('utf-8')
+		if message.find("ref-node1:",0,10) !=-1:
+			message.rstrip('\x00')
+			RSSI_strings[0]= message.split(" ",-1)
+			if RSSI_strings[0].count('\x00') > 0:
+				RSSI_strings[0].remove('\x00')
+			del RSSI_strings[0][0]
+			message_counter+=1
+		if message.find("ref-node2:",0,10) !=-1:
+			message.rstrip('\x00')
+			RSSI_strings[1]=  message.split(" ",-1)
+			if RSSI_strings[1].count('\x00') > 0:
+				RSSI_strings[1].remove('\x00')
+			del RSSI_strings[1][0]
+			message_counter+=1
+		if message.find("ref-node3:",0,10) !=-1:
+			message.rstrip('\x00')
+			RSSI_strings[2]=  message.split(" ",-1)
+			if RSSI_strings[2].count('\x00') > 0:
+				RSSI_strings[2].remove('\x00')
+			del RSSI_strings[2][0]
+			message_counter+=1
+		if message.find("ref-node4:",0,10) !=-1:
+			message.rstrip('\x00')
+			RSSI_strings[3]=  message.split(" ",-1)
+			if RSSI_strings[3].count('\x00') > 0:
+				RSSI_strings[3].remove('\x00')
+			del RSSI_strings[3][0]
+			message_counter+=1
+		receiver.nextPacket()
+
+	if len(RSSI_strings[0]) > 1:
+		for i in range(N):
+			del RSSI_strings[0][len(RSSI_strings[0])-1]
+			del RSSI_strings[1][len(RSSI_strings[1])-1]
+			del RSSI_strings[2][len(RSSI_strings[2])-1]
+			del RSSI_strings[3][len(RSSI_strings[3])-1]
+		message_counter=0
+		# print(RSSI_strings)
+		localize_robots(RSSI_strings)

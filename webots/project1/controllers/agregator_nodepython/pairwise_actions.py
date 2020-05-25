@@ -52,16 +52,15 @@ def calculate_angle(x_p,y_p):
     return theta
 
 def update_pairwisedistance(xj,yj,rho_j,xk,yk,rho_k,times,mu):
-    x_p,y_p= distance_vector(xj,yj,xk,yk) #xj-xk , yj-yk
-    pdist = distance_magnitude(x_p,y_p) # |rj - rk|
-    theta= calculate_angle(x_p,y_p)
-        
-    deg = theta*180/np.pi
-    
-    #print(x_p, y_p, deg)
+	x_p,y_p= distance_vector(xj,yj,xk,yk) #xj-xk , yj-yk
+	pdist = distance_magnitude(x_p,y_p) # |rj - rk|
+	theta= calculate_angle(x_p,y_p)
 
-    xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
-    yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
+	deg = theta*180/np.pi
 
-    return xrj,yrj#,xrk,yrk,xj,yj,xk,yk
+	#print(x_p, y_p, deg)
+	xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
+	yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
+	jmagnitude=	distance_magnitude(xrj,yrj)
+	return xrj,yrj,theta,jmagnitude#,xrk,yrk,xj,yj,xk,yk
 	#calculate the pairwise distance

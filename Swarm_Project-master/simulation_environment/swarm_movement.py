@@ -45,7 +45,7 @@ simulation_time = time.time()
 
 trial_no="BD1"
 
-N=100
+N=10
 rho_bar, sigma =0, 100
 mu=100
 l=5*rho_bar
@@ -81,15 +81,15 @@ Uma.append(du) #Average List
 dUma=np.mean(Uma)
 Uma_knot=0
 while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon): 
-    objective_func = AverageMeter()
-    averageobjective_func= AverageMeter()
+    #objective_func = AverageMeter()
+    #averageobjective_func= AverageMeter()
     #previous Uma
     
     interaction=1
-    plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
-    plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
+    #plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
+    #plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
 
-    plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
+    #plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
     
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
@@ -124,7 +124,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
 
     if len(Uma)==32: #pop the oldest value of the running average
         dUma=np.mean(Uma)-Uma_knot
-        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
+        #plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
         del Uma[0]
     
     step = step+1
