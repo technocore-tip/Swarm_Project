@@ -59,7 +59,7 @@ def localize_robots(RSSI_strings):
 	#return robots
 
 robot = Robot()
-timestep =32
+timestep =64
 
 sender = robot.getEmitter('emitter')
 receiver = robot.getReceiver('receiver')
@@ -109,13 +109,13 @@ while robot.step(timestep) != -1:
 			del RSSI_strings[3][0]
 			message_counter+=1
 		receiver.nextPacket()
-
-	if len(RSSI_strings[0]) > 1:
-		for i in range(N):
-			del RSSI_strings[0][len(RSSI_strings[0])-1]
-			del RSSI_strings[1][len(RSSI_strings[1])-1]
-			del RSSI_strings[2][len(RSSI_strings[2])-1]
-			del RSSI_strings[3][len(RSSI_strings[3])-1]
-		message_counter=0
+	#print(RSSI_strings)
+	if len(RSSI_strings[0]) > 2:
+		# for i in range(10):
+			# del RSSI_strings[0][len(RSSI_strings[0])-1]
+			# del RSSI_strings[1][len(RSSI_strings[1])-1]
+			# del RSSI_strings[2][len(RSSI_strings[2])-1]
+			# del RSSI_strings[3][len(RSSI_strings[3])-1]
+		# message_counter=0
 		# print(RSSI_strings)
 		localize_robots(RSSI_strings)
