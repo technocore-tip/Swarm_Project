@@ -27,8 +27,6 @@ static WbDeviceTag left_motor, right_motor,emitters,imu,receivers;
 #define LEFT 0
 #define RIGHT 1
 #define MAX_SPEED 6.28
-static double speeds[2];
-
 /* Breitenberg stuff */
 
 static int get_time_step() {
@@ -83,13 +81,6 @@ static void blink_leds() {
   leds_values[(counter / 10) % LEDS_NUMBER] = true;
 }
 
-
-static void go_backwards() {
-  wb_motor_set_velocity(left_motor, -MAX_SPEED);
-  wb_motor_set_velocity(right_motor, -MAX_SPEED);
-  passive_wait(0.2);
-}
-
 static void turn_left() {
   wb_motor_set_velocity(left_motor, -MAX_SPEED/4);
   wb_motor_set_velocity(right_motor, MAX_SPEED/4);
@@ -132,7 +123,7 @@ int main(int argc, char **argv) {
     send_message();
     while (wb_receiver_get_queue_length(receivers) > 0) 
       {
-         const char *message = wb_receiver_get_data(receivers);
+         char *message = wb_receiver_get_data(receivers);
          char * token = strtok(message, " ");
          int message_counter=0,node_id=0;
          float magnitude=0,angle=0;         
@@ -180,13 +171,12 @@ int main(int argc, char **argv) {
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
             step();
-            float t= magnitude/(MAX_SPEED*0.1);
+            //float t= magnitude/(12.874*0.1);
             wb_motor_set_velocity(left_motor,0.1*MAX_SPEED);
             wb_motor_set_velocity(right_motor,0.1*MAX_SPEED);
-            passive_wait(t);
+            passive_wait(magnitude);
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
-            
          }
          message_counter=0;
          magnitude=0;

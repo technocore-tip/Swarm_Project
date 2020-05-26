@@ -14,7 +14,7 @@ def normal_distribution(mu,sigma,N):
 
         s= np.random.normal(sigma,mu)
         if s >= 0:
-            rho_k.append(s)
+            rho_k.append((3.55+s)) #3.55 is the radius of the robot body
   #  plt.hist(rho_k,30,density = True)
 #    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     #plt.show()
@@ -22,7 +22,7 @@ def normal_distribution(mu,sigma,N):
     return rho_k
 
 def localize_robots(RSSI_strings):
-	ref_node=np.array([[2,2],[-2,2],[-2,-2],[2,-2]])
+	ref_node=np.array([[4,4],[-4,4],[-4,-4],[4,-4]])
 	robots= list()
 	robots.clear()
 	for x in range(RSSI_strings.size):
@@ -39,23 +39,24 @@ def localize_robots(RSSI_strings):
 		[(pow(ref_node[1][0],2)-pow(ref_node[3][0],2))+(pow(ref_node[1][1],2)-pow(ref_node[3][1],2)-pow(np.sqrt(1/RSSI_strings[1][n][1]),2)+pow(np.sqrt(1/RSSI_strings[3][n][1]),2))],
 		[(pow(ref_node[2][0],2)-pow(ref_node[3][0],2))+(pow(ref_node[2][1],2)-pow(ref_node[3][1],2)-pow(np.sqrt(1/RSSI_strings[2][n][1]),2)+pow(np.sqrt(1/RSSI_strings[3][n][1]),2))]])
 		xy=a/X
-		x,y=xy[2][0],xy[0][1]
+		x,y=xy[2][0]*100,xy[0][1]*100 #change unit to cm
 		robots.append([RSSI_strings[0][n][0],x,y])
 		#print("Real-Time Location (m):node=",n,"x=",x,"y=",y)
 		#print(robots)
 		if len(robots)>2:
 			robotjk = random.sample(robots,2)
 			#print(robotjk)
-			#print(robotjk[0][0])
-			xj,yj,angle,magnitude=update_pairwisedistance(robotjk[0][1],robotjk[0][2],rho_k[robotjk[0][0]-1],robotjk[1][1],robotjk[1][2],rho_k[robotjk[1][0]-1],times,mu)
-			#send this xj yj to robot j
+			if(robotjk[0][0]!=robotjk[1][0]):
+				#print(robotjk[0][0])
+				xj,yj,angle,magnitude=update_pairwisedistance(robotjk[0][1],robotjk[0][2],rho_k[robotjk[0][0]-1],robotjk[1][1],robotjk[1][2],rho_k[robotjk[1][0]-1],times,mu)
+				#send this xj yj to robot j
 
-			message=str(robotjk[0][0])+' '+str(xj)+' '+str(yj)+' '+str(magnitude)+' '+str(angle)
-			#message = 'message_frommain'
-			sender.send(message.encode('utf-8'))
-			#print(message)
+				message=str(robotjk[0][0])+' '+str(xj)+' '+str(yj)+' '+str(magnitude)+' '+str(angle)
+				#message = 'message_frommain'
+				sender.send(message.encode('utf-8'))
+				#print(message)
+				time.sleep(magnitude)
 	RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
-
 	#return robots
 
 robot = Robot()
@@ -66,13 +67,13 @@ receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
 N=10
-rho_bar, sigma =0, 0.5
-mu=100
+rho_bar, sigma =0, 10
+mu=12.874
 l=5*rho_bar
 times=pow(2,-8)
 
 rho_k = normal_distribution(rho_bar,sigma,N)
-
+print(rho_k)
 message_counter=0
 RSSI_strings=np.empty(4, dtype='object')
 RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""

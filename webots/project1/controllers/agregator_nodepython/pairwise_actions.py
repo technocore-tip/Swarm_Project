@@ -16,7 +16,7 @@ def distance_vector(x1,y1,x2,y2):#function to calculate distance between two poi
     x = x2 - x1 #P1.getX()-P2.getX()
     y = y2 - y1 #P1.getY()-P2.getY()
     return x,y
-    pass
+    pass 
 
 def distance_magnitude(x,y):
 	#calculate magnitude of distance vector
@@ -55,12 +55,13 @@ def update_pairwisedistance(xj,yj,rho_j,xk,yk,rho_k,times,mu):
 	x_p,y_p= distance_vector(xj,yj,xk,yk) #xj-xk , yj-yk
 	pdist = distance_magnitude(x_p,y_p) # |rj - rk|
 	theta= calculate_angle(x_p,y_p)
-
+	#print(xj,yj,xk,yk,x_p,y_p)
 	deg = theta*180/np.pi
-
+	#print(pdist)
 	#print(x_p, y_p, deg)
 	xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
 	yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
 	jmagnitude=	distance_magnitude(xrj,yrj)
-	return xrj,yrj,theta,jmagnitude#,xrk,yrk,xj,yj,xk,yk
+	print(jmagnitude,(jmagnitude/(6.437*0.1)))
+	return xrj,yrj,theta,(jmagnitude/(6.437*0.1))#,xrk,yrk,xj,yj,xk,yk
 	#calculate the pairwise distance

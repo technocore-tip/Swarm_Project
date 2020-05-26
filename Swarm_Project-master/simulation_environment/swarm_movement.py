@@ -46,7 +46,7 @@ simulation_time = time.time()
 trial_no="BD1"
 
 N=20
-rho_bar, sigma =0, 100
+rho_bar, sigma =0, 300
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
@@ -80,7 +80,7 @@ Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
 dUma=np.mean(Uma)
 Uma_knot=0
-while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon): 
+while(1):#((np.abs(du))>epsilon and (np.abs(dUma))>epsilon): 
     #objective_func = AverageMeter()
     #averageobjective_func= AverageMeter()
     #previous Uma
@@ -92,7 +92,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
     #plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
     
     while(interaction!=combination):
-        print("Interaction : %d Step: %d",interaction,step)
+      #  print("Interaction : %d Step: %d",interaction,step)
         pairwise_list = random.sample(particles, 2)
         robot_j = robots[pairwise_list[0][0]-1]
         rho_j= pairwise_list[0][1]
@@ -101,7 +101,7 @@ while((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
         xj,yj=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win,robots)
         robot_j.move(xj,yj)
         interaction = interaction+1
-        print("du/dt",du)
+      #  print("du/dt",du)
     if step==0:
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
