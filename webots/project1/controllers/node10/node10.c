@@ -146,13 +146,16 @@ int main(int argc, char **argv) {
             }               
             token = strtok(NULL, " ");
             message_counter++;
+            send_message();
          }
          if(node_id == node_no)
          {
+               send_message();
            float current_angle = orientation_angle();
            //printf("current angle %f\n",current_angle);
            while((current_angle > angle+0.2)||(current_angle < angle-0.2))
            {
+             
                if((current_angle > angle+0.2)||(current_angle > angle-0.2)) //rotate  clockwise
                {
                  turn_right();
@@ -166,6 +169,7 @@ int main(int argc, char **argv) {
              current_angle = orientation_angle();
              //printf("current angle %f\n",current_angle);
 //             printf("target angle %f\n",angle);
+               send_message();
             }
             //printf("magnitude : %f",magnitude);
             wb_motor_set_velocity(left_motor, 0);
@@ -177,11 +181,13 @@ int main(int argc, char **argv) {
             passive_wait(0.2);
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
+            send_message();
          }
          message_counter=0;
          magnitude=0;
          node_id=0;
          wb_receiver_next_packet(receivers);
+         passive_wait(0.06);
          blink_leds();
          step();
       }
