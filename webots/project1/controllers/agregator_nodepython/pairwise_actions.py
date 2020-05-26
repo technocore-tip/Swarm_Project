@@ -63,6 +63,6 @@ def update_pairwisedistance(xj,yj,rho_j,xk,yk,rho_k,times,mu):
 	yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
 	phi = calculate_angle(xrj,yrj)
 	jmagnitude=	distance_magnitude(xrj,yrj)
-	print(math.tanh(pdist-rho_j))
+	#print(math.tanh(pdist-rho_j))
 	return xrj,yrj,phi,jmagnitude#,xrk,yrk,xj,yj,xk,yk
 	#calculate the pairwise distance
