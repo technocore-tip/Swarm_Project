@@ -55,7 +55,7 @@ def localize_robots(RSSI_strings):
 				#message = 'message_frommain'
 				sender.send(message.encode('utf-8'))
 				#print(message)
-				time.sleep(magnitude)
+				#time.sleep(magnitude)
 	RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
 	#return robots
 
@@ -67,8 +67,8 @@ receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
 N=10
-rho_bar, sigma =0, 10
-mu=12.874
+rho_bar, sigma =0, 200
+mu=100
 l=5*rho_bar
 times=pow(2,-8)
 

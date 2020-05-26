@@ -1,5 +1,5 @@
 Webots Project File version R2020a
-perspectives: 000000ff00000000fd00000003000000000000000000000000fc0100000001fb0000001a0044006f00630075006d0065006e0074006100740069006f006e0000000000000000140000005400ffffff00000001000004570000056afc0200000001fb0000001400540065007800740045006400690074006f007201000000240000056a000000d000ffffff0000000300000f000000024bfc0100000001fb0000000e0043006f006e0073006f006c0065010000000000000f000000006e00ffffff00000aa30000056a00000001000000020000000100000008fc00000000
+perspectives: 000000ff00000000fd000000030000000000000320000007bbfc0100000002fb0000001a0044006f00630075006d0065006e0074006100740069006f006e0000000000000000140000005400fffffffb0000001e00480074006d006c0052006f0062006f007400570069006e0064006f0077000000000000000320000000000000000000000001000004570000056afc0200000001fb0000001400540065007800740045006400690074006f007201000000240000056a000000d000ffffff0000000300000f000000024bfc0100000001fb0000000e0043006f006e0073006f006c0065010000000000000f000000006e00ffffff00000aa30000056a00000001000000020000000100000008fc00000000
 simulationViewPerspectives: 000000ff0000000100000002000002420000085b0100000006010000000100
 sceneTreePerspectives: 000000ff0000000100000002000000c0000000fc0100000006010000000200
 maximizedDockId: -1
@@ -8,19 +8,9 @@ projectionMode: PERSPECTIVE
 selectionDisabled: 0
 viewpointLocked: 0
 orthographicViewHeight: 1
-textFiles: 0 "controllers/node1/node1.c" "controllers/node2/node2.c" "controllers/node3/node3.c" "controllers/node4/node4.c" "controllers/node5/node5.c" "controllers/node6/node6.c" "controllers/node7/node7.c" "controllers/node8/node8.c" "controllers/node9/node9.c" "controllers/node10/node10.c"
-renderingDevicePerspectives: reference_node1(7):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(1):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(3):camera;1;1;0;0
+textFiles: 9 "controllers/node1/node1.c" "controllers/node2/node2.c" "controllers/node3/node3.c" "controllers/node4/node4.c" "controllers/node5/node5.c" "controllers/node6/node6.c" "controllers/node7/node7.c" "controllers/node8/node8.c" "controllers/node9/node9.c" "controllers/node10/node10.c"
 renderingDevicePerspectives: reference_node3:camera;1;1;0;0
 renderingDevicePerspectives: reference_node4:camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(5):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(11):camera;1;1;0;0
 renderingDevicePerspectives: reference_node2:camera;1;1;0;0
 renderingDevicePerspectives: reference_node1:camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(8):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(10):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(4):camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(2):camera;1;1;0;0
 renderingDevicePerspectives: agregator_node:camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(9):camera;1;1;0;0

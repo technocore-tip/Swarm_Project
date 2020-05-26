@@ -167,14 +167,14 @@ int main(int argc, char **argv) {
              //printf("current angle %f\n",current_angle);
 //             printf("target angle %f\n",angle);
             }
-            printf("magnitude : %f",magnitude);
+            //printf("magnitude : %f",magnitude);
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
             step();
             //float t= magnitude/(12.874*0.1);
-            wb_motor_set_velocity(left_motor,0.1*MAX_SPEED);
-            wb_motor_set_velocity(right_motor,0.1*MAX_SPEED);
-            passive_wait(magnitude);
+            wb_motor_set_velocity(left_motor,2.44*magnitude);
+            wb_motor_set_velocity(right_motor,2.44*magnitude);
+            passive_wait(0.2);
             wb_motor_set_velocity(left_motor, 0);
             wb_motor_set_velocity(right_motor,0);
          }
