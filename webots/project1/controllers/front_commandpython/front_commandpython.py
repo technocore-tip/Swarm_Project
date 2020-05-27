@@ -4,7 +4,7 @@ node='1_'
 print("Initializing node",node)
 def send_message(message):
 	emitter.send(message.encode('utf-8'))
-TIME_STEP = 512
+TIME_STEP = 32
 
 MAX_SPEED = 6.28
 
@@ -27,4 +27,4 @@ rightMotor.setVelocity(0 * MAX_SPEED)
 
 while robot.step(TIME_STEP) != -1:
 	send_message(node)
-	print(gyros.getRollPitchYaw()[2])
+	#print(gyros.getRollPitchYaw()[2])
