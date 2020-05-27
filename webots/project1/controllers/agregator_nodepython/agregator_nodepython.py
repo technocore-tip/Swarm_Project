@@ -62,7 +62,7 @@ def localize_robots(ref_node1,ref_node2,ref_node3,ref_node4):
 	#return robots
 
 robot = Robot()
-timestep =64
+timestep =30
 
 sender = robot.getEmitter('emitter')
 receiver = robot.getReceiver('receiver')

@@ -64,7 +64,7 @@ static void init_devices() {
   emitters = wb_robot_get_device("emitter");
   imu = wb_robot_get_device("inertial_unit");
   
-  wb_receiver_enable(receivers, 60);
+  wb_receiver_enable(receivers, 32);
   wb_inertial_unit_enable(imu,get_time_step());
   wb_motor_set_position(left_motor, INFINITY);
   wb_motor_set_position(right_motor, INFINITY);
@@ -82,15 +82,28 @@ static void blink_leds() {
 }
 
 static void turn_left() {
-  wb_motor_set_velocity(left_motor, -MAX_SPEED/4);
-  wb_motor_set_velocity(right_motor, MAX_SPEED/4);
+  wb_motor_set_velocity(left_motor, -MAX_SPEED*0.1);
+  wb_motor_set_velocity(right_motor, MAX_SPEED*0.1);
   passive_wait(0.2);
 }
 
 static void turn_right() {
-  wb_motor_set_velocity(left_motor, MAX_SPEED/4);
-  wb_motor_set_velocity(right_motor,-MAX_SPEED/4);
+  wb_motor_set_velocity(left_motor, MAX_SPEED*0.1);
+  wb_motor_set_velocity(right_motor,-MAX_SPEED*0.1);
   passive_wait(0.2);
+}
+
+static void move_bot(float magnitude){
+  wb_motor_set_velocity(left_motor, 0);
+  wb_motor_set_velocity(right_motor,0);
+  step();
+  //float t= magnitude/(12.874*0.1);
+  wb_motor_set_velocity(left_motor,2.44*magnitude);
+  wb_motor_set_velocity(right_motor,2.44*magnitude);
+  passive_wait(0.2);
+  wb_motor_set_velocity(left_motor, 0);
+  wb_motor_set_velocity(right_motor,0);
+  passive_wait(0.1);
 }
 
 static float orientation_angle(){
@@ -127,61 +140,54 @@ int main(int argc, char **argv) {
          char * token = strtok(message, " ");
          int message_counter=0,node_id=0;
          float magnitude=0,angle=0;         
-         while( token != NULL ) {
+         while( token != NULL ) 
+         {
 
             if(message_counter==0)
             {
-              if(atoi(token)==node_no)
-              {
                 node_id=atoi(token);
-               }
             }
-            if(message_counter==3)
+            if((message_counter==3)&& (node_id==node_no))
             {
                magnitude=atof(token);
             }      
-            if(message_counter==4)
+            if((message_counter==4)&& (node_id==node_no))
             {
-               angle=atof(token);          
+               angle=atof(token);  
+               float current_angle = orientation_angle();
+               //printf("current angle %f\n",current_angle);
+               while((current_angle > angle+0.2)||(current_angle < angle-0.2))
+               {
+                 
+                   if((current_angle > angle+0.2)||(current_angle > angle-0.2)) //rotate  clockwise
+                   {
+                     turn_right();
+                     step();
+                   }
+                   if((current_angle < angle+0.2)||(current_angle < angle-0.2)) // rotate  counter clockwise
+                   {
+                       turn_left();
+                       step();
+                   }
+                 current_angle = orientation_angle();
+                 //printf("current angle %f\n",current_angle);
+    //             printf("target angle %f\n",angle);
+                }
+                //printf("magnitude : %f",magnitude);
+                move_bot(magnitude);
+                send_message();       
             }               
             token = strtok(NULL, " ");
             message_counter++;
+            send_message();
          }
-         if(node_id == node_no)
-         {
-           float current_angle = orientation_angle();
-           //printf("current angle %f\n",current_angle);
-           while((current_angle > angle+0.2)||(current_angle < angle-0.2))
-           {
-               if((current_angle > angle+0.2)||(current_angle > angle-0.2)) //rotate  clockwise
-               {
-                 turn_right();
-                 step();
-               }
-               if((current_angle < angle+0.2)||(current_angle < angle-0.2)) // rotate  counter clockwise
-               {
-                   turn_left();
-                   step();
-               }
-             current_angle = orientation_angle();
-             //printf("current angle %f\n",current_angle);
-//             printf("target angle %f\n",angle);
-            }
-            //printf("magnitude : %f",magnitude);
-            wb_motor_set_velocity(left_motor, 0);
-            wb_motor_set_velocity(right_motor,0);
-            step();
-            //float t= magnitude/(12.874*0.1);
-            wb_motor_set_velocity(left_motor,2.44*magnitude);
-            wb_motor_set_velocity(right_motor,2.44*magnitude);
-            passive_wait(0.2);
-            wb_motor_set_velocity(left_motor, 0);
-            wb_motor_set_velocity(right_motor,0);
-         }
+        
+         printf("node_id:%d\n",node_id);
          message_counter=0;
          magnitude=0;
          node_id=0;
          wb_receiver_next_packet(receivers);
+         passive_wait(0.06);
          blink_leds();
          step();
       }
