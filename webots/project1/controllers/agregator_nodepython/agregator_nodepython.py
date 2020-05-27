@@ -7,6 +7,7 @@ import struct
 import random
 from pairwise_actions import distance_vector,distance_magnitude,update_pairwisedistance
 from numpy.lib import recfunctions as rfn
+N=100
 def normal_distribution(mu,sigma,N):
     start_time = time.time()
     rho_k=list()
@@ -61,7 +62,6 @@ sender = robot.getEmitter('emitter')
 receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
-N=15
 rho_bar, sigma =0,50
 mu=100
 l=5*rho_bar

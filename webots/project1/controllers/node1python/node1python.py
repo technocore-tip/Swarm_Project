@@ -2,8 +2,29 @@ from controller import Robot, Motor, Emitter, InertialUnit
 import time
 import numpy as np
 import time
-node='1_'
-actual_id=1
+import mysql.connector
+from mysql.connector import Error
+
+actual_id=0
+try:
+	connection = mysql.connector.connect(host='localhost',
+								 database='nonat',
+								 user='nonat',
+								 password='password')
+	sql_query="INSERT INTO `swarms` (`swarm_id`, `name`) VALUES (NULL, 'a')"
+	cursor = connection.cursor()
+	cursor.execute(sql_query)
+	cursor.execute('select LAST_INSERT_ID()')
+	records=cursor.fetchall()
+	print(records[0][0])
+	actual_id=records[0][0]
+	cursor.close() 
+	connection.close()
+except Error as e:
+	print("Error connecting to database",e)
+	
+node=str(actual_id)+'_'
+
 print("Initializing node",node)
 def send_message(message):
 	emitter.send(message.encode('utf-8'))
