@@ -3,7 +3,7 @@ from controller import Receiver, Emitter
 
 robot = Robot()
 timestep =32
-N=30
+N=100
 sender = robot.getEmitter('emitter')
 receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)

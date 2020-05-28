@@ -7,7 +7,7 @@ import struct
 import random
 from pairwise_actions import distance_vector,distance_magnitude,update_pairwisedistance
 from numpy.lib import recfunctions as rfn
-N=30
+N=100
 def normal_distribution(mu,sigma,N):
     start_time = time.time()
     rho_k=list()
