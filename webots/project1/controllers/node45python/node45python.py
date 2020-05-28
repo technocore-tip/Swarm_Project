@@ -2,8 +2,8 @@ from controller import Robot, Motor, Emitter, InertialUnit
 import time
 import numpy as np
 import time
-node='30_'
-actual_id=30
+node='45_'
+actual_id=45
 print("Initializing node",node)
 def send_message(message):
 	emitter.send(message.encode('utf-8'))

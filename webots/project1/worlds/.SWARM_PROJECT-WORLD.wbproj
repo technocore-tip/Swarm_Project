@@ -9,9 +9,9 @@ selectionDisabled: 0
 viewpointLocked: 0
 orthographicViewHeight: 1
 textFiles: 1 "controllers/node1/node1.c" "controllers/reference_node_2/reference_node_2.c"
-renderingDevicePerspectives: agregator_node:camera;1;1;0;0
-renderingDevicePerspectives: reference_node2:camera;1;1;0;0
-renderingDevicePerspectives: reference_node1(16):camera;1;1;0;0
 renderingDevicePerspectives: reference_node4:camera;1;1;0;0
-renderingDevicePerspectives: reference_node1:camera;1;1;0;0
 renderingDevicePerspectives: reference_node3:camera;1;1;0;0
+renderingDevicePerspectives: agregator_node:camera;1;1;0;0
+renderingDevicePerspectives: reference_node1:camera;1;1;0;0
+renderingDevicePerspectives: reference_node1(16):camera;1;1;0;0
+renderingDevicePerspectives: reference_node2:camera;1;1;0;0

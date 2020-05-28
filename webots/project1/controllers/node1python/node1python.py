@@ -25,7 +25,7 @@ except Error as e:
 	
 node=str(actual_id)+'_'
 
-print("Initializing node",node)
+print("Assigned RobotID: ",node)
 def send_message(message):
 	emitter.send(message.encode('utf-8'))
 TIME_STEP = 32
