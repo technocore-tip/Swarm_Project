@@ -62,7 +62,7 @@ sender = robot.getEmitter('emitter')
 receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
-rho_bar, sigma =0,50
+rho_bar, sigma =10,100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
@@ -150,14 +150,14 @@ while robot.step(timestep) != -1:
 					RSSI_strings[x][y][0]=int(RSSI_strings[x][y][0]) #covert robot id string to int
 					ref_node4[RSSI_strings[x][y][0]-1][0]=RSSI_strings[x][y][0]
 					ref_node4[RSSI_strings[x][y][0]-1][1]=RSSI_strings[x][y][1]
-					
+
 
 		# except:
-			# print("string convertion error")	
+			# print("string convertion error")
 		refnonzero1=0
 		refnonzero2=0
 		refnonzero3=0
-		refnonzero4=0 
+		refnonzero4=0
 		for n in range(N):
 			refnonzero1=refnonzero1+ np.count_nonzero(ref_node1[n][0])
 			refnonzero2=refnonzero2+ np.count_nonzero(ref_node2[n][0])
@@ -185,7 +185,7 @@ while robot.step(timestep) != -1:
 			RSSI_strings=np.empty(4, dtype='object')
 			RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
 			localize_robots(ref_node1,ref_node2,ref_node3,ref_node4)
-			
+
 			node_ids=np.zeros(N,dtype=int)
 			rssis=np.ones(N,dtype=float)
 			arrays=rfn.merge_arrays((node_ids,rssis))
@@ -196,4 +196,4 @@ while robot.step(timestep) != -1:
 		else:
 			#print("incomplete")
 			RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
-			RSSI_strings=np.empty(4, dtype='object')		
+			RSSI_strings=np.empty(4, dtype='object')
