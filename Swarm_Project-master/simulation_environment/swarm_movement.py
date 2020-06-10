@@ -82,7 +82,7 @@ times=pow(2,-8)
 rho_k,patches = normal_distribution(rho_bar,sigma,trial_no)
 particles=list()
 
-win = draw_windows(1024,1024) #draw window with width = 700 and height = 600.
+win = draw_windows(1024,1024,trial_no) #draw window with width = 700 and height = 600.
 robots = draw_swarm(N,win,l,rho_k,patches) #draw N swarm in win
 win.getMouse() #blocking call
 

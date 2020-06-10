@@ -26,10 +26,10 @@ def get_colour_name(requested_colour):
         actual_name = None 
     return actual_name, closest_name
 
-def draw_windows(w,h): #function for crea.ting the simulation space
+def draw_windows(w,h,name): #function for crea.ting the simulation space
 	#create windows
 	#print('create windows with name : swarm, width : ',w,', height : ',h)
-	return GraphWin('swarm',w,h)
+	return GraphWin(name,w,h)
 	pass
 
 def draw_swarm(n,win,l,rho_k,patches): #function for drawing robot nodes
