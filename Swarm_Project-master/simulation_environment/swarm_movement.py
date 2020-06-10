@@ -43,7 +43,7 @@ def get_colour_name(requested_colour):
 def mt_shuffle():
     np.random.shuffle(pairwise_list)
 
-def normal_distribution(mu,sigma):
+def normal_distribution(mu,sigma,trial_no):
     start_time = time.time()
     rho_k=list()
     while (len(rho_k)!=N):
@@ -61,7 +61,9 @@ def normal_distribution(mu,sigma):
     
     for c, p in zip(col, patches):
         plt.setp(p,fc=(cm(c/max(col))[0],cm(c/max(col))[1],cm(c/max(col))[2],1))
-    plt.savefig('Histogram.png', dpi=600)
+    plt.xlabel(r'Prefered Distance $\rho_k$')
+    plt.ylabel(r'Probability')
+    plt.savefig(trial_no'.png', dpi=600)
     plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k,0.5 * (bins[:-1] + bins[1:])
@@ -72,12 +74,12 @@ simulation_time = time.time()
 trial_no="BD1"
 
 N=100
-rho_bar, sigma =10,100
+rho_bar, sigma =50,100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
 
-rho_k,patches = normal_distribution(rho_bar,sigma)
+rho_k,patches = normal_distribution(rho_bar,sigma,trial_no)
 particles=list()
 
 win = draw_windows(1024,1024) #draw window with width = 700 and height = 600.
