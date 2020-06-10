@@ -61,7 +61,7 @@ def normal_distribution(mu,sigma):
     
     for c, p in zip(col, patches):
         plt.setp(p,fc=(cm(c/max(col))[0],cm(c/max(col))[1],cm(c/max(col))[2],1))
-    
+    plt.savefig('Histogram.png', dpi=600)
     plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k,0.5 * (bins[:-1] + bins[1:])
