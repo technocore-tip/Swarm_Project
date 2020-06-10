@@ -15,13 +15,30 @@ import threading
 import math
 from random import *
 import random
-
+import webcolors
 import numpy as np
 from itertools import combinations
 
 import scipy.stats
 import matplotlib.pyplot as plt
+#actual_name, closest_name = get_colour_name((int(cm(rho_k[x]/max(patches))[0]*255),int(cm(rho_k[x]/max(patches))[1]*255),int(cm(rho_k[x]/max(patches))[2]*255)))
+def closest_colour(requested_colour):
+    min_colours = {}
+    for key, name in webcolors.css3_hex_to_names.items():
+        r_c, g_c, b_c = webcolors.hex_to_rgb(key)
+        rd = (r_c - requested_colour[0]) ** 2
+        gd = (g_c - requested_colour[1]) ** 2
+        bd = (b_c - requested_colour[2]) ** 2
+        min_colours[(rd + gd + bd)] = name
+    return min_colours[min(min_colours.keys())]
 
+def get_colour_name(requested_colour):
+    try:
+        closest_name = actual_name = webcolors.rgb_to_name(requested_colour)
+    except ValueError:
+        closest_name = closest_colour(requested_colour)
+        actual_name = None 
+    return actual_name, closest_name
 
 def mt_shuffle():
     np.random.shuffle(pairwise_list)
@@ -39,11 +56,11 @@ def normal_distribution(mu,sigma):
     bin_centers = 0.5 * (bins[:-1] + bins[1:])
     print(patches)
 #    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
-    col = bin_centers - min(bin_centers)
-    col /= max(col)
+    col = bin_centers #- min(bin_centers)
+    #col /= max(col)
     
     for c, p in zip(col, patches):
-        plt.setp(p, 'facecolor', cm(c))
+        plt.setp(p,fc=(cm(c/max(col))[0],cm(c/max(col))[1],cm(c/max(col))[2],1))
     
     plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))

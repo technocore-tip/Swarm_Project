@@ -37,11 +37,12 @@ def draw_swarm(n,win,l,rho_k,patches): #function for drawing robot nodes
     max_p = max(patches)
     for x in range(0,n):
     		#robot.append(Circle(Point( randint(20,win.getWidth-20) , randint(20,win.getHeight()-20) ), 0.5))
-        robot.append(Circle(Point( randint(-(win.getWidth()/4),win.getWidth()/4)+win.getWidth()/2, (win.getHeight()/2)-randint(-(win.getHeight()/4),win.getHeight()/4) ), 2))
+        robot.append(Circle(Point( randint(-(win.getWidth()/4),win.getWidth()/4)+win.getWidth()/2, (win.getHeight()/2)-randint(-(win.getHeight()/4),win.getHeight()/4) ),4 ))
         		#print(robot)
         		#print('create robot with number ',x,' point x : ',x*200+40,', y : 200 , r : 5')
         cm = plt.cm.get_cmap('RdYlBu_r')
-        actual_name, closest_name = get_colour_name((int(cm(rho_k[x]/max(patches))[0]*255),int(cm(rho_k[x]/max(patches))[1]*255),int(cm(rho_k[x]/max(patches))[2]*255)))
+        actual_name, closest_name = get_colour_name((int(cm(rho_k[x]/max(rho_k))[0]*255),int(cm(rho_k[x]/max(rho_k))[1]*255),int(cm(rho_k[x]/max(rho_k))[2]*255)))
+        #actual_name, closest_name = get_colour_name((int(cm((rho_k[x]/max(rho_k))-min(rho_k))[0]*255),int(cm((rho_k[x]/max(rho_k))-min(rho_k))[1]*255),int(cm((rho_k[x]/max(rho_k))-min(rho_k))[2]*255)))
         robot[x].setFill(closest_name)
         robot[x].draw(win)
     pass
