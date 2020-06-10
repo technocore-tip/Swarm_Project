@@ -4,8 +4,27 @@ import threading
 import math
 from random import randint
 import numpy as np
+import matplotlib.pyplot as plt
+import webcolors
 #swarm environment
 lock = threading.Lock()
+def closest_colour(requested_colour):
+    min_colours = {}
+    for key, name in webcolors.css3_hex_to_names.items():
+        r_c, g_c, b_c = webcolors.hex_to_rgb(key)
+        rd = (r_c - requested_colour[0]) ** 2
+        gd = (g_c - requested_colour[1]) ** 2
+        bd = (b_c - requested_colour[2]) ** 2
+        min_colours[(rd + gd + bd)] = name
+    return min_colours[min(min_colours.keys())]
+
+def get_colour_name(requested_colour):
+    try:
+        closest_name = actual_name = webcolors.rgb_to_name(requested_colour)
+    except ValueError:
+        closest_name = closest_colour(requested_colour)
+        actual_name = None 
+    return actual_name, closest_name
 
 def draw_windows(w,h): #function for crea.ting the simulation space
 	#create windows
@@ -13,19 +32,22 @@ def draw_windows(w,h): #function for crea.ting the simulation space
 	return GraphWin('swarm',w,h)
 	pass
 
-def draw_swarm(n,win,l): #function for drawing robot nodes
-	robot =[]
-	for x in range(0,n):
-		#robot.append(Circle(Point( randint(20,win.getWidth-20) , randint(20,win.getHeight()-20) ), 0.5))
-		robot.append(Circle(Point( randint(-(win.getWidth()/4),win.getWidth()/4)+win.getWidth()/2, (win.getHeight()/2)-randint(-(win.getHeight()/4),win.getHeight()/4) ), 2))
-		#print(robot)
-		#print('create robot with number ',x,' point x : ',x*200+40,', y : 200 , r : 5')
-		robot[x].setFill('blue')
-		robot[x].draw(win)
-		pass
-	#print(robot)
-	return robot
-	pass
+def draw_swarm(n,win,l,rho_k,patches): #function for drawing robot nodes
+    robot =[]
+    max_p = max(patches)
+    for x in range(0,n):
+    		#robot.append(Circle(Point( randint(20,win.getWidth-20) , randint(20,win.getHeight()-20) ), 0.5))
+        robot.append(Circle(Point( randint(-(win.getWidth()/4),win.getWidth()/4)+win.getWidth()/2, (win.getHeight()/2)-randint(-(win.getHeight()/4),win.getHeight()/4) ), 2))
+        		#print(robot)
+        		#print('create robot with number ',x,' point x : ',x*200+40,', y : 200 , r : 5')
+        cm = plt.cm.get_cmap('RdYlBu_r')
+        actual_name, closest_name = get_colour_name((int(cm(rho_k[x]/max(patches))[0]*255),int(cm(rho_k[x]/max(patches))[1]*255),int(cm(rho_k[x]/max(patches))[2]*255)))
+        robot[x].setFill(closest_name)
+        robot[x].draw(win)
+    pass
+    	#print(robot)
+    return robot
+    pass
 
 #def stopping_condition(N,rho_k):
 

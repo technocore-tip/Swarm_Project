@@ -34,11 +34,20 @@ def normal_distribution(mu,sigma):
         s= np.random.normal(sigma,mu)
         if s >= 0:
             rho_k.append(s)
-  #  plt.hist(rho_k,30,density = True)
+    cm = plt.cm.get_cmap('RdYlBu_r')
+    n,bins,patches=plt.hist(rho_k,30,density = True)
+    bin_centers = 0.5 * (bins[:-1] + bins[1:])
+    print(patches)
 #    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
-    #plt.show()
+    col = bin_centers - min(bin_centers)
+    col /= max(col)
+    
+    for c, p in zip(col, patches):
+        plt.setp(p, 'facecolor', cm(c))
+    
+    plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
-    return rho_k
+    return rho_k,0.5 * (bins[:-1] + bins[1:])
 
 #plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
@@ -51,11 +60,11 @@ mu=100
 l=5*rho_bar
 times=pow(2,-8)
 
-rho_k = normal_distribution(rho_bar,sigma)
+rho_k,patches = normal_distribution(rho_bar,sigma)
 particles=list()
 
 win = draw_windows(1024,1024) #draw window with width = 700 and height = 600.
-robots = draw_swarm(N,win,l) #draw N swarm in win
+robots = draw_swarm(N,win,l,rho_k,patches) #draw N swarm in win
 win.getMouse() #blocking call
 
 for i in range(1,N+1,1):
