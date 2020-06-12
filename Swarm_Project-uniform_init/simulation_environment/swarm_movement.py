@@ -10,7 +10,7 @@ from graphics import *
 from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance,init_uniform_rhok,draw_robots
 
 import time
-#from line_plotter import AverageMeter, VisdomLinePlotter
+from line_plotter import AverageMeter, VisdomLinePlotter
 import threading
 import math
 from random import *
@@ -55,7 +55,7 @@ def normal_distribution(mu,sigma,trial_no):
     n,bins,patches=plt.hist(rho_k,30,density = True)
     bin_centers = 0.5 * (bins[:-1] + bins[1:])
     print(patches)
-#    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
+    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     col = bin_centers #- min(bin_centers)
     #col /= max(col)
     
@@ -68,7 +68,7 @@ def normal_distribution(mu,sigma,trial_no):
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k,0.5 * (bins[:-1] + bins[1:])
 
-#plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
+plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
 trial_no="With Uniform rho_k Initialization"
@@ -110,19 +110,19 @@ Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
 dUma=np.mean(Uma)
 Uma_knot=0
-while(1):#((np.abs(du))>epsilon and (np.abs(dUma))>epsilon): 
-    #objective_func = AverageMeter()
-    #averageobjective_func= AverageMeter()
+while(((np.abs(du))>epsilon and (np.abs(dUma))>epsilon): 
+    objective_func = AverageMeter()
+    averageobjective_func= AverageMeter()
     #previous Uma
     
     interaction=1
-    #plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
-    #plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
+    plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
+    plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
 
-    #plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
+    plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
     
     while(interaction!=combination):
-      #  print("Interaction : %d Step: %d",interaction,step)
+        print("Interaction : %d Step: %d",interaction,step)
         pairwise_list = random.sample(particles, 2)
         robot_j = robots[pairwise_list[0][0]-1]
         rho_j= pairwise_list[0][1]
@@ -154,7 +154,7 @@ while(1):#((np.abs(du))>epsilon and (np.abs(dUma))>epsilon):
 
     if len(Uma)==32: #pop the oldest value of the running average
         dUma=np.mean(Uma)-Uma_knot
-        #plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
+        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
         del Uma[0]
     
     step = step+1
