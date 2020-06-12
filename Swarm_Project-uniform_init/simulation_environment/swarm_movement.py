@@ -110,7 +110,7 @@ Uma=list() #Order Parameter Running Average
 Uma.append(du) #Average List
 dUma=np.mean(Uma)
 Uma_knot=0
-while(((np.abs(du))>epsilon and (np.abs(dUma))>epsilon): 
+while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)): 
     objective_func = AverageMeter()
     averageobjective_func= AverageMeter()
     #previous Uma
