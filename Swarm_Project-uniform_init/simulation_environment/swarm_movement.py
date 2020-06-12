@@ -2,12 +2,12 @@
 """
 Created on Wed Mar 11 12:49:18 2020
 
-@author: Paul Vincent Nonat, :Rowel S Facunla
+@author: Paul Vincent Nonat
 """
 
 # -*- coding: utf-8 -*-
 from graphics import *
-from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance
+from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance,init_uniform_rhok,draw_robots
 
 import time
 #from line_plotter import AverageMeter, VisdomLinePlotter
@@ -71,25 +71,27 @@ def normal_distribution(mu,sigma,trial_no):
 #plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="Without Uniform rho_k Initialization"
+trial_no="With Uniform rho_k Initialization"
 
 N=100
 rho_bar, sigma =50,100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
-
 rho_k,patches = normal_distribution(rho_bar,sigma,trial_no)
+
 particles=list()
 
+    
 win = draw_windows(1024,1024,trial_no) #draw window with width = 700 and height = 600.
-robots = draw_swarm(N,win,l,rho_k,patches) #draw N swarm in win
+
+robots = draw_swarm(N,win) #draw N swarm in win
+robots,rho_k = init_uniform_rhok(rho_k,robots,1024,1024,win)
+robots = draw_robots(N,win,robots,rho_k,patches)
 win.getMouse() #blocking call
 
 for i in range(1,N+1,1):
     particles.append([i,rho_k[i-1]])
-
-
 #pairwise_list= list(combinations(particles,2))
 pairwise_list = random.sample(particles, 2)
 #mt_shuffle()
