@@ -10,7 +10,7 @@ from graphics import *
 from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance
 
 import time
-#from line_plotter import AverageMeter, VisdomLinePlotter
+from line_plotter import AverageMeter, VisdomLinePlotter
 import threading
 import math
 from random import *
@@ -55,7 +55,7 @@ def normal_distribution(mu,sigma,trial_no):
     n,bins,patches=plt.hist(rho_k,30,density = True)
     bin_centers = 0.5 * (bins[:-1] + bins[1:])
     print(patches)
-#    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
+    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     col = bin_centers #- min(bin_centers)
     #col /= max(col)
     
@@ -68,13 +68,13 @@ def normal_distribution(mu,sigma,trial_no):
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k,0.5 * (bins[:-1] + bins[1:])
 
-#plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
+plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="Without Uniform rho_k Initialization"
+trial_no="TURK1 s2"
 
 N=100
-rho_bar, sigma =50,100
+rho_bar, sigma =10,100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
@@ -114,10 +114,6 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
     #previous Uma
     
     interaction=1
-    plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
-    plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
-
-    plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
     
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
@@ -149,7 +145,11 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         U_knot=U
         Uma_knot=np.mean(Uma)
         Uma.append(U) #average List
-
+        plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
+        plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
+    
+        plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
+    
     if len(Uma)==32: #pop the oldest value of the running average
         dUma=np.mean(Uma)-Uma_knot
         plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
