@@ -71,7 +71,7 @@ def normal_distribution(mu,sigma,trial_no):
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="With Uniform rho_k Initialization"
+trial_no="TURK5"
 
 N=100
 rho_bar, sigma =50,100
@@ -116,10 +116,6 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
     #previous Uma
     
     interaction=1
-    plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
-    plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
-
-    plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
     
     while(interaction!=combination):
         print("Interaction : %d Step: %d",interaction,step)
@@ -151,7 +147,11 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         U_knot=U
         Uma_knot=np.mean(Uma)
         Uma.append(U) #average List
-
+        plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
+        plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
+    
+        plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
+        
     if len(Uma)==32: #pop the oldest value of the running average
         dUma=np.mean(Uma)-Uma_knot
         plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
