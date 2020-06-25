@@ -55,7 +55,7 @@ def normal_distribution(mu,sigma,trial_no):
     n,bins,patches=plt.hist(rho_k,30,density = True)
     bin_centers = 0.5 * (bins[:-1] + bins[1:])
     print(patches)
-    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
+    plotter.plot_histogram('Frequency','rho_k',trial_no+'Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     col = bin_centers #- min(bin_centers)
     #col /= max(col)
     
