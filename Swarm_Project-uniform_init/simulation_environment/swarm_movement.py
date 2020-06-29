@@ -71,10 +71,10 @@ def normal_distribution(mu,sigma,trial_no):
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="TURK5"
+trial_no="TURK4 s3"
 
 N=100
-rho_bar, sigma =50,100
+rho_bar, sigma =40,100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
