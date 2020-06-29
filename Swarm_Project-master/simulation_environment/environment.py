@@ -172,7 +172,7 @@ def update_pairwisedistance(robot_j,rho_j,robot_k,rho_k,times,mu,win,robots):
     xrj = mu*np.cos(theta)*math.tanh(pdist-rho_j)*times
     yrj = mu*np.sin(theta)*math.tanh(pdist-rho_j)*times
     print(xrj,yrj,distance_magnitude(xrj,yrj))
-    #xrj,yrj=get_nearbybots(robot_j,robots,win,xrj,yrj,theta,(45*np.pi/180))
+    xrj,yrj=get_nearbybots(robot_j,robots,win,xrj,yrj,theta,(45*np.pi/180))
     return xrj,yrj#,xrk,yrk,xj,yj,xk,yk
 	#calculate the pairwise distance
 
