@@ -140,6 +140,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
     if step==0:
         print("time step:",step)
         for q in range (9900):
+            print("time step:",step,"Interaction :",q)
             interaction(q)
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
@@ -153,6 +154,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
     if step>0:
         print("time step:",step)
         for q in range (9900):
+            print("time step:",step,"Interaction :",q)
             interaction(q)
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
