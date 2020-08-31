@@ -75,7 +75,7 @@ def interaction(z):
     robot_k= robots[pairwise_list[z][1][0]-1]
     rho_kk = pairwise_list[z][1][1]
     xj,yj=update_pairwisedistance(robot_j,rho_j,robot_k,rho_kk,times,mu,win,robots)
-    robot_j.move(xj,yj)
+    #robot_j.move(xj,yj)
     return xj,yj
     #robot_j.move(xj,yj)
     
@@ -141,7 +141,14 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         print("time step:",step)
         for q in range (9900):
             print("time step:",step,"Interaction :",q)
-            interaction(q)
+            x,y=interaction(q)
+            x_points.append(x)
+            y_points.append(x)
+            
+        for w in  range (9900):
+             robot_j = robots[pairwise_list[w][0][0]-1]
+             robot_j.move(x_points[w],y_points[w])
+             
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U_knot= averageinterparticledist- rho_kmean
@@ -155,7 +162,14 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         print("time step:",step)
         for q in range (9900):
             print("time step:",step,"Interaction :",q)
-            interaction(q)
+            x,y=interaction(q)
+            x_points.append(x)
+            y_points.append(x)
+            
+        for w in  range (9900):
+             robot_j = robots[pairwise_list[w][0][0]-1]
+             robot_j.move(x_points[w],y_points[w])
+             
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U= averageinterparticledist- rho_kmean
