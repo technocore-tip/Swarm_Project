@@ -187,7 +187,8 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         dUma=np.mean(Uma)-Uma_knot
         plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
         del Uma[0]
-    
+    x_points=list()
+    y_points=list()
     #robot_j.move(xj,yj)
     step = step+1
     
