@@ -11,7 +11,7 @@ import numpy as np
 class VisdomLinePlotter(object):
     """Plots to Visdom"""
     def __init__(self, env_name='main'):
-        self.viz = Visdom(server="http://10.3.33.81",port=8097)
+        self.viz = Visdom(server="http://192.168.15.6",port=8097)
         self.env = env_name
         self.plots = {}
     def plot(self, var_name, split_name, title_name, x, y):

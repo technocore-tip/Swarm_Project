@@ -9,7 +9,7 @@ Created on Wed Mar 11 12:49:18 2020
 import concurrent.futures
 from graphics import *
 from environment import draw_windows,draw_swarm,distance_magnitude,relative_distance,update_pairwisedistance,position_vector, total_relativedistance,init_uniform_rhok,draw_robots
-
+import csv
 import time
 from line_plotter import AverageMeter, VisdomLinePlotter
 import threading
@@ -44,14 +44,7 @@ def get_colour_name(requested_colour):
 def mt_shuffle():
     np.random.shuffle(pairwise_list)
 
-def normal_distribution(mu,sigma,trial_no):
-    start_time = time.time()
-    rho_k=list()
-    while (len(rho_k)!=N):
-
-        s= np.random.normal(sigma,mu)
-        if s >= 0:
-            rho_k.append(s)
+def normal_distribution_color(rho_k): 
     cm = plt.cm.get_cmap('RdYlBu_r')
     n,bins,patches=plt.hist(rho_k,30,density = True)
     bin_centers = 0.5 * (bins[:-1] + bins[1:])
@@ -66,8 +59,7 @@ def normal_distribution(mu,sigma,trial_no):
     plt.ylabel(r'Probability')
     plt.savefig(trial_no+'.png', dpi=600)
     plt.show()
-    print("--- %s seconds ---" % (time.time() - start_time))
-    return rho_k,0.5 * (bins[:-1] + bins[1:])
+    return 0.5 * (bins[:-1] + bins[1:])
 
 def interaction(z):
     robot_j = robots[pairwise_list[z][0][0]-1]
@@ -82,24 +74,24 @@ def interaction(z):
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="TURK4 s3"
+trial_no="SOL3-T1"
 
 N=100
-rho_bar, sigma =0,100
+
 mu=100
-l=5*rho_bar
 times=pow(2,-8)
-rho_k,patches = normal_distribution(rho_bar,sigma,trial_no)
+#rho_k,patches = normal_distribution(rho_bar,sigma,trial_no)
 
 particles=list()
 
     
 win = draw_windows(1024,1024,trial_no) #draw window with width = 700 and height = 600.
 
-robots = draw_swarm(N,win) #draw N swarm in win
-robots,rho_k = init_uniform_rhok(rho_k,robots,1024,1024,win)
+robots,rho_k = draw_swarm(N,win) #draw N swarm in win
+#robots,rho_k = init_uniform_rhok(rho_k,robots,1024,1024,win)
+patches=normal_distribution_color(rho_k)
 robots = draw_robots(N,win,robots,rho_k,patches)
-win.getMouse() #blocking call
+win.getMouse() #blocking call.
 
 for i in range(1,N+1,1):
     particles.append([i,rho_k[i-1]])
@@ -139,7 +131,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
       #  print("du/dt",du)
     if step==0:
         print("time step:",step)
-        for q in range (9900):
+        for q in range (combination):
             print("time step:",step,"Interaction :",q)
             interaction(q)
         total_relativedist=total_relativedistance(robots,win,N)
@@ -153,7 +145,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         
     if step>0:
         print("time step:",step)
-        for q in range (9900):
+        for q in range (combination):
             print("time step:",step,"Interaction :",q)
             interaction(q)
         total_relativedist=total_relativedistance(robots,win,N)
@@ -168,7 +160,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
     
         plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
-        
+
     if len(Uma)==32: #pop the oldest value of the running average
         dUma=np.mean(Uma)-Uma_knot
         plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
@@ -176,7 +168,14 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
     
     #robot_j.move(xj,yj)
     step = step+1
+    with open(trial_no+str(step)+'.csv',mode='w',newline='') as csv_file:
+        fieldnames =['robot_no','x','y','rho']
+        writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
     
+        writer.writeheader()
+        for w in range(len(rho_k)):
+            writer.writerow({'robot_no':w+1,'x':robots[w].getCenter().getX(),'y':robots[w].getCenter().getY(),'rho':rho_k[w]})
+
 total_time = time.time()-simulation_time
 print("total runtime: %d ",total_time)
 win.getMouse() #blocking call

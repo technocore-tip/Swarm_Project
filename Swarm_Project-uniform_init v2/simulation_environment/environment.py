@@ -6,6 +6,7 @@ from random import randint
 import numpy as np
 import matplotlib.pyplot as plt
 import webcolors
+import pandas as pd
 #swarm environment
 lock = threading.Lock()
 
@@ -47,10 +48,20 @@ def draw_windows(w,h,name): #function for crea.ting the simulation space
 
 def draw_swarm(n,win): #function for drawing robot nodes
     robot =[]
+    df = pd.read_csv('SOL3-T1.csv')
+    print (df)
+    x=df['x'].values #robot x coordinate value
+    x=x.astype('float64')
     
-    for x in range(0,n):
-        robot.append(Circle(Point( randint(-(win.getWidth()/4),win.getWidth()/4)+win.getWidth()/2, (win.getHeight()/2)-randint(-(win.getHeight()/4),win.getHeight()/4) ),4 ))        
-    return robot
+    y=df['y'].values # robot y coordinate value
+    y=y.astype('float64')
+
+    rho=df['rho'].values # robot prefered distance
+    rho=rho.astype('float64')
+    #win.getWidth()/2 win.getHeight()/2
+    for q in range(0,n):
+        robot.append(Circle(Point(x[q]+win.getWidth()/2,win.getHeight()/2 -y[q]),4 ))        
+    return robot, rho
 
 def draw_robots(n,win,robots,rho_k,patches):
     max_p = max(patches)
