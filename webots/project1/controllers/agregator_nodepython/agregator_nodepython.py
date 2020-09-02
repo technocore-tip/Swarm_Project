@@ -15,7 +15,7 @@ def normal_distribution(mu,sigma,N):
 
         s= np.random.normal(sigma,mu)
         if s >= 0:
-            rho_k.append((3.55+s)) #3.55 is the radius of the robot body
+            rho_k.append((10+s)) #3.55 is the radius of the robot body
   #  plt.hist(rho_k,30,density = True)
 #    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     #plt.show()

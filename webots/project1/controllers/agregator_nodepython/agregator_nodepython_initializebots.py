@@ -23,7 +23,7 @@ def normal_distribution(mu,sigma,N):
 
         s= np.random.normal(sigma,mu)
         if s >= 0:
-            rho_k.append((3.55+s)) #3.55 is the radius of the robot body
+            rho_k.append((10+s)) #3.55 is the radius of the robot body
   #  plt.hist(rho_k,30,density = True)
 #    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
     #plt.show()
@@ -59,7 +59,7 @@ def localize_robots(ref_node1,ref_node2,ref_node3,ref_node4):
 		sorted_robotlist.append((robots[x][0],robots[x][1],robots[x][2],rho_k[x])) #robot number, x,y,
 	
 	sorted_robotlist.sort()
-	with open('test.csv',mode='w',newline='') as csv_file:
+	with open('WEBOTS-SOL3-T6.csv',mode='w',newline='') as csv_file:
 		fieldnames =['robot_no','x','y','rho']
 		writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
 
@@ -78,7 +78,7 @@ sender = robot.getEmitter('emitter')
 receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
-rho_bar, sigma =10,100
+rho_bar, sigma =60,100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
