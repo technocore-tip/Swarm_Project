@@ -46,9 +46,9 @@ def draw_windows(w,h,name): #function for crea.ting the simulation space
 	return GraphWin(name,w,h)
 	pass
 
-def draw_swarm(n,win): #function for drawing robot nodes
+def draw_swarm(n,win,trial_no): #function for drawing robot nodes
     robot =[]
-    df = pd.read_csv('SOL3-T1.csv')
+    df = pd.read_csv(trial_no+'.csv')
     print (df)
     x=df['x'].values #robot x coordinate value
     x=x.astype('float64')

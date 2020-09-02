@@ -74,7 +74,7 @@ def interaction(z):
 plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
 simulation_time = time.time()
 
-trial_no="SOL3-T1"
+trial_no="WEBOTS-SOL3-T1"
 
 N=100
 
@@ -84,10 +84,10 @@ times=pow(2,-8)
 
 particles=list()
 
-    
+w,h=1024,1024
 win = draw_windows(1024,1024,trial_no) #draw window with width = 700 and height = 600.
 
-robots,rho_k = draw_swarm(N,win) #draw N swarm in win
+robots,rho_k = draw_swarm(N,win,trial_no) #draw N swarm in win
 #robots,rho_k = init_uniform_rhok(rho_k,robots,1024,1024,win)
 patches=normal_distribution_color(rho_k)
 robots = draw_robots(N,win,robots,rho_k,patches)
@@ -131,9 +131,17 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
       #  print("du/dt",du)
     if step==0:
         print("time step:",step)
-        for q in range (combination):
+        for q in range (int(combination)):
             print("time step:",step,"Interaction :",q)
             interaction(q)
+            with open(trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
+                fieldnames =['robot_no','x','y','rho']
+                writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
+            
+                writer.writeheader()
+                for w in range(len(rho_k)):
+                    writer.writerow({'robot_no':w+1,'x':(robots[w].getCenter().getX()-(w/2)),'y':((robots[w].getCenter().getY()-(h/2))*-1),'rho':rho_k[w]})
+
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U_knot= averageinterparticledist- rho_kmean
@@ -145,9 +153,17 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         
     if step>0:
         print("time step:",step)
-        for q in range (combination):
+        for q in range (int(combination)):
             print("time step:",step,"Interaction :",q)
             interaction(q)
+            with open(trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
+                fieldnames =['robot_no','x','y','rho']
+                writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
+            
+                writer.writeheader()
+                for w in range(len(rho_k)):
+                    writer.writerow({'robot_no':w+1,'x':(robots[w].getCenter().getX()-(w/2)),'y':((robots[w].getCenter().getY()-(h/2))*-1),'rho':rho_k[w]})
+
         total_relativedist=total_relativedistance(robots,win,N)
         averageinterparticledist= (1/combination)*total_relativedist
         U= averageinterparticledist- rho_kmean
@@ -168,14 +184,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
     
     #robot_j.move(xj,yj)
     step = step+1
-    with open(trial_no+str(step)+'.csv',mode='w',newline='') as csv_file:
-        fieldnames =['robot_no','x','y','rho']
-        writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
     
-        writer.writeheader()
-        for w in range(len(rho_k)):
-            writer.writerow({'robot_no':w+1,'x':robots[w].getCenter().getX(),'y':robots[w].getCenter().getY(),'rho':rho_k[w]})
-
 total_time = time.time()-simulation_time
 print("total runtime: %d ",total_time)
 win.getMouse() #blocking call
