@@ -134,7 +134,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         for q in range (int(combination)):
             print("time step:",step,"Interaction :",q)
             interaction(q)
-            with open('../'+trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
+            with open('/'+trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
                 fieldnames =['robot_no','x','y','rho']
                 writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
             
@@ -156,7 +156,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
         for q in range (int(combination)):
             print("time step:",step,"Interaction :",q)
             interaction(q)
-            with open('../'+trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
+            with open('/'+trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
                 fieldnames =['robot_no','x','y','rho']
                 writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
             
