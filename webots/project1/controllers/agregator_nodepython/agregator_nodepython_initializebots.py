@@ -33,37 +33,40 @@ def takefourth(elem):
     return elem[3]
 
 def localize_robots(ref_node1,ref_node2,ref_node3,ref_node4):
-    ref_node=np.array([[4,4],[-4,4],[-4,-4],[4,-4]])
-    robots= list()
-    robots.clear()
-    for n in range(N):
-        X=np.array([[2*(ref_node[0][0]-ref_node[3][0]),2*(ref_node[0][1]-ref_node[3][1])],
-				[2*(ref_node[1][0]-ref_node[3][0]),2*(ref_node[1][1]-ref_node[3][1])],
-				[2*(ref_node[2][0]-ref_node[3][0]),2*(ref_node[2][1]-ref_node[3][1])]])
-        a=np.array([
+	ref_node=np.array([[4,4],[-4,4],[-4,-4],[4,-4]])
+	robots= list()
+	robots.clear()
+	for n in range(N):
+		X=np.array([[2*(ref_node[0][0]-ref_node[3][0]),2*(ref_node[0][1]-ref_node[3][1])],
+		[2*(ref_node[1][0]-ref_node[3][0]),2*(ref_node[1][1]-ref_node[3][1])],
+		[2*(ref_node[2][0]-ref_node[3][0]),2*(ref_node[2][1]-ref_node[3][1])]])
+		a=np.array([
 		[(pow(ref_node[0][0],2)-pow(ref_node[3][0],2))+(pow(ref_node[0][1],2)-pow(ref_node[3][1],2)-pow(np.sqrt(1/ref_node1[n][1]),2)+pow(np.sqrt(1/ref_node4[n][1]),2))],
 		[(pow(ref_node[1][0],2)-pow(ref_node[3][0],2))+(pow(ref_node[1][1],2)-pow(ref_node[3][1],2)-pow(np.sqrt(1/ref_node2[n][1]),2)+pow(np.sqrt(1/ref_node4[n][1]),2))],
 		[(pow(ref_node[2][0],2)-pow(ref_node[3][0],2))+(pow(ref_node[2][1],2)-pow(ref_node[3][1],2)-pow(np.sqrt(1/ref_node3[n][1]),2)+pow(np.sqrt(1/ref_node4[n][1]),2))]])
-        xy=a/X
-        x,y=xy[2][0]*100,xy[0][1]*100 #change unit to cm
-        from_origin = np.sqrt(pow(x,2)+pow(y,2))
-        robots.append((RSSI_strings[0][n][0],x,y,from_origin))
+		xy=a/X
+		x,y=xy[2][0]*100,xy[0][1]*100 #change unit to cm
+		from_origin = np.sqrt(pow(x,2)+pow(y,2))
+		print(n)
+		print(from_origin)
+		robots.append((n+1,x,y,from_origin))
 
-        robots.sort(key=takefourth)
-        rho_k.sort()
-        sorted_robotlist=list()
-        for x in range(len(robots)): #reconstruct a list with its prefered distance
-            sorted_robotlist.append((robots[x][0],robots[x][1],robots[x][2],rho_k[x])) #robot number, x,y,
+	robots.sort(key=takefourth)
+	rho_k.sort()
+	sorted_robotlist=list()
 
-        sorted_robotlist.sort()
-        with open('test.csv',mode='w',newline='') as csv_file:
-            fieldnames =['robot_no','x','y','rho']
-            writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
-    
-            writer.writeheader()
-            for x in range(len(sorted_robotlist)):
-                writer.writerow({'robot_no':sorted_robotlist[x][0],'x':sorted_robotlist[x][1],'y':sorted_robotlist[x][2],'rho':sorted_robotlist[x][3]})
-        return -1
+	for x in range(len(robots)): #reconstruct a list with its prefered distance
+		sorted_robotlist.append((robots[x][0],robots[x][1],robots[x][2],rho_k[x])) #robot number, x,y,
+	
+	sorted_robotlist.sort()
+	with open('test.csv',mode='w',newline='') as csv_file:
+		fieldnames =['robot_no','x','y','rho']
+		writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
+
+		writer.writeheader()
+		for x in range(len(sorted_robotlist)):
+			writer.writerow({'robot_no':sorted_robotlist[x][0],'x':sorted_robotlist[x][1],'y':sorted_robotlist[x][2],'rho':sorted_robotlist[x][3]})
+
 
 		#print("Real-Time Location (m):node=",n,"x=",x,"y=",y)
 		#print(robots)
@@ -92,14 +95,14 @@ ref_node1 = arrays.copy()
 ref_node2 = arrays.copy()
 ref_node3= arrays.copy()
 ref_node4= arrays.copy()
-stopper=1
-while robot.step(timestep) != -1 or stopper!=-1:
+stopper=0
+while robot.step(timestep) !=-1 or stopper!=1:
 	try:
 		message_counter=0
 		for i in range(4):
 			if receiver.getQueueLength() > 0:
 				message = receiver.getData().decode('utf-8')
-				#print(message)
+				print(message)
 				if message.find("ref-node1:",0,10) !=-1:
 					# message.rstrip('\x00')
 					RSSI_strings[0]= message.split(" ",-1)
@@ -131,7 +134,7 @@ while robot.step(timestep) != -1 or stopper!=-1:
 				receiver.nextPacket()
 	except:
 		print("decode error")
-	#print(RSSI_strings)
+	print(RSSI_strings)
 	if len(RSSI_strings[0]) ==N:
 		# try:
 		for x in range(RSSI_strings.size):
@@ -197,8 +200,8 @@ while robot.step(timestep) != -1 or stopper!=-1:
 			message_counter=0
 			RSSI_strings=np.empty(4, dtype='object')
 			RSSI_strings[0]=RSSI_strings[1]=RSSI_strings[2]=RSSI_strings[3]=""
-			stopper=localize_robots(ref_node1,ref_node2,ref_node3,ref_node4)
-
+			localize_robots(ref_node1,ref_node2,ref_node3,ref_node4)
+			stopper=1
 			node_ids=np.zeros(N,dtype=int)
 			rssis=np.ones(N,dtype=float)
 			arrays=rfn.merge_arrays((node_ids,rssis))

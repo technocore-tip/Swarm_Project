@@ -118,7 +118,7 @@ while robot.step(timestep) != -1:
 				receiver.nextPacket()
 	except:
 		print("decode error")
-	#print(RSSI_strings)
+	print(RSSI_strings)
 	if len(RSSI_strings[0]) ==N:
 		# try:
 		for x in range(RSSI_strings.size):
