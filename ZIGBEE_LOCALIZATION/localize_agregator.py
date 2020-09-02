@@ -135,6 +135,7 @@ def takefourth(elem):
     return elem[3]
 #save initialize to CSV
 #get robot distance from 
+    
 robots.sort(key=takefourth)
 rho_k.sort()
 sorted_robotlist=list()
