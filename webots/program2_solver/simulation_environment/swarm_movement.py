@@ -123,7 +123,7 @@ while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
     
     #while(interaction!=combination):
         
-        #print("Interaction : %d Step: %d",interaction,step)
+        #print("Interaction : %Step: %d",interaction,step)
     mt_shuffle()
     x_points=list()
     y_points=list()
