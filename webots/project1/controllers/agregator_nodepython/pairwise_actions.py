@@ -12,11 +12,14 @@ from random import randint
 import numpy as np
 
 def distance_vector(x1,y1,x2,y2):#function to calculate distance between two points
-
-    x = x2 - x1 #P1.getX()-P2.getX()
-    y = y2 - y1 #P1.getY()-P2.getY()
-    return x,y
-    pass 
+	x1=round(x1,5)
+	y1=round(y1,5)
+	x2=round(x2,5)
+	y2=round(y2,5)
+	x = x2 - x1 #P1.getX()-P2.getX()
+	y = y2 - y1 #P1.getY()-P2.getY()
+	return x,y
+	pass 
 
 def distance_magnitude(x,y):
 	#calculate magnitude of distance vector

@@ -5,7 +5,7 @@ import time
 import mysql.connector
 from mysql.connector import Error
 
-actual_id=0
+actual_id=1
 try:
 	connection = mysql.connector.connect(host='localhost',
 								 database='nonat',

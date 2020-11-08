@@ -29,43 +29,53 @@ trial='WEBOTS-SOL3-T1'
 trial_no=trial
 df_init=pd.read_csv(trial+'.csv')
 x_init=df_init['x'].values.astype('float64')
-y_init=df_init['x'].values.astype('float64')
+y_init=df_init['y'].values.astype('float64')
 rho=df_init['rho'].values.astype('float64')
 
-timestep=333
+tts=231
 combination = (N*(N-1))/2
-
+print("Initialize")
 message="complete 1"
 while robot.step(timestep) !=-1 or stopper!=1:
-	
-	for q in range(timestep):
-		for w in range(combination):
+	print("TEST")
+	for q in range(tts):
+		for w in range(int(combination)):
 			print("Running step-"+str(q)+"Interaction-"+str(w))
 			nextstep_diff=pd.read_csv(trial_no+'/'+trial_no+'-Step-'+str(q)+'-Interaction-'+str(w)+'.csv')
 			nextstep_x=nextstep_diff['x'].values.astype('float64')
 			nextstep_y=nextstep_diff['y'].values.astype('float64')
-			
-			for j in range(len(rho))
+			#for x in range(len(rho)):
+			#	nextstep_x[x]=nextstep_x[x]-512
+
+			#print(nextstep_x)
+			for j in range(len(rho)):
+				#print("Previous Pos- X:"+str(x_init[j])+"Y:"+str(y_init[j])+"Next- X:"+str(nextstep_x[j])+"Y:"+str(nextstep_y[j]))
 				xj,yj=distance_vector(x_init[j],y_init[j],nextstep_x[j],nextstep_y[j])
+				#print("distance vector- Xj:"+str(xj)+"Yj:"+str(yj))
 				magnitude=distance_magnitude(xj,yj)
 				angle=calculate_angle(xj,yj)
+				#print("computed magnitude"+str(magnitude)+"robot-"+str(j))
 				if magnitude >0:
 					message=str(j+1)+' '+str(magnitude)+' '+str(angle) #[0]robot_number, [1]magnitude [2]angle
 					sender.send(message.encode('utf-8'))
 					print(message)
 					done=0
-					while done!=1:
-						print(q)
-						try:
-							if receiver.getQueueLength() > 0:
-								receive_message = receiver.getData().decode('utf-8')
-								
-								if receive_message.find("complete",0,9) !=-1:
-									if(int(message.split(" ",-1)[1]))==j+1:
-										done=1
-								receiver.nextPacket()
-						except:
-							print("empty command")
-						
+					#print("timestep-"+str(q)+"interaction-"+str(w))
+					#movement=  (magnitude*10)/128.78
+					#print("magnitude"+str(movement))
+					robot.step(32)
+#					while done!=1:
+#						print("timestep-"+str(q)+"interaction-"+str(w))
+#						try:
+#							if receiver.getQueueLength() > 0:
+#								receive_message = receiver.getData().decode('utf-8')
+#
+#								if receive_message.find("complete",0,9) !=-1:
+#									if(int(message.split(" ",-1)[1]))==j+1:
+#										done=1
+#								receiver.nextPacket()
+#						except:
+#							print("empty command")
+#						robot.step(timestep)
 			x_init = nextstep_x
 			y_init = nextstep_y

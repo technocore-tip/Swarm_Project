@@ -18,11 +18,11 @@ try:
 	records=cursor.fetchall()
 	print(records[0][0])
 	actual_id=records[0][0]
-	cursor.close() 
+	cursor.close()
 	connection.close()
 except Error as e:
 	print("Error connecting to database",e)
-	
+
 node=str(actual_id)+'_'
 
 print("Assigned RobotID: ",node)
@@ -55,7 +55,7 @@ gyros.enable(TIME_STEP)
 
 def send_message(message):
 	emitter.send(message.encode('utf-8'))
-	
+
 def orientation_angle():
 	angle=0
 	if(gyros.getRollPitchYaw()[2]<0):
@@ -66,7 +66,7 @@ def orientation_angle():
 
 
 def receive_command():
-	commands=np.empty(1, dtype='object')		
+	commands=np.empty(1, dtype='object')
 	try:
 		if receiver.getQueueLength() > 0:
 			message = receiver.getData().decode('utf-8')
@@ -79,19 +79,19 @@ def receive_command():
 		commands.append(0)
 		commands.append(0)
 		commands.append(0)
-		
+
 	return commands[0],commands[3],commands[4] #node_id,magnitude, angle
 
 
 def turn_left():
 	leftMotor.setVelocity(-MAX_SPEED*0.2)
 	rightMotor.setVelocity(MAX_SPEED*0.2)
-	robot.step(8)
-	
+	robot.step(32)
+
 def turn_right():
 	leftMotor.setVelocity(MAX_SPEED*0.2)
 	rightMotor.setVelocity(-MAX_SPEED*0.2)
-	robot.step(8)
+	robot.step(32)
 
 def stop():
 	leftMotor.setVelocity(0)
@@ -101,34 +101,54 @@ def stop():
 def rotate(angle):
 #	print("rotation ready")
 	actual_angle=orientation_angle()
-	#print(actual_angle) 
+	#print(actual_angle)
 	while ((actual_angle> angle+0.2) or (actual_angle < angle-0.2)):
 		#print(actual_angle)
 		if((actual_angle> angle+0.2) or (actual_angle > angle-0.2)):
 			turn_right()
 			stop()
-			
+
 		if((actual_angle< angle+0.2) or (actual_angle < angle-0.2)):
 			turn_left()
 			stop()
 		actual_angle=orientation_angle()
 
+def rotate_nofeedback(angle):
+	actual_angle=orientation_angle()
+	if (actual_angle-angle) >0:
+		velocity_percent= (20.5*np.abs(actual_angle-angle))/128.78
+		print("turn right")
+		leftMotor.setVelocity(MAX_SPEED)
+		rightMotor.setVelocity(-(MAX_SPEED))
+		robot.step(velocity_percent*1000)
+		stop()
+	if (actual_angle-angle) <0:
+		velocity_percent= (20.5*np.abs(actual_angle-angle))/128.78
+		print("turn left")
+		leftMotor.setVelocity(-(MAX_SPEED))
+		rightMotor.setVelocity(MAX_SPEED)
+		robot.step(velocity_percent*1000)
+		stop()
+		
 def move_bot(robot_id,magnitude,angle,actual_id):
 	#print("robot id: ",robot_id,"magnitude: ",magnitude,"angle: ",angle,"actual_id: ",actual_id)
 	#print(type(robot_id))
 	if robot_id == actual_id: #if robotID matches your ID, perform the requested movement, else do nothing
 		rotate(angle)
 		#print("occured")
-		movement=  (6.28*magnitude*10)/128.78 #1 rotation = 128.78mm, if I need to displace 
-		leftMotor.setVelocity(movement)
-		rightMotor.setVelocity(movement)
-		robot.step(TIME_STEP)
 		stop()
-		send_message("complete "+str(actual_id))
-		
+		movement=  (magnitude*10)/128.78 #1 rotation = 128.78mm, if I need to displace
+		print("velocity ratio"+str(movement))
+		leftMotor.setVelocity(MAX_SPEED)
+		rightMotor.setVelocity(MAX_SPEED)
+		robot.step(movement*1000)
+		stop()
+		robot.step(32)
+		#send_message("complete "+str(actual_id))
+
 while robot.step(TIME_STEP) != -1:
-	
-	commands=np.empty(1, dtype='object')		
+
+	commands=np.empty(1, dtype='object')
 	try:
 		if receiver.getQueueLength() > 0:# get command from aggregator node broadcast
 			message = receiver.getData().decode('utf-8')
@@ -136,6 +156,6 @@ while robot.step(TIME_STEP) != -1:
 			receiver.nextPacket()
 	except:
 		print("empty command")
-		
+
 	if commands:
 		move_bot(int(commands[0]),float(commands[1]),float(commands[2]),actual_id) #do action from command
