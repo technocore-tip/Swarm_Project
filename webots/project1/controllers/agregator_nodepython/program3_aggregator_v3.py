@@ -18,7 +18,7 @@ from pairwise_actions import distance_vector,distance_magnitude,calculate_angle
 from numpy.lib import recfunctions as rfn
 
 class Driver (Supervisor):
-	timeStep = 32
+	timeStep = 8
 	
 	def __init__(self):
 		super(Driver, self).__init__()
@@ -35,17 +35,17 @@ class Driver (Supervisor):
 #		for y in range(N):
 #			translational_field_list.append(robot_list[y].getField('translation'))
 		previous_message = ''
-		trial='WEBOTS-SOL3-T1'
+		trial='WEBOTS-SOL3-T4'
 		trial_no=trial
 		df_init=pd.read_csv(trial+'.csv')
 		x_init=df_init['x'].values.astype('float64')
 		y_init=df_init['y'].values.astype('float64')
 		rho=df_init['rho'].values.astype('float64')
 
-		tts=231
+		tts=243
 		combination = (N*(N-1))/2
 		print("Initialize")
-		message="complete 1"
+		message="complete 3"
 		while True:
 			print("TEST")
 			for q in range(tts):
@@ -77,7 +77,7 @@ class Driver (Supervisor):
 							#print("timestep-"+str(q)+"interaction-"+str(w))
 							#movement=  (magnitude*10)/128.78
 							#print("magnitude"+str(movement))
-							self.step(32)
+							self.step(8)
 		#					while done!=1:
 		#						print("timestep-"+str(q)+"interaction-"+str(w))
 		#						try:
