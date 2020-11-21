@@ -45,7 +45,8 @@ def get_colour_name(requested_colour):
         actual_name = None
     return actual_name, closest_name
 
-def mt_shuffle():
+def mt_shuffle(step):
+	np.random.seed(step)
     np.random.shuffle(pairwise_list)
 
 def normal_distribution_color(rho_k):
@@ -86,7 +87,7 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 	N=args.N_robots
 	trial_no=str(args.trial_name)
-	plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
+	plotter = VisdomLinePlotter(env_name="pairwise_experiment")
 	simulation_time = time.time()
 	if not os.path.exists(trial_no):
 		os.makedirs(trial_no)
@@ -113,7 +114,7 @@ if __name__ == '__main__':
 		particles.append([i,rho_k[i-1]])
 	pairwise_list= list(permutations(particles,2))
 	#pairwise_list = random.sample(particles, 2)
-	mt_shuffle()
+	#mt_shuffle()
 
 	step=0
 
@@ -140,7 +141,7 @@ if __name__ == '__main__':
 		#while(interaction!=combination):
 
 			#print("Interaction : %Step: %d",interaction,step)
-		mt_shuffle()
+		mt_shuffle(step)
 		x_points=list()
 		y_points=list()
 
@@ -197,10 +198,6 @@ if __name__ == '__main__':
 
 			plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
 
-		if len(Uma)<32: #pop the oldest value of the running average
-			dUma=np.mean(Uma)-Uma_knot
-			plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
-			#del Uma[0]
 			
 		if len(Uma)==32: #pop the oldest value of the running average
 			dUma=np.mean(Uma)-Uma_knot
