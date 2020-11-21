@@ -19,9 +19,13 @@ import random
 import webcolors
 import numpy as np
 from itertools import combinations,permutations
+import argparse
 
 import scipy.stats
 import matplotlib.pyplot as plt
+
+import os
+	
 #actual_name, closest_name = get_colour_name((int(cm(rho_k[x]/max(patches))[0]*255),int(cm(rho_k[x]/max(patches))[1]*255),int(cm(rho_k[x]/max(patches))[2]*255)))
 def closest_colour(requested_colour):
     min_colours = {}
@@ -71,124 +75,141 @@ def interaction(z):
     #return xj,yj
     #robot_j.move(xj,yj)
 
-plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
-simulation_time = time.time()
 
-trial_no="WEBOTS-SOL3-T1"
 
-N=100
 
-mu=100
-times=pow(2,-8)
-#rho_k,patches = normal_distribution(rho_bar,sigma,trial_no)
+if __name__ == '__main__':
 
-particles=list()
+	parser = argparse.ArgumentParser(description="--N [Number of Robots], --trial-name [trial name]")
+	parser.add_argument('--N-robots',type=int,default=100,help='Number of Robots')
+	parser.add_argument('--trial-name',type=str,required=True)
+	args = parser.parse_args()
+	N=args.N_robots
+	trial_no=str(args.trial_name)
+	plotter = VisdomLinePlotter(env_name="Swarm_Simulation")
+	simulation_time = time.time()
+	if not os.path.exists(trial_no):
+		os.makedirs(trial_no)
+	#trial_no="WEBOTS-SOL3-T1"
 
-w,h=1024,1024
-win = draw_windows(1024,1024,trial_no) #draw window with width = 700 and height = 600.
+	#N=100
 
-robots,rho_k = draw_swarm(N,win,trial_no) #draw N swarm in win
-#robots,rho_k = init_uniform_rhok(rho_k,robots,1024,1024,win)
-patches=normal_distribution_color(rho_k)
-robots = draw_robots(N,win,robots,rho_k,patches)
-win.getMouse() #blocking call.
+	mu=100
+	times=pow(2,-8)
+	#rho_k,patches = normal_distribution(rho_bar,sigma,trial_no)
 
-for i in range(1,N+1,1):
-    particles.append([i,rho_k[i-1]])
-pairwise_list= list(permutations(particles,2))
-#pairwise_list = random.sample(particles, 2)
-mt_shuffle()
+	particles=list()
 
-step=0
+	w,h=1024,1024
+	win = draw_windows(1024,1024,str(trial_no)) #draw window with width = 700 and height = 600.
 
-rho_kmean =np.mean(rho_k)# second term of the energy function
-combination= (N*(N-1))/2
-U_knot=0 #Order Parameter
-U=0 #Order Parameter
-du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
-U=du
-epsilon= pow(9,-5)
+	robots,rho_k = draw_swarm(N,win,trial_no) #draw N swarm in win
+	#robots,rho_k = init_uniform_rhok(rho_k,robots,1024,1024,win)
+	patches=normal_distribution_color(rho_k)
+	robots = draw_robots(N,win,robots,rho_k,patches)
+	win.getMouse() #blocking call.
 
-Uma=list() #Order Parameter Running Average
-Uma.append(du) #Average List
-dUma=np.mean(Uma)
-Uma_knot=0
+	for i in range(1,N+1,1):
+		particles.append([i,rho_k[i-1]])
+	pairwise_list= list(permutations(particles,2))
+	#pairwise_list = random.sample(particles, 2)
+	mt_shuffle()
 
-while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
-    objective_func = AverageMeter()
-    averageobjective_func= AverageMeter()
-    #previous Uma
+	step=0
 
-    #interaction=1
+	rho_kmean =np.mean(rho_k)# second term of the energy function
+	combination= (N*(N-1))/2
+	U_knot=0 #Order Parameter
+	U=0 #Order Parameter
+	du= (1/combination)*total_relativedistance(robots,win,N) - rho_kmean
+	U=du
+	epsilon= pow(9,-5)
 
-    #while(interaction!=combination):
+	Uma=list() #Order Parameter Running Average
+	Uma.append(du) #Average List
+	dUma=np.mean(Uma)
+	Uma_knot=0
 
-        #print("Interaction : %Step: %d",interaction,step)
-    mt_shuffle()
-    x_points=list()
-    y_points=list()
+	while(((np.abs(du))>epsilon) and ((np.abs(dUma))>epsilon)):
+		objective_func = AverageMeter()
+		averageobjective_func= AverageMeter()
+		#previous Uma
 
-      #  print("du/dt",du)
-    if step==0:
-        print("time step:",step)
-        for q in range (int(combination)):
-            print("time step:",step,"Interaction :",q)
-            interaction(q)
-            with open(trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
-                fieldnames =['robot_no','x','y','rho']
-                writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
+		#interaction=1
 
-                writer.writeheader()
-                for w in range(len(rho_k)):
-                    x_coordinate=((robots[w].getCenter().getX()))-512
-                    y_coordinate=(((robots[w].getCenter().getY())-(h/2))*-1)
-                    writer.writerow({'robot_no':w+1,'x':x_coordinate,'y':y_coordinate,'rho':rho_k[w]})
+		#while(interaction!=combination):
 
-        total_relativedist=total_relativedistance(robots,win,N)
-        averageinterparticledist= (1/combination)*total_relativedist
-        U_knot= averageinterparticledist- rho_kmean
-        U=U_knot
-        du=U
-        #xk,yk,x_newj,y_newj,x_newk,y_newk
-        Uma.append(U) #average list
-        Uma_knot=np.mean(Uma)
+			#print("Interaction : %Step: %d",interaction,step)
+		mt_shuffle()
+		x_points=list()
+		y_points=list()
 
-    if step>0:
-        print("time step:",step)
-        for q in range (int(combination)):
-            print("time step:",step,"Interaction :",q)
-            interaction(q)
-            with open(trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
-                fieldnames =['robot_no','x','y','rho']
-                writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
+		  #  print("du/dt",du)
+		if step==0:
+			print("time step:",step)
+			for q in range (int(combination)):
+				print("time step:",step,"Interaction :",q)
+				interaction(q)
+				with open(trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
+					fieldnames =['robot_no','x','y','rho']
+					writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
 
-                writer.writeheader()
-                for w in range(len(rho_k)):
-                    x_coordinate=((robots[w].getCenter().getX()))-512
-                    y_coordinate=(((robots[w].getCenter().getY())-(h/2))*-1)
-                    writer.writerow({'robot_no':w+1,'x':x_coordinate,'y':y_coordinate,'rho':rho_k[w]})
+					writer.writeheader()
+					for w in range(len(rho_k)):
+						x_coordinate=((robots[w].getCenter().getX()))-512
+						y_coordinate=(((robots[w].getCenter().getY())-(h/2))*-1)
+						writer.writerow({'robot_no':w+1,'x':x_coordinate,'y':y_coordinate,'rho':rho_k[w]})
 
-        total_relativedist=total_relativedistance(robots,win,N)
-        averageinterparticledist= (1/combination)*total_relativedist
-        U= averageinterparticledist- rho_kmean
-        du=U-U_knot
+			total_relativedist=total_relativedistance(robots,win,N)
+			averageinterparticledist= (1/combination)*total_relativedist
+			U_knot= averageinterparticledist- rho_kmean
+			U=U_knot
+			du=U
+			#xk,yk,x_newj,y_newj,x_newk,y_newk
+			Uma.append(U) #average list
+			Uma_knot=np.mean(Uma)
 
-        U_knot=U
-        Uma_knot=np.mean(Uma)
-        Uma.append(U) #average List
-        plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
-        plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
+		if step>0:
+			print("time step:",step)
+			for q in range (int(combination)):
+				print("time step:",step,"Interaction :",q)
+				interaction(q)
+				with open(trial_no+'/'+trial_no+'-Step-'+str(step)+'-Interaction-'+str(q)+'.csv',mode='w',newline='') as csv_file:
+					fieldnames =['robot_no','x','y','rho']
+					writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
 
-        plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
+					writer.writeheader()
+					for w in range(len(rho_k)):
+						x_coordinate=((robots[w].getCenter().getX()))-512
+						y_coordinate=(((robots[w].getCenter().getY())-(h/2))*-1)
+						writer.writerow({'robot_no':w+1,'x':x_coordinate,'y':y_coordinate,'rho':rho_k[w]})
 
-    if len(Uma)==32: #pop the oldest value of the running average
-        dUma=np.mean(Uma)-Uma_knot
-        plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
-        del Uma[0]
+			total_relativedist=total_relativedistance(robots,win,N)
+			averageinterparticledist= (1/combination)*total_relativedist
+			U= averageinterparticledist- rho_kmean
+			du=U-U_knot
 
-    #robot_j.move(xj,yj)
-    step = step+1
+			U_knot=U
+			Uma_knot=np.mean(Uma)
+			Uma.append(U) #average List
+			plotter.plot('U', 'U(t)', trial_no+'Objective Function',step, float(U))
+			plotter.plot('U', 'U ma', trial_no+'Objective Function',step, float(np.mean(Uma)))
 
-total_time = time.time()-simulation_time
-print("total runtime: %d ",total_time)
-win.getMouse() #blocking call
+			plotter.plot('du/dt', 'dU/dt', trial_no+'Objective Function',step, float(du))
+
+		if len(Uma)<32: #pop the oldest value of the running average
+			dUma=np.mean(Uma)-Uma_knot
+			plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
+			#del Uma[0]
+			
+		if len(Uma)==32: #pop the oldest value of the running average
+			dUma=np.mean(Uma)-Uma_knot
+			plotter.plot('du/dt', 'd Uma/dt', trial_no+'Objective Function',step, float(dUma))
+			del Uma[0]
+
+		#robot_j.move(xj,yj)
+		step = step+1
+
+	total_time = time.time()-simulation_time
+	print("total runtime: %d ",total_time)
+	win.getMouse() #blocking call
