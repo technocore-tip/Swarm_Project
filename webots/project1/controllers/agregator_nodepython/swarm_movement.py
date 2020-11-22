@@ -47,7 +47,7 @@ def get_colour_name(requested_colour):
 
 def mt_shuffle(step):
 	np.random.seed(step)
-    np.random.shuffle(pairwise_list)
+	np.random.shuffle(pairwise_list)
 
 def normal_distribution_color(rho_k):
     cm = plt.cm.get_cmap('RdYlBu_r')
