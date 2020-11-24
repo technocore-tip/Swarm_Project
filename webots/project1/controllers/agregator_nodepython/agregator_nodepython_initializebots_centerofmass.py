@@ -15,12 +15,13 @@ import struct
 import random
 from pairwise_actions import distance_vector,distance_magnitude,update_pairwisedistance
 from numpy.lib import recfunctions as rfn
-N=100
+N=200
 
-rho_bar, sigma =0,1000
+rho_bar, sigma =50,100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
+trial='SOL3-T5-POS1-N200.csv'
 
 def normal_distribution(mu,sigma,N):
     start_time = time.time()
@@ -67,9 +68,9 @@ def localize_robots(ref_node1,ref_node2,ref_node3,ref_node4):
 	center_y = sum_y/N
 	for n in range(N):
 		from_origin = np.sqrt(pow((x_coordinate[n]-center_x),2)+pow((y_coordinate[n]-center_y),2))
-		print(n)
+		#print(n)
 		print(from_origin)
-		robots.append((n+1,x_coordinate[n],y_coordinate[n],from_origin))
+		#robots.append((n+1,x_coordinate[n],y_coordinate[n],from_origin))
 
 	robots.sort(key=takefourth)
 	rho_k.sort()
@@ -79,7 +80,7 @@ def localize_robots(ref_node1,ref_node2,ref_node3,ref_node4):
 		sorted_robotlist.append((robots[x][0],robots[x][1],robots[x][2],rho_k[x])) #robot number, x,y,
 	
 	sorted_robotlist.sort()
-	with open('WEBOTS-SOL3-T6.csv',mode='w',newline='') as csv_file:
+	with open(trial,mode='w',newline='') as csv_file:
 		fieldnames =['robot_no','x','y','rho']
 		writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
 
@@ -90,7 +91,7 @@ def localize_robots(ref_node1,ref_node2,ref_node3,ref_node4):
 
 		#print("Real-Time Location (m):node=",n,"x=",x,"y=",y)
 		#print(robots)
-
+	print("done")
 robot = Robot()
 timestep =32
 
@@ -150,7 +151,7 @@ while robot.step(timestep) !=-1 or stopper!=1:
 				receiver.nextPacket()
 	except:
 		print("decode error")
-	print(RSSI_strings)
+	print(RSSI_strings[0])
 	if len(RSSI_strings[0]) ==N:
 		# try:
 		for x in range(RSSI_strings.size):

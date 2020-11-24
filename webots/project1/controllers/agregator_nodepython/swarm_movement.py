@@ -81,13 +81,15 @@ def interaction(z):
 
 if __name__ == '__main__':
 
-	parser = argparse.ArgumentParser(description="--N [Number of Robots], --trial-name [trial name]")
+	parser = argparse.ArgumentParser(description="--N [Number of Robots], --trial-name [trial name] --visdom-name [visdom environment name]")
 	parser.add_argument('--N-robots',type=int,default=100,help='Number of Robots')
 	parser.add_argument('--trial-name',type=str,required=True)
+	parser.add_argument('--visdom-name',type=str,required=True)
 	args = parser.parse_args()
 	N=args.N_robots
 	trial_no=str(args.trial_name)
-	plotter = VisdomLinePlotter(env_name="pairwise_experiment")
+	visdom_server = str(args.visdom_name)
+	plotter = VisdomLinePlotter(env_name=visdom_server)
 	simulation_time = time.time()
 	if not os.path.exists(trial_no):
 		os.makedirs(trial_no)

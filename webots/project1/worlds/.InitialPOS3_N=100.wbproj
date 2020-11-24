@@ -8,6 +8,7 @@ orthographicViewHeight: 1
 textFiles: -1
 consoles: Console:All:All
 renderingDevicePerspectives: reference_node1(1):camera;1;1;0;0
+renderingDevicePerspectives: reference_node1(2):camera;1;1;0;0
 renderingDevicePerspectives: reference_node1:camera;1;1;0;0
 renderingDevicePerspectives: reference_node2:camera;1;1;0;0
 renderingDevicePerspectives: reference_node3:camera;1;1;0;0

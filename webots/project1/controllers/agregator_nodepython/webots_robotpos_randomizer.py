@@ -29,7 +29,7 @@ class Driver (Supervisor):
 	def run(self):
 		robot_list=list()
 		translational_field_list=list()
-		N=100
+		N=200
 		print("Randomize Robot Position")
 		message="complete 3"
 		
@@ -46,6 +46,7 @@ class Driver (Supervisor):
 		for j in range(N):
 			robot= self.getFromDef('R'+str(j+1))
 			robot.translationField = robot.getField('translation')
-			robot.translationField.setSFVec3f([random.uniform(-3,3),0,random.uniform(-3,3)])#y,z,x
+			robot.translationField.setSFVec3f([random.uniform(-2.1,2.1),0,random.uniform(-2.1,2.1)])#y,z,x
+			self.step(8)
 controller= Driver()
 controller.run()
