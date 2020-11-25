@@ -15,7 +15,13 @@ import struct
 import random
 from pairwise_actions import distance_vector,distance_magnitude,update_pairwisedistance
 from numpy.lib import recfunctions as rfn
-N=100
+N=200
+rho_bar, sigma =10,100
+mu=100
+l=5*rho_bar
+times=pow(2,-8)
+trial='SOL3-T1-POS1-N200.csv'
+
 def normal_distribution(mu,sigma,N):
     start_time = time.time()
     rho_k=list()
@@ -59,12 +65,13 @@ def localize_robots(ref_node1,ref_node2,ref_node3,ref_node4):
 		sorted_robotlist.append((robots[x][0],robots[x][1],robots[x][2],rho_k[x])) #robot number, x,y,
 	
 	sorted_robotlist.sort()
-	with open('WEBOTS-SOL3-T6.csv',mode='w',newline='') as csv_file:
+	with open(trial,mode='w',newline='') as csv_file:
 		fieldnames =['robot_no','x','y','rho']
 		writer = csv.DictWriter(csv_file,fieldnames=fieldnames)
 
 		writer.writeheader()
 		for x in range(len(sorted_robotlist)):
+			print("writer")
 			writer.writerow({'robot_no':sorted_robotlist[x][0],'x':sorted_robotlist[x][1],'y':sorted_robotlist[x][2],'rho':sorted_robotlist[x][3]})
 
 
@@ -78,10 +85,6 @@ sender = robot.getEmitter('emitter')
 receiver = robot.getReceiver('receiver')
 receiver.enable(timestep)
 
-rho_bar, sigma =0,1000
-mu=100
-l=5*rho_bar
-times=pow(2,-8)
 
 rho_k = normal_distribution(rho_bar,sigma,N)
 print(rho_k)

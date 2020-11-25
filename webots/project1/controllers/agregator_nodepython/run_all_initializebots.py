@@ -13,3 +13,4 @@ if __name__ == '__main__':
 		time.sleep(0.2)
 	
 	#subprocess.call('start python webots_robotpos_randomizer.py',shell=True)
+	#subprocess.call('start python agregator_nodepython_centerofmass.py',shell=True)

@@ -29,7 +29,7 @@ class Driver (Supervisor):
 	def run(self):
 		robot_list=list()
 		translational_field_list=list()
-		N=200
+		N=100
 		print("Randomize Robot Position")
 		message="complete 3"
 		
@@ -48,5 +48,7 @@ class Driver (Supervisor):
 			robot.translationField = robot.getField('translation')
 			robot.translationField.setSFVec3f([random.uniform(-2.1,2.1),0,random.uniform(-2.1,2.1)])#y,z,x
 			self.step(8)
+			
+		self.exportImage("C:/Users/Paul Vincent Nonat/Documents/Graduate Student Files/agregator_nodepython/test2.jpg",100)
 controller= Driver()
 controller.run()

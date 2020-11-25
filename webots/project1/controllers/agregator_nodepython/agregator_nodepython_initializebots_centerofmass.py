@@ -15,13 +15,14 @@ import struct
 import random
 from pairwise_actions import distance_vector,distance_magnitude,update_pairwisedistance
 from numpy.lib import recfunctions as rfn
+import matplotlib.pyplot as plt
 N=200
 
-rho_bar, sigma =50,100
+rho_bar, sigma =10,100
 mu=100
 l=5*rho_bar
 times=pow(2,-8)
-trial='SOL3-T5-POS1-N200.csv'
+trial='SOL3-T1-POS3-N200.csv'
 
 def normal_distribution(mu,sigma,N):
     start_time = time.time()
@@ -31,9 +32,9 @@ def normal_distribution(mu,sigma,N):
         s= np.random.normal(sigma,mu)
         if s >= 0:
             rho_k.append((10+s)) #3.55 is the radius of the robot body
-  #  plt.hist(rho_k,30,density = True)
+    #plt.hist(rho_k,30,density = True)
 #    plotter.plot_histogram('Frequency','rho_k','Preferred distance histogram',np.asarray(rho_k, dtype=np.float32))
-    #plt.show()
+    plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
     return rho_k
 def takefourth(elem):
@@ -66,11 +67,12 @@ def localize_robots(ref_node1,ref_node2,ref_node3,ref_node4):
 	
 	center_x= sum_x/N
 	center_y = sum_y/N
+	n=0
 	for n in range(N):
 		from_origin = np.sqrt(pow((x_coordinate[n]-center_x),2)+pow((y_coordinate[n]-center_y),2))
 		#print(n)
 		print(from_origin)
-		#robots.append((n+1,x_coordinate[n],y_coordinate[n],from_origin))
+		robots.append((n+1,x_coordinate[n],y_coordinate[n],from_origin))
 
 	robots.sort(key=takefourth)
 	rho_k.sort()

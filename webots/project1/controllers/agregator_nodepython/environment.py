@@ -129,10 +129,10 @@ def get_nearbybots(robot_j,robots,win,xrj,yrj,theta,beta):
     
     i=0 
     near_robotlist=list()
-    delta_r=distance_magnitude(xrj,yrj)
+    delta_r=distance_magnitude(xrj,yrj)+4
     for r in robots:
         relative_dist[i][0],relative_dist[i][1]= distance_vector(robot_j.getCenter(),r.getCenter(),win)
-        relative_dist[i][2] = distance_magnitude(relative_dist[i][0],relative_dist[i][1])-8 # 4 is the diameter of the bot
+        relative_dist[i][2] = distance_magnitude(relative_dist[i][0],relative_dist[i][1])# 4 is the diameter of the bot
               
         relative_dist[i][3]= calculate_angle(relative_dist[i][0],relative_dist[i][1])    #relative_dist[i][3] phi    
         
